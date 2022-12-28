@@ -1,0 +1,295 @@
+:root {
+  --background: #222;
+  --foreground: #ddd;
+  --border: #bdbdbd;
+}
+
+* {
+  box-sizing: border-box; /* Include padding in element width and height */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  line-height: 1.4em;
+  font-size: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  color: var(--foreground);
+  background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+select:focus,
+input:focus,
+button:focus,
+textarea:focus {
+  outline: 0;
+  outline-color: transparent;
+  outline-style: none;
+}
+
+header {
+  width: 100%;
+  height: 80px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: var(--border) solid 5px;
+  align-content: center;
+}
+
+main {
+  width: 100%;
+  height: 711px;
+  margin: auto;
+}
+
+section {
+  height: 100%;
+}
+
+section div {
+  text-align: center;
+}
+
+h2,
+h3 {
+  margin-bottom: 1rem;
+}
+
+img {
+  width: 800px;
+}
+
+button {
+  border: none;
+  height: 40px;
+  font-size: 30px;
+  background-color: var(--background);
+}
+
+button span {
+  padding: 0.5rem;
+}
+
+button .fa-icon {
+  color: var(--foreground);
+}
+
+button:hover .fa-icon {
+  /* color: blueviolet; */
+  cursor: pointer;
+}
+
+form button {
+  /* width: 80px; */
+  font-size: 20px;
+  border-radius: 5px;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+form button:hover {
+  /* background: blue; */
+  cursor: pointer;
+}
+
+form button .fa-icon {
+  color: var(--background);
+}
+
+form button:hover .fa-icon {
+  color: var(--background);
+}
+
+form input {
+  width: 100%;
+}
+
+input {
+  border: none;
+}
+
+input[type="text"] {
+  height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  padding: 0.5rem;
+  width: 100%;
+  height: 40px;
+  background-color: #bdbdbd;
+}
+
+footer p {
+  font-weight: 900;
+}
+
+.grid {
+  display: grid;
+  grid-auto-rows: auto;
+  grid-gap: 1rem;
+}
+
+.microscope {
+  grid-template-columns: 5fr 2fr;
+  justify-items: center;
+  align-content: center;
+}
+
+.filler {
+  width: 800px;
+  height: 600px;
+  background-color: #2e2e2e;
+}
+
+.fa-cam {
+  height: 100px;
+  margin: 250px auto;
+  color: #444;
+}
+
+.controls {
+  max-width: 300px;
+  grid-template-columns: 2fr 1fr;
+}
+
+.panel {
+  border: 0.15rem solid var(--foreground);
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.panel:last-child button {
+  font-size: 20px;
+  border-radius: 5px;
+  width: 70px;
+  height: 40px;
+  margin: auto 0.5rem;
+  background: var(--foreground);
+}
+
+.panel:last-child button .fa-icon {
+  color: var(--background);
+}
+
+.panel:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+.panel:last-child {
+  grid-column: 1 / -1;
+}
+
+.xy {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.gcode {
+  grid-template-columns: 5fr 2fr;
+}
+
+.overlap .focus {
+  grid-area: 1 / 1 / 1 / 1;
+}
+
+.sequence-steps {
+  height: 460px;
+  overflow-y: scroll;
+}
+
+.sequence-btns {
+  margin-bottom: 1rem;
+}
+
+.sequence-btns button {
+  margin: auto 0.5rem;
+}
+
+.step {
+  padding: 0.5rem 1rem;
+  background: slateblue;
+  border-bottom: var(--background) solid 5px;
+}
+
+.highlight {
+  background-color: teal;
+}
+
+.step-create div:nth-child(1) {
+  width: 600px;
+  height: 550px;
+  margin: 2rem auto 0 auto;
+  background-color: #333;
+}
+
+.step-create div:nth-child(2) {
+  width: 100%;
+  position: absolute;
+  bottom: 5rem;
+}
+
+.step-create div form {
+  width: 330px;
+  margin: auto;
+  text-align: left;
+}
+
+.step-create input[type="text"] {
+  width: 250px;
+  margin: 10px 10px 0 0;
+}
+
+.step-create form button {
+  font-size: 20px;
+  border-radius: 5px;
+  width: 70px;
+  height: 40px;
+}
+
+.show-grid {
+  display: grid;
+}
+
+.show-block {
+  display: inline-block;
+}
+
+.hide {
+  display: none;
+}
+
+.toggle {
+  margin-bottom: 0.5rem;
+}
+
+.toggle button {
+  margin: 0 0.5rem;
+  font-size: 24px;
+  font-weight: 900;
+  color: #555;
+}
+
+.toggle button:hover {
+  cursor: pointer;
+}
+
+.toggle .toggle-focus {
+  color: var(--foreground);
+}
+
+@media screen and (min-width: 960px) {
+  .controls {
+    grid-template-columns: 2fr 1fr;
+  }
+}
