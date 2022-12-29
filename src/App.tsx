@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import "./App.css"
 
+window.Main.getSettings().then((result) => console.log(result))
+
 // const ENDPOINT = 'ws://localhost:8765'
 const ENDPOINT = "ws://10.0.151.85:8765"
 

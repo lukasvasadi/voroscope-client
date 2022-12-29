@@ -41,6 +41,11 @@ async function registerListeners() {
   ipcMain.on("message", (_, message) => {
     console.log(message)
   })
+
+  ipcMain.handle("get-settings", async (_e) => {
+    // return store.get()
+    return 1
+  })
 }
 
 /**
@@ -49,7 +54,11 @@ async function registerListeners() {
  *
  * Some APIs can only be used after this event occurs
  */
-app.on("ready", createWindow)
+app
+  .on("ready", createWindow)
+  .whenReady()
+  .then(registerListeners)
+  .catch((e) => console.error(e))
 
 /**
  * Quit when all windows are closed, except on macOS, where it is common

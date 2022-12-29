@@ -6,3 +6,7 @@ declare global {
     Main: typeof api
   }
 }
+
+declare namespace api {
+  function getSettings(): Promise<object>
+}
