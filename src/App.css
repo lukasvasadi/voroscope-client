@@ -25,6 +25,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Remove yellow border highlight from focused elements */
 select:focus,
 input:focus,
 button:focus,
@@ -34,6 +35,7 @@ textarea:focus {
   outline-style: none;
 }
 
+/* Toolbar */
 header {
   width: 100%;
   height: 80px;
@@ -49,41 +51,8 @@ main {
   margin: auto;
 }
 
-section {
-  height: 100%;
-}
-
-section div {
-  text-align: center;
-}
-
-h2,
-h3 {
-  margin-bottom: 1rem;
-}
-
-img {
-  width: 800px;
-}
-
-button {
-  border: none;
-  height: 40px;
-  font-size: 30px;
-  background-color: var(--background);
-}
-
-button span {
-  padding: 0.5rem;
-}
-
-button .fa-icon {
-  color: var(--foreground);
-}
-
-button:hover .fa-icon {
-  /* color: blueviolet; */
-  cursor: pointer;
+form label {
+  margin-bottom: 5rem;
 }
 
 form button {
@@ -120,6 +89,68 @@ input[type="text"] {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
+}
+
+section {
+  height: 100%;
+}
+
+section div {
+  text-align: center;
+}
+
+section.about {
+  position: fixed;
+  width: 50%;
+  top: 25%;
+  left: 25%;
+}
+
+section.about a {
+  color: blueviolet;
+}
+
+section.settings {
+  width: 60%;
+  margin: 3rem auto auto auto;
+}
+
+section.settings form {
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+section.settings form input {
+  margin-top: 0.5rem;
+}
+
+h2,
+h3 {
+  margin-bottom: 1rem;
+}
+
+img {
+  width: 800px;
+}
+
+button {
+  border: none;
+  height: 40px;
+  font-size: 30px;
+  background-color: var(--background);
+}
+
+button span {
+  padding: 0.5rem;
+}
+
+button .fa-icon {
+  color: var(--foreground);
+}
+
+button:hover .fa-icon {
+  /* color: blueviolet; */
+  cursor: pointer;
 }
 
 footer {
