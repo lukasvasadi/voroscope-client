@@ -69,6 +69,7 @@ const createWindow = (): void => {
     height: 900,
     width: 1200,
     resizable: false,
+    autoHideMenuBar: true,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
