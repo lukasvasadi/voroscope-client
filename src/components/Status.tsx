@@ -1,8 +1,13 @@
+/**
+ * Status
+ * Present system information in footer section
+ */
+
 import PropTypes from "prop-types"
 
 const Status = ({ status }: { status: string }) => {
   return (
-    <footer className="statusbar">
+    <footer>
       {/* <p style={{ color: status === 'connected' ? 'green' : '#800000'}}>{status}</p> */}
     </footer>
   )

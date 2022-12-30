@@ -1,13 +1,12 @@
 import Toolbar from "./components/Toolbar"
 import Status from "./components/Status"
+import About from "./components/About"
+import Settings from "./components/Settings"
 import Microscope from "./components/Microscope"
-import Automation from "./components/Automation"
 import StepCreate from "./components/StepCreate"
 import { useEffect, useState } from "react"
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import "./App.css"
-
-window.Main.getSettings().then((config) => console.log(config))
 
 // const ENDPOINT = 'ws://localhost:8765'
 const ENDPOINT = "ws://10.0.151.85:8765"
@@ -23,17 +22,17 @@ export const App: React.FC = () => {
   const [image, setImage] = useState<string>("")
 
   const [visibilityMicroscope, setVisibilityMicroscope] =
-    useState<boolean>(true)
-  const [visibilityAutomation, setVisibilityAutomation] =
     useState<boolean>(false)
   const [visibilityStepCreate, setVisibilityStepCreate] =
     useState<boolean>(false)
+  const [visibilitySettings, setVisibilitySettings] = useState<boolean>(true)
+  const [visibilityAbout, setVisibilityAbout] = useState<boolean>(false)
 
-  useEffect(() => {
-    const socket = new W3CWebSocket(ENDPOINT)
-    setSocket(socket)
-    // return () => socket.close()
-  }, [setSocket])
+  // useEffect(() => {
+  //   const socket = new W3CWebSocket(ENDPOINT)
+  //   setSocket(socket)
+  //   // return () => socket.close()
+  // }, [setSocket])
 
   // Pass generic message to Raspi node
   const sendMessage = (message: object) => {
@@ -74,13 +73,9 @@ export const App: React.FC = () => {
       try {
         reader.readAsDataURL(message.data)
         reader.onloadend = () => {
-          var base64String: string | ArrayBuffer | null = reader.result
+          var base64String: string | ArrayBuffer = reader.result
           if (typeof base64String == "string") {
-            var base64SubString: string = base64String.substring(
-              base64String.indexOf(",") + 1
-            )
-            console.log("Image received")
-            setImage(base64SubString)
+            setImage(base64String.substring(base64String.indexOf(",") + 1))
           } else
             console.log("Received imaging data does not match expected format")
         }
@@ -90,7 +85,7 @@ export const App: React.FC = () => {
     }
 
     socket.onerror = (_e) => {
-      console.log(_e)
+      // console.log(_e)
       setSocket(null)
     }
   }
@@ -100,6 +95,8 @@ export const App: React.FC = () => {
       <Toolbar
         setVisibilityMicroscope={setVisibilityMicroscope}
         setVisibilityStepCreate={setVisibilityStepCreate}
+        setVisibilitySettings={setVisibilitySettings}
+        setVisibilityAbout={setVisibilityAbout}
       />
       <main className="grid">
         <Microscope
@@ -108,8 +105,9 @@ export const App: React.FC = () => {
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}
         />
-        {/* <Automation visibility={visibilityAutomation} image={image} /> */}
         <StepCreate visibility={visibilityStepCreate} />
+        <Settings visibility={visibilitySettings} />
+        <About visibility={visibilityAbout} />
       </main>
       <Status status={status} />
     </div>

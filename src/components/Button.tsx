@@ -1,8 +1,8 @@
-/* 
-  Button
-  Basic application component
-  Requires icon and onClick event handler
-*/
+/**
+ * Button
+ * Basic application component
+ * Requires icon and onClick event handler
+ */
 
 import PropTypes from "prop-types"
 import { IconProp } from "@fortawesome/fontawesome-svg-core"

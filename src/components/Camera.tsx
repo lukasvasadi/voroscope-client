@@ -1,8 +1,8 @@
-/* 
-  Camera view
-  Show live feed from Raspi
-  Requires image data string
-*/
+/**
+ * Camera
+ * Show live feed from Raspi imaging module
+ * Requires image data string
+ */
 
 import PropTypes from "prop-types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -28,7 +28,7 @@ const Camera = ({ image }: { image: string }) => {
 }
 
 Camera.propTypes = {
-  image: PropTypes.string,
+  image: PropTypes.string.isRequired,
 }
 
 export default Camera

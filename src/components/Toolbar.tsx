@@ -1,7 +1,6 @@
 import PropTypes from "prop-types"
 import {
   faCog,
-  faRobot,
   faFileCode,
   faMicroscope,
   faQuestionCircle,
@@ -9,8 +8,10 @@ import {
 import Button from "./Button"
 
 interface PropsDefinition {
-  setVisibilityMicroscope(data: boolean): void
-  setVisibilityStepCreate(data: boolean): void
+  setVisibilityMicroscope(visibility: boolean): void
+  setVisibilityStepCreate(visibility: boolean): void
+  setVisibilitySettings(visibility: boolean): void
+  setVisibilityAbout(visibility: boolean): void
 }
 
 const Toolbar = (props: PropsDefinition) => {
@@ -21,22 +22,19 @@ const Toolbar = (props: PropsDefinition) => {
         onClick={() => {
           props.setVisibilityMicroscope(true)
           props.setVisibilityStepCreate(false)
+          props.setVisibilitySettings(false)
+          props.setVisibilityAbout(false)
         }}
         onMouseDown={(_e) => {}}
         onMouseUp={(_e) => {}}
       />
-      {/* <Button
-        icon={faRobot}
-        onClick={() => {
-          props.setVisibilityMicroscope(true)
-          props.setVisibilityStepCreate(false)
-        }}
-      /> */}
       <Button
         icon={faFileCode}
         onClick={() => {
           props.setVisibilityMicroscope(false)
           props.setVisibilityStepCreate(true)
+          props.setVisibilitySettings(false)
+          props.setVisibilityAbout(false)
         }}
         onMouseDown={(_e) => {}}
         onMouseUp={(_e) => {}}
@@ -45,7 +43,9 @@ const Toolbar = (props: PropsDefinition) => {
         icon={faCog}
         onClick={() => {
           props.setVisibilityMicroscope(false)
-          props.setVisibilityStepCreate(true)
+          props.setVisibilityStepCreate(false)
+          props.setVisibilitySettings(true)
+          props.setVisibilityAbout(false)
         }}
         onMouseDown={(_e) => {}}
         onMouseUp={(_e) => {}}
@@ -54,7 +54,9 @@ const Toolbar = (props: PropsDefinition) => {
         icon={faQuestionCircle}
         onClick={() => {
           props.setVisibilityMicroscope(false)
-          props.setVisibilityStepCreate(true)
+          props.setVisibilityStepCreate(false)
+          props.setVisibilitySettings(false)
+          props.setVisibilityAbout(true)
         }}
         onMouseDown={(_e) => {}}
         onMouseUp={(_e) => {}}
