@@ -15,6 +15,11 @@ let reader: FileReader = new FileReader()
 var location: number[] = [0.0, 0.0, 0.0] // Assume starting at home
 var pitch: number = 3.0 // Placeholder pitch value
 
+interface Config {
+  endpoint: string
+  resolution: Array<number>
+}
+
 export const App: React.FC = () => {
   const [status, setStatus] = useState<string>("disconnected")
   const [socket, setSocket] = useState<W3CWebSocket | null>(null)
@@ -24,6 +29,16 @@ export const App: React.FC = () => {
   const [visStepCreate, setVisStepCreate] = useState<boolean>(false)
   const [visSettings, setVisSettings] = useState<boolean>(true)
   const [visAbout, setVisAbout] = useState<boolean>(false)
+
+  const [settings, updateSettings] = useState<Config>({
+    endpoint: "",
+    resolution: [640, 480],
+  })
+
+  // Pull settings from file
+  window.Main.getSettings().then((defaultConfig: Config) =>
+    updateSettings(defaultConfig)
+  )
 
   // useEffect(() => {
   //   const socket = new W3CWebSocket(ENDPOINT)
@@ -51,6 +66,9 @@ export const App: React.FC = () => {
     sendGcode("G1 X0")
     console.log(map.map((val) => val * pitch))
   }
+
+  // Listen for state changes
+  useEffect(() => console.log(settings), [updateSettings])
 
   if (socket) {
     socket.onopen = () => {
@@ -103,7 +121,14 @@ export const App: React.FC = () => {
           sendGcodeRelPos={sendGcodeRelPos}
         />
         <StepCreate visibility={visStepCreate} />
-        <Settings visibility={visSettings} />
+        <Settings
+          visibility={visSettings}
+          settings={settings}
+          updateSettings={(newSettings: Config) => {
+            updateSettings(newSettings)
+            console.log(settings)
+          }}
+        />
         <About visibility={visAbout} />
       </main>
       <Status status={status} />

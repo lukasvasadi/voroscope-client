@@ -11,8 +11,8 @@ const SideBar = ({
   sendGcodeRelPos: Function
 }) => {
   // Control display visibility
-  const [visibilityManual, setVisibilityManual] = useState(true)
-  const [visibilityAutomated, setVisibilityAutomated] = useState(false)
+  const [visManual, setVisManual] = useState(true)
+  const [visAutomated, setVisAutomated] = useState(false)
   const [focusManual, setFocusManual] = useState("toggle-focus")
   const [focusAutomated, setFocusAutomated] = useState("")
 
@@ -22,8 +22,8 @@ const SideBar = ({
         <button
           className={focusManual}
           onClick={() => {
-            setVisibilityManual(true)
-            setVisibilityAutomated(false)
+            setVisManual(true)
+            setVisAutomated(false)
             setFocusManual("toggle-focus")
             setFocusAutomated("")
           }}
@@ -33,8 +33,8 @@ const SideBar = ({
         <button
           className={focusAutomated}
           onClick={() => {
-            setVisibilityManual(false)
-            setVisibilityAutomated(true)
+            setVisManual(false)
+            setVisAutomated(true)
             setFocusManual("")
             setFocusAutomated("toggle-focus")
           }}
@@ -44,11 +44,11 @@ const SideBar = ({
       </div>
       <div className="grid">
         <ControlsManual
-          visibility={visibilityManual}
+          visibility={visManual}
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}
         />
-        <ControlsAutomated visibility={visibilityAutomated} />
+        <ControlsAutomated visibility={visAutomated} />
       </div>
     </section>
   )
