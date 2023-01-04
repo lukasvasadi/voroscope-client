@@ -14,19 +14,16 @@ const ENDPOINT = "ws://10.0.151.85:8765"
 let reader: FileReader = new FileReader()
 var location: number[] = [0.0, 0.0, 0.0] // Assume starting at home
 var pitch: number = 3.0 // Placeholder pitch value
-var images: number = 0
 
 export const App: React.FC = () => {
-  const [status, setStatus] = useState("disconnected")
+  const [status, setStatus] = useState<string>("disconnected")
   const [socket, setSocket] = useState<W3CWebSocket | null>(null)
   const [image, setImage] = useState<string>("")
 
-  const [visibilityMicroscope, setVisibilityMicroscope] =
-    useState<boolean>(false)
-  const [visibilityStepCreate, setVisibilityStepCreate] =
-    useState<boolean>(false)
-  const [visibilitySettings, setVisibilitySettings] = useState<boolean>(true)
-  const [visibilityAbout, setVisibilityAbout] = useState<boolean>(false)
+  const [visMicroscope, setVisMicroscope] = useState<boolean>(false)
+  const [visStepCreate, setVisStepCreate] = useState<boolean>(false)
+  const [visSettings, setVisSettings] = useState<boolean>(true)
+  const [visAbout, setVisAbout] = useState<boolean>(false)
 
   // useEffect(() => {
   //   const socket = new W3CWebSocket(ENDPOINT)
@@ -34,12 +31,12 @@ export const App: React.FC = () => {
   //   // return () => socket.close()
   // }, [setSocket])
 
-  // Pass generic message to Raspi node
+  // Pass generic message to raspi node
   const sendMessage = (message: object) => {
     if (socket) socket.send(JSON.stringify(message))
   }
 
-  // Pass gcode to Raspi node
+  // Pass gcode to raspi node
   const sendGcode = (command: string) => {
     if (command.includes("G1")) {
       // Assume user wants to move to exact coordinate location
@@ -91,25 +88,25 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div>
+    <>
       <Toolbar
-        setVisibilityMicroscope={setVisibilityMicroscope}
-        setVisibilityStepCreate={setVisibilityStepCreate}
-        setVisibilitySettings={setVisibilitySettings}
-        setVisibilityAbout={setVisibilityAbout}
+        setVisMicroscope={setVisMicroscope}
+        setVisStepCreate={setVisStepCreate}
+        setVisSettings={setVisSettings}
+        setVisAbout={setVisAbout}
       />
       <main className="grid">
         <Microscope
-          visibility={visibilityMicroscope}
+          visibility={visMicroscope}
           image={image}
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}
         />
-        <StepCreate visibility={visibilityStepCreate} />
-        <Settings visibility={visibilitySettings} />
-        <About visibility={visibilityAbout} />
+        <StepCreate visibility={visStepCreate} />
+        <Settings visibility={visSettings} />
+        <About visibility={visAbout} />
       </main>
       <Status status={status} />
-    </div>
+    </>
   )
 }

@@ -8,10 +8,10 @@ import {
 import Button from "./Button"
 
 interface PropsDefinition {
-  setVisibilityMicroscope(visibility: boolean): void
-  setVisibilityStepCreate(visibility: boolean): void
-  setVisibilitySettings(visibility: boolean): void
-  setVisibilityAbout(visibility: boolean): void
+  setVisMicroscope(visibility: boolean): void
+  setVisStepCreate(visibility: boolean): void
+  setVisSettings(visibility: boolean): void
+  setVisAbout(visibility: boolean): void
 }
 
 const Toolbar = (props: PropsDefinition) => {
@@ -20,10 +20,10 @@ const Toolbar = (props: PropsDefinition) => {
       <Button
         icon={faMicroscope}
         onClick={() => {
-          props.setVisibilityMicroscope(true)
-          props.setVisibilityStepCreate(false)
-          props.setVisibilitySettings(false)
-          props.setVisibilityAbout(false)
+          props.setVisMicroscope(true)
+          props.setVisStepCreate(false)
+          props.setVisSettings(false)
+          props.setVisAbout(false)
         }}
         onMouseDown={(_e) => {}}
         onMouseUp={(_e) => {}}
@@ -31,10 +31,10 @@ const Toolbar = (props: PropsDefinition) => {
       <Button
         icon={faFileCode}
         onClick={() => {
-          props.setVisibilityMicroscope(false)
-          props.setVisibilityStepCreate(true)
-          props.setVisibilitySettings(false)
-          props.setVisibilityAbout(false)
+          props.setVisMicroscope(false)
+          props.setVisStepCreate(true)
+          props.setVisSettings(false)
+          props.setVisAbout(false)
         }}
         onMouseDown={(_e) => {}}
         onMouseUp={(_e) => {}}
@@ -42,10 +42,10 @@ const Toolbar = (props: PropsDefinition) => {
       <Button
         icon={faCog}
         onClick={() => {
-          props.setVisibilityMicroscope(false)
-          props.setVisibilityStepCreate(false)
-          props.setVisibilitySettings(true)
-          props.setVisibilityAbout(false)
+          props.setVisMicroscope(false)
+          props.setVisStepCreate(false)
+          props.setVisSettings(true)
+          props.setVisAbout(false)
         }}
         onMouseDown={(_e) => {}}
         onMouseUp={(_e) => {}}
@@ -53,10 +53,10 @@ const Toolbar = (props: PropsDefinition) => {
       <Button
         icon={faQuestionCircle}
         onClick={() => {
-          props.setVisibilityMicroscope(false)
-          props.setVisibilityStepCreate(false)
-          props.setVisibilitySettings(false)
-          props.setVisibilityAbout(true)
+          props.setVisMicroscope(false)
+          props.setVisStepCreate(false)
+          props.setVisSettings(false)
+          props.setVisAbout(true)
         }}
         onMouseDown={(_e) => {}}
         onMouseUp={(_e) => {}}
