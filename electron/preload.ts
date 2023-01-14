@@ -13,6 +13,10 @@ export const api = {
 
   getSettings: () => ipcRenderer.invoke("get-settings"),
 
+  getFile: () => ipcRenderer.invoke("get-file"),
+  getFileContents: (filePath: string) =>
+    ipcRenderer.invoke("get-file-contents", filePath),
+
   /**
    * Provide an easier way to listen to events
    */
