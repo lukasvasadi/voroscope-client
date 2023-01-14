@@ -9,17 +9,6 @@ import {
   faStop,
 } from "@fortawesome/free-solid-svg-icons"
 
-interface ElectronDialogResult {
-  canceled: boolean
-  filePaths: string[]
-}
-
-interface Step {
-  id: number
-  command: string
-  active: boolean
-}
-
 const stepsPlaceholder: Step[] = []
 for (var i = 0; i < 15; i++) {
   stepsPlaceholder.push({
@@ -31,10 +20,6 @@ for (var i = 0; i < 15; i++) {
 
 const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
   const [steps, setSteps] = useState<Step[]>(stepsPlaceholder)
-
-  const open = () => {
-    console.log("open")
-  }
 
   return (
     <section
@@ -75,26 +60,26 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
           icon={faPlay}
           onMouseDown={(_e) => {}}
           onMouseUp={(_e) => {}}
-          onClick={open}
+          onClick={(_e) => {}}
         />
         <Button
           icon={faPause}
           onMouseDown={(_e) => {}}
           onMouseUp={(_e) => {}}
-          onClick={open}
+          onClick={(_e) => {}}
         />
         <Button
           icon={faStop}
           onMouseDown={(_e) => {}}
           onMouseUp={(_e) => {}}
-          onClick={open}
+          onClick={(_e) => {}}
         />
       </div>
-      <div className="sequence-steps">
+      <ul className="sequence-steps">
         {steps.map((step) => (
           <Step key={step.id} step={step} />
         ))}
-      </div>
+      </ul>
     </section>
   )
 }

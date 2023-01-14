@@ -5,6 +5,17 @@ declare global {
   interface Window {
     Main: typeof api
   }
+
+  interface ElectronDialogResult {
+    canceled: boolean
+    filePaths: string[]
+  }
+
+  interface Step {
+    id: number
+    command: string
+    active: boolean
+  }
 }
 
 declare namespace api {
