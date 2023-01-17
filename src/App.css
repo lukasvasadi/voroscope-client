@@ -13,6 +13,8 @@
 body {
   width: 100vw;
   height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
   position: relative;
   line-height: 1.4em;
   font-size: 20px;
@@ -20,7 +22,7 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   color: var(--foreground);
-  background-color: var(--background);
+  background: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -38,7 +40,7 @@ textarea:focus {
 /* Toolbar */
 header {
   width: 100%;
-  height: 80px;
+  height: 70px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-bottom: var(--border) solid 5px;
@@ -64,7 +66,6 @@ form button {
 }
 
 form button:hover {
-  /* background: blue; */
   cursor: pointer;
 }
 
@@ -72,19 +73,12 @@ form button .fa-icon {
   color: var(--background);
 }
 
-form button:hover .fa-icon {
-  color: var(--background);
-}
-
 form input {
   width: 100%;
-}
-
-input {
   border: none;
 }
 
-input[type="text"] {
+form input[type="text"] {
   height: 40px;
   padding: 10px;
   font-size: 16px;
@@ -134,7 +128,7 @@ button {
   border: none;
   height: 40px;
   font-size: 30px;
-  background-color: var(--background);
+  background: var(--background);
 }
 
 button span {
@@ -145,8 +139,7 @@ button .fa-icon {
   color: var(--foreground);
 }
 
-button:hover .fa-icon {
-  /* color: blueviolet; */
+button:hover {
   cursor: pointer;
 }
 
@@ -175,15 +168,20 @@ footer p {
   align-content: center;
 }
 
-.filler {
+div.filler {
   width: 800px;
   height: 600px;
   background-color: #2e2e2e;
 }
 
-.fa-cam {
+div.filler button {
   height: 100px;
   margin: 250px auto;
+  background: #2e2e2e;
+}
+
+div.filler button .fa-icon {
+  height: 100px;
   color: #444;
 }
 
@@ -244,45 +242,111 @@ footer p {
   margin: auto 0.5rem;
 }
 
-.step {
-  padding: 0.5rem 1rem;
-  background: slateblue;
-  border-bottom: var(--background) solid 5px;
+ul {
+  list-style-type: none;
 }
 
-.highlight {
+li {
+  position: relative;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center; */
+  background: slateblue;
+  margin-bottom: 0.5rem;
+}
+
+li:last-of-type {
+  margin-bottom: 0;
+}
+
+li.highlight {
   background-color: teal;
 }
 
-.step-create div:nth-child(1) {
+li span:first-child {
+  margin: auto;
+}
+
+li span:last-child {
+  display: none;
+  position: absolute;
+  right: 1rem;
+}
+
+section.step-create > ul {
   width: 600px;
   height: 550px;
-  margin: 2rem auto 0 auto;
-  background-color: #333;
+  padding: 1rem;
+  margin: 2rem auto;
+  background: #333;
 }
 
-.step-create div:nth-child(2) {
-  width: 100%;
-  position: absolute;
-  bottom: 5rem;
+section.step-create ul li:hover span:last-child {
+  display: block;
 }
 
-.step-create div form {
+section.step-create ul li button {
+  background: none;
+  height: 1rem;
+  font-size: 18px;
+}
+
+section.step-create ul li button svg {
+  height: 1rem;
+}
+
+section.step-create ul li button:first-child {
+  margin-right: 0.5rem;
+}
+
+section.step-create form {
   width: 330px;
-  margin: auto;
+  height: min-content;
+  /* margin: auto; */
   text-align: left;
+  margin-right: 3rem;
+  align-self: last baseline;
 }
 
-.step-create input[type="text"] {
+section.step-create form input[type="text"] {
   width: 250px;
   margin: 10px 10px 0 0;
 }
 
-.step-create form button {
+section.step-create form button {
   font-size: 20px;
   border-radius: 5px;
   width: 70px;
   height: 40px;
+}
+
+section.step-create div {
+  width: min-content;
+  height: min-content;
+  display: flex;
+  flex-direction: row;
+  align-content: last baseline;
+  margin: auto;
+}
+
+section.step-create div > button {
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 5px;
+  background: var(--foreground);
+  color: var(--background);
+  align-self: last baseline;
+}
+
+section.step-create div > button .fa-icon {
+  color: var(--background);
+}
+
+section.step-create div > button:first-of-type {
+  margin-right: 1rem;
 }
 
 .show-grid {

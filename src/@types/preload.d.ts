@@ -12,6 +12,17 @@ declare global {
     pitchXY: number
     pitchZ: number
   }
+
+  interface ElectronDialogResult {
+    canceled: boolean
+    filePaths: string[]
+  }
+
+  interface Step {
+    id: number
+    command: string
+    active: boolean
+  }
 }
 
 declare namespace api {
@@ -21,4 +32,7 @@ declare namespace api {
   function closePort(
     callback: (event: IpcRendererEvent, ...args: any[]) => void
   ): void
+  function getSettings(): Promise<object>
+  function getFile(): Promise<object>
+  function getFileContents(filePath: string): Promise<string>
 }

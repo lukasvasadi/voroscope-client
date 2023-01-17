@@ -5,6 +5,7 @@
  */
 
 import PropTypes from "prop-types"
+import Button from "./Button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCamera } from "@fortawesome/free-solid-svg-icons"
 import { ReactElement } from "react"
@@ -16,7 +17,12 @@ const Camera = ({ image }: { image: string }) => {
   } else {
     imageElement = (
       <div className="filler">
-        <FontAwesomeIcon icon={faCamera} className="fa-cam" />
+        <Button
+          icon={faCamera}
+          onClick={(_) => {}}
+          onMouseDown={(_) => {}}
+          onMouseUp={(_) => {}}
+        />
       </div>
     )
   }

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron"
+import { app, BrowserWindow, ipcMain, dialog } from "electron"
 import path from "path"
 import fs from "fs"
 
@@ -103,6 +103,27 @@ async function registerListeners() {
 
   ipcMain.handle("get-default", async (_) => {
     return defaultConfig
+  })
+
+  ipcMain.handle("get-file", async (_) => {
+    return dialog.showOpenDialog(mainWindow, {
+      properties: ["openFile"],
+    })
+  })
+
+  ipcMain.handle("get-file-contents", (_, filePath: string) => {
+    return fs.readFileSync(filePath, "utf-8")
+  })
+
+  /**
+   * https://stackoverflow.com/questions/43487543/writing-binary-data-using-node-js-fs-writefile-to-create-an-image-file
+   */
+  ipcMain.on("save-image-file", (_, base64String: string) => {
+    var buf = Buffer.from(base64String, "base64")
+    fs.writeFile("image.png", buf, (err) => {
+      if (err) throw err
+      console.log("Image file saved!")
+    })
   })
 }
 

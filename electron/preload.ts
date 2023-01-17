@@ -16,6 +16,10 @@ export const api = {
   closePort: (callback: (event: IpcRendererEvent, ...args: any[]) => void) =>
     ipcRenderer.on("close-port", callback),
 
+  getFile: () => ipcRenderer.invoke("get-file"),
+  getFileContents: (filePath: string) =>
+    ipcRenderer.invoke("get-file-contents", filePath),
+
   /**
    * Provide an easier way to listen to events
    */

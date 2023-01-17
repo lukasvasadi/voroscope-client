@@ -9,101 +9,17 @@ import {
   faStop,
 } from "@fortawesome/free-solid-svg-icons"
 
-const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
-  const [steps, setSteps] = useState([
-    {
-      id: 0,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: true,
-    },
-    {
-      id: 1,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 2,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 3,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 4,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 5,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 6,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 7,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 8,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 9,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 10,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-  ])
+const stepsPlaceholder: Step[] = []
+for (var i = 0; i < 15; i++) {
+  stepsPlaceholder.push({
+    id: i,
+    command: `X${i * 5 + 10} Y${i * 5 + 10} Z${i} F800`,
+    active: i ? false : true,
+  })
+}
 
-  const open = () => {
-    console.log("open")
-  }
+const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
+  const [steps, setSteps] = useState<Step[]>(stepsPlaceholder)
 
   return (
     <section
@@ -112,7 +28,31 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
       <div className="sequence-btns">
         <Button
           icon={faFolderOpen}
-          onClick={open}
+          onClick={(_e) => {
+            window.Main.getFile().then((result: ElectronDialogResult) => {
+              // Proceed if user selects file
+              if (!result.canceled) {
+                window.Main.getFileContents(result.filePaths[0]).then(
+                  (contents: string) => {
+                    var gcodeList: string[] = contents.split("\n") // Split string into gcode array
+                    var stepList: Step[] = [] // Initialize empty step list
+                    for (var i = 0; i < gcodeList.length; i++) {
+                      // Populate step list if gcode is not an empty string
+                      if (gcodeList[i]) {
+                        stepList.push({
+                          id: i,
+                          command: gcodeList[i].substring(3),
+                          active: false,
+                        })
+                      }
+                    }
+                    console.log(stepList)
+                    setSteps(stepList)
+                  }
+                )
+              }
+            })
+          }}
           onMouseDown={(_e) => {}}
           onMouseUp={(_e) => {}}
         />
@@ -120,26 +60,26 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
           icon={faPlay}
           onMouseDown={(_e) => {}}
           onMouseUp={(_e) => {}}
-          onClick={open}
+          onClick={(_e) => {}}
         />
         <Button
           icon={faPause}
           onMouseDown={(_e) => {}}
           onMouseUp={(_e) => {}}
-          onClick={open}
+          onClick={(_e) => {}}
         />
         <Button
           icon={faStop}
           onMouseDown={(_e) => {}}
           onMouseUp={(_e) => {}}
-          onClick={open}
+          onClick={(_e) => {}}
         />
       </div>
-      <div className="sequence-steps">
+      <ul className="sequence-steps">
         {steps.map((step) => (
           <Step key={step.id} step={step} />
         ))}
-      </div>
+      </ul>
     </section>
   )
 }

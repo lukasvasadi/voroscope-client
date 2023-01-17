@@ -2,124 +2,54 @@ import PropTypes from "prop-types"
 import Button from "./Button"
 import Step from "./Step"
 import { useState } from "react"
-import { faUpload } from "@fortawesome/free-solid-svg-icons"
+import {
+  faPlus,
+  faSave,
+  faRotateRight,
+} from "@fortawesome/free-solid-svg-icons"
+
+const stepsPlaceholder: Step[] = []
+for (var i = 0; i < 15; i++) {
+  stepsPlaceholder.push({
+    id: i,
+    command: `X${i * 5 + 10} Y${i * 5 + 10} Z${i} F800`,
+    active: i ? false : true,
+  })
+}
 
 const StepCreate = ({ visibility }: { visibility: boolean }) => {
-  const push = () => {
-    console.log("upload")
-  }
-
-  const [steps, setSteps] = useState([
-    {
-      id: 0,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: true,
-    },
-    {
-      id: 1,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 2,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 3,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 4,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 5,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 6,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 7,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 8,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 9,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-    {
-      id: 10,
-      x: 7,
-      y: 2,
-      z: 3,
-      speed: 800,
-      active: false,
-    },
-  ])
+  const [steps, setSteps] = useState<Step[]>(stepsPlaceholder)
 
   return (
     <section className={`step-create ${visibility ? "show-block" : "hide"}`}>
-      <div>
-        <div className="sequence-steps">
-          {steps.map((step) => (
-            <Step key={step.id} step={step} />
-          ))}
-        </div>
-      </div>
+      <ul className="sequence-steps">
+        {steps.map((step) => (
+          <Step key={step.id} step={step} />
+        ))}
+      </ul>
       <div>
         <form>
           <label>Add step</label>
           <input type="text" placeholder="X1 Y2 Z3 F800" />
           <Button
-            icon={faUpload}
-            onClick={push}
+            icon={faPlus}
+            onClick={(_e) => {}}
             onMouseDown={(_e) => {}}
             onMouseUp={(_e) => {}}
           />
         </form>
+        <Button
+          icon={faSave}
+          onClick={(_e) => {}}
+          onMouseDown={(_e) => {}}
+          onMouseUp={(_e) => {}}
+        />
+        <Button
+          icon={faRotateRight}
+          onClick={(_e) => {}}
+          onMouseDown={(_e) => {}}
+          onMouseUp={(_e) => {}}
+        />
       </div>
     </section>
   )

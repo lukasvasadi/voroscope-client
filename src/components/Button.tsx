@@ -22,7 +22,12 @@ const Button = ({
 }) => {
   return (
     // MouseEventHandler is a function with a single parameter (event)
-    <button onClick={onClick} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+    <button
+      type="button" // Without specifying type, form buttons will behave as "submit"
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+    >
       <FontAwesomeIcon icon={icon} className="fa-icon" />
     </button>
   )
