@@ -52,20 +52,24 @@ function parseDataFile(path: fs.PathOrFileDescriptor, data: object) {
   }
 }
 
+// Create default system configuration
+let defaultConfig: Config = {
+  endpoint: "ws://10.0.151.85:8765",
+  resolution: [640, 480],
+  pitchXY: 3.0,
+  pitchZ: 0.5,
+}
+
 // Initialize store
 const store = new Store({
   fname: ".voroconfig",
-  data: {
-    endpoint: "ws://10.0.151.85:8765",
-    resolution: [640, 480],
-    pitch_xy: 3.0,
-    pitch_z: 0.5,
-  },
+  data: defaultConfig,
 })
 
+let mainWindow: BrowserWindow
 const createWindow = (): void => {
   // Create the browser window
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     height: 900,
     width: 1200,
     resizable: false,
@@ -91,8 +95,14 @@ async function registerListeners() {
     console.log(message)
   })
 
-  ipcMain.handle("get-settings", async (_e) => {
+  ipcMain.on("set-config", (_, config) => store.set(config))
+
+  ipcMain.handle("get-config", async (_) => {
     return store.get()
+  })
+
+  ipcMain.handle("get-default", async (_) => {
+    return defaultConfig
   })
 }
 
@@ -107,6 +117,11 @@ app
   .whenReady()
   .then(registerListeners)
   .catch((e) => console.error(e))
+
+app.on("before-quit", (e) => {
+  mainWindow.webContents.send("close-port")
+  console.log("Closing comport...")
+})
 
 /**
  * Quit when all windows are closed, except on macOS, where it is common

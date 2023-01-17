@@ -8,43 +8,34 @@ import { useEffect, useState } from "react"
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import "./App.css"
 
-// const ENDPOINT = 'ws://localhost:8765'
-const ENDPOINT = "ws://10.0.151.85:8765"
-
 let reader: FileReader = new FileReader()
 var location: number[] = [0.0, 0.0, 0.0] // Assume starting at home
-var pitch: number = 3.0 // Placeholder pitch value
-
-interface Config {
-  endpoint: string
-  resolution: Array<number>
-}
 
 export const App: React.FC = () => {
-  const [status, setStatus] = useState<string>("disconnected")
   const [socket, setSocket] = useState<W3CWebSocket | null>(null)
   const [image, setImage] = useState<string>("")
 
-  const [visMicroscope, setVisMicroscope] = useState<boolean>(false)
+  const [visMicroscope, setVisMicroscope] = useState<boolean>(true)
   const [visStepCreate, setVisStepCreate] = useState<boolean>(false)
-  const [visSettings, setVisSettings] = useState<boolean>(true)
+  const [visSettings, setVisSettings] = useState<boolean>(false)
   const [visAbout, setVisAbout] = useState<boolean>(false)
 
-  const [settings, updateSettings] = useState<Config>({
-    endpoint: "",
-    resolution: [640, 480],
-  })
+  const [config, setConfig] = useState<Config | null>(null)
 
   // Pull settings from file
-  window.Main.getSettings().then((defaultConfig: Config) =>
-    updateSettings(defaultConfig)
-  )
+  useEffect(() => {
+    window.Main.getConfig().then((config: Config) => setConfig(config))
+  }, []) // Empty array means function will only run on component docking
 
-  // useEffect(() => {
-  //   const socket = new W3CWebSocket(ENDPOINT)
-  //   setSocket(socket)
-  //   // return () => socket.close()
-  // }, [setSocket])
+  useEffect(() => {
+    if (!socket && config) {
+      try {
+        setSocket(new W3CWebSocket(config.endpoint))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }, [config])
 
   // Pass generic message to raspi node
   const sendMessage = (message: object) => {
@@ -64,13 +55,17 @@ export const App: React.FC = () => {
   // Send gcode from control panel buttons
   const sendGcodeRelPos = (map: number[]) => {
     sendGcode("G1 X0")
-    console.log(map.map((val) => val * pitch))
+    console.log(map.map((val) => val * config.pitchXY))
   }
 
   // Listen for state changes
-  useEffect(() => console.log(settings), [updateSettings])
+  useEffect(() => console.log(config), [config])
 
   if (socket) {
+    window.Main.closePort((_) => {
+      socket.close()
+    })
+
     socket.onopen = () => {
       console.log("Connected")
 
@@ -96,6 +91,8 @@ export const App: React.FC = () => {
         }
       } catch (TypeError) {
         console.log(message.data)
+        var data = JSON.parse(message.data)
+        if ("location" in data) location = data.location
       }
     }
 
@@ -123,15 +120,15 @@ export const App: React.FC = () => {
         <StepCreate visibility={visStepCreate} />
         <Settings
           visibility={visSettings}
-          settings={settings}
+          settings={config}
           updateSettings={(newSettings: Config) => {
-            updateSettings(newSettings)
-            console.log(settings)
+            setConfig(newSettings)
+            window.Main.setConfig(newSettings)
           }}
         />
         <About visibility={visAbout} />
       </main>
-      <Status status={status} />
+      <Status status={socket ? "connected" : "disconnected"} />
     </>
   )
 }

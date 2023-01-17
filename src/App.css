@@ -47,7 +47,7 @@ header {
 
 main {
   width: 100%;
-  height: 711px;
+  height: 751px;
   margin: auto;
 }
 
@@ -100,10 +100,9 @@ section div {
 }
 
 section.about {
-  position: fixed;
   width: 50%;
-  top: 25%;
-  left: 25%;
+  height: 30%;
+  margin: 5rem auto auto auto;
 }
 
 section.about a {
@@ -111,13 +110,11 @@ section.about a {
 }
 
 section.settings {
-  width: 60%;
-  margin: 3rem auto auto auto;
-}
-
-section.settings form {
-  width: 50%;
-  margin-bottom: 1rem;
+  width: 40%;
+  height: 30%;
+  margin: 5rem auto auto auto;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
 section.settings form input {
@@ -294,6 +291,10 @@ footer p {
 
 .show-block {
   display: inline-block;
+}
+
+.show-grid {
+  display: grid;
 }
 
 .hide {

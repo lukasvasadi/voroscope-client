@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from "electron"
+import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
 
 export const api = {
   /**
@@ -10,8 +10,11 @@ export const api = {
    */
 
   sendMessage: (message: string) => ipcRenderer.send("message", message),
-
-  getSettings: () => ipcRenderer.invoke("get-settings"),
+  setConfig: (config: Config) => ipcRenderer.send("set-config", config),
+  getConfig: () => ipcRenderer.invoke("get-config"),
+  getDefault: () => ipcRenderer.invoke("get-default"),
+  closePort: (callback: (event: IpcRendererEvent, ...args: any[]) => void) =>
+    ipcRenderer.on("close-port", callback),
 
   /**
    * Provide an easier way to listen to events
