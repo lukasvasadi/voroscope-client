@@ -152,6 +152,18 @@ li span:last-child {
   right: 1rem;
 }
 
+li[draggable="true"] {
+  cursor: grab;
+}
+
+li span:last-of-type {
+  cursor: pointer;
+}
+
+li span button {
+  cursor: none;
+}
+
 footer {
   position: absolute;
   bottom: 0;
@@ -161,10 +173,6 @@ footer {
   flex-direction: column;
   align-items: center;
   background-color: #bdbdbd;
-}
-
-footer p {
-  font-weight: 900;
 }
 
 section {
@@ -420,6 +428,7 @@ div.pane:last-child button svg {
 div.sequence ul {
   height: 460px;
   width: 90%;
+  margin: auto;
   padding: 1rem;
   background: #333;
   overflow-y: scroll;
