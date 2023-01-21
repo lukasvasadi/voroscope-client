@@ -13,8 +13,8 @@ export const api = {
   setConfig: (config: Config) => ipcRenderer.send("set-config", config),
   getConfig: () => ipcRenderer.invoke("get-config"),
   getDefault: () => ipcRenderer.invoke("get-default"),
-  closePort: (callback: (event: IpcRendererEvent, ...args: any[]) => void) =>
-    ipcRenderer.on("close-port", callback),
+  // closePort: (callback: (event: IpcRendererEvent, ...args: any[]) => void) =>
+  //   ipcRenderer.on("close-port", callback),
 
   getFile: () => ipcRenderer.invoke("get-file"),
   getFileContents: (filePath: string) =>

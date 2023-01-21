@@ -21,10 +21,10 @@ class Store {
   path: fs.PathOrFileDescriptor
   data: object
   constructor(config: { fname: string; data: object }) {
-    const userDataPath = app.getPath("home")
+    const userHomePath = app.getPath("home")
 
     // this.path = path.join(userDataPath, config.fname + ".json")
-    this.path = path.join(userDataPath, config.fname) // Save without json extension
+    this.path = path.join(userHomePath, config.fname) // Save without json extension
     this.data = parseDataFile(this.path, config.data)
   }
 
@@ -55,6 +55,12 @@ function parseDataFile(path: fs.PathOrFileDescriptor, data: object) {
 // Create default system configuration
 let defaultConfig: Config = {
   endpoint: "ws://10.0.151.85:8765",
+  imageSavePath: path.join(
+    app.getPath("home"),
+    "Documents",
+    "Voroscope",
+    "Data"
+  ),
   resolution: [640, 480],
   pitchXY: 3.0,
   pitchZ: 0.5,
@@ -139,10 +145,10 @@ app
   .then(registerListeners)
   .catch((e) => console.error(e))
 
-app.on("before-quit", (e) => {
-  mainWindow.webContents.send("close-port")
-  console.log("Closing comport...")
-})
+// app.on("before-quit", (e) => {
+//   mainWindow.webContents.send("close-port")
+//   console.log("Closing comport...")
+// })
 
 /**
  * Quit when all windows are closed, except on macOS, where it is common

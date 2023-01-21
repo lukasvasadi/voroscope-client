@@ -10,6 +10,7 @@ import "./App.css"
 
 let reader: FileReader = new FileReader()
 var location: number[] = [0.0, 0.0, 0.0] // Assume starting at home
+var images: number = 0
 
 export const App: React.FC = () => {
   const [socket, setSocket] = useState<W3CWebSocket | null>(null)
@@ -21,21 +22,23 @@ export const App: React.FC = () => {
   const [visAbout, setVisAbout] = useState<boolean>(false)
 
   const [config, setConfig] = useState<Config | null>(null)
-
-  // Pull settings from file
-  useEffect(() => {
-    window.Main.getConfig().then((config: Config) => setConfig(config))
-  }, []) // Empty array means function will only run on component docking
+  const [connect, setConnect] = useState<boolean>(false)
 
   useEffect(() => {
     if (!socket && config) {
       try {
         setSocket(new W3CWebSocket(config.endpoint))
+        console.log("Camera connected!")
       } catch (err) {
         console.log(err)
       }
     }
-  }, [config])
+  }, [connect])
+
+  // Pull settings from file
+  useEffect(() => {
+    window.Main.getConfig().then((config: Config) => setConfig(config))
+  }, []) // Empty array means function will only run on component docking
 
   // Pass generic message to raspi node
   const sendMessage = (message: object) => {
@@ -62,9 +65,9 @@ export const App: React.FC = () => {
   useEffect(() => console.log(config), [config])
 
   if (socket) {
-    window.Main.closePort((_) => {
-      socket.close()
-    })
+    // window.Main.closePort((_) => {
+    //   socket.close()
+    // })
 
     socket.onopen = () => {
       console.log("Connected")
@@ -76,6 +79,7 @@ export const App: React.FC = () => {
     }
 
     socket.onclose = () => {
+      setConnect(false)
       console.log("Disconnected")
     }
 
@@ -86,19 +90,21 @@ export const App: React.FC = () => {
           var base64String: string | ArrayBuffer = reader.result
           if (typeof base64String == "string") {
             setImage(base64String.substring(base64String.indexOf(",") + 1))
+            images += 1
+            console.log(images)
           } else
             console.log("Received imaging data does not match expected format")
         }
       } catch (TypeError) {
         console.log(message.data)
-        var data = JSON.parse(message.data)
-        if ("location" in data) location = data.location
+        var data = message.data
+        // if ("location" in data) location = data.location
       }
     }
 
-    socket.onerror = (_e) => {
-      // console.log(_e)
-      setSocket(null)
+    socket.onerror = (err) => {
+      console.log(err)
+      // setSocket(null)
     }
   }
 
@@ -110,9 +116,10 @@ export const App: React.FC = () => {
         setVisSettings={setVisSettings}
         setVisAbout={setVisAbout}
       />
-      <main className="grid">
+      <main>
         <Microscope
           visibility={visMicroscope}
+          cameraConnect={setConnect}
           image={image}
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}

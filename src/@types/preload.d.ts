@@ -11,6 +11,7 @@ declare global {
     resolution: number[]
     pitchXY: number
     pitchZ: number
+    imageSavePath: string
   }
 
   interface ElectronDialogResult {
@@ -29,9 +30,9 @@ declare namespace api {
   function setConfig(config: Config): void
   function getConfig(): Promise<object>
   function getDefault(): Promise<Config>
-  function closePort(
-    callback: (event: IpcRendererEvent, ...args: any[]) => void
-  ): void
+  // function closePort(
+  //   callback: (event: IpcRendererEvent, ...args: any[]) => void
+  // ): void
   function getSettings(): Promise<object>
   function getFile(): Promise<object>
   function getFileContents(filePath: string): Promise<string>
