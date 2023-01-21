@@ -101,98 +101,98 @@ const ControlsManual = ({
       Map each button to xyz binary array 
       Arrays get multiplied by user-defined pitch value 
     */
-    <section>
-      <div className={`grid controls ${visibility ? "show-grid" : "hide"}`}>
-        <div className="panel">
-          <h3>xy</h3>
-          <div className="grid xy">
-            {xyControlsTop.map((xy) => (
-              <Button
-                key={xy.id}
-                icon={xy.icon}
-                onClick={(_e) => sendGcodeRelPos(xy.arr)}
-                onMouseDown={(_e) => {
-                  timer(() => {
-                    sendGcodeRelPos(xy.arr)
-                  })
-                }}
-                onMouseUp={(_e) => clearInterval(interval)}
-              />
-            ))}
+    <div className={visibility ? "controls" : "hide"}>
+      <div className="pane">
+        <h3>xy</h3>
+        <div className="xy">
+          {xyControlsTop.map((xy) => (
             <Button
-              icon={faHome}
-              onClick={(_e) => sendGcode("G28")}
-              onMouseDown={(_e) => {}}
-              onMouseUp={(_e) => {}}
+              key={xy.id}
+              icon={xy.icon}
+              onClick={(_e) => sendGcodeRelPos(xy.arr)}
+              onMouseDown={(_e) => {
+                timer(() => {
+                  sendGcodeRelPos(xy.arr)
+                })
+              }}
+              onMouseUp={(_e) => clearInterval(interval)}
             />
-            {xyControlsBtm.map((xy) => (
-              <Button
-                key={xy.id}
-                icon={xy.icon}
-                onClick={(_e) => sendGcodeRelPos(xy.arr)}
-                onMouseDown={(_e) => {
-                  timer(() => {
-                    sendGcodeRelPos(xy.arr)
-                  })
-                }}
-                onMouseUp={(_e) => clearInterval(interval)}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="panel">
-          <h3>z</h3>
-          <div className="grid">
-            {zControls.map((z) => (
-              <Button
-                key={z.id}
-                icon={z.icon}
-                onClick={(_e) => sendGcodeRelPos(z.arr)}
-                onMouseDown={(_e) => {
-                  timer(() => {
-                    sendGcodeRelPos(z.arr)
-                  })
-                }}
-                onMouseUp={(_e) => clearInterval(interval)}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="panel">
-          <h3>gcode</h3>
-          <form className="grid gcode">
-            <input type="text" placeholder="G1 X0 Y0 Z0" required />
+          ))}
+          <Button
+            icon={faHome}
+            onClick={(_e) => sendGcode("G28")}
+            onMouseDown={(_e) => {}}
+            onMouseUp={(_e) => {}}
+          />
+          {xyControlsBtm.map((xy) => (
             <Button
-              icon={faPaperPlane}
-              onClick={(_e) => {}}
-              onMouseDown={(_e) => {}}
-              onMouseUp={(_e) => {}}
+              key={xy.id}
+              icon={xy.icon}
+              onClick={(_e) => sendGcodeRelPos(xy.arr)}
+              onMouseDown={(_e) => {
+                timer(() => {
+                  sendGcodeRelPos(xy.arr)
+                })
+              }}
+              onMouseUp={(_e) => clearInterval(interval)}
             />
-          </form>
-        </div>
-        <div className="panel">
-          <h3>camera</h3>
-          <Button
-            icon={faPlay}
-            onClick={(_e) => {}}
-            onMouseDown={(_e) => {}}
-            onMouseUp={(_e) => {}}
-          />
-          <Button
-            icon={faStop}
-            onClick={(_e) => {}}
-            onMouseDown={(_e) => {}}
-            onMouseUp={(_e) => {}}
-          />
-          <Button
-            icon={faCamera}
-            onClick={(_e) => {}}
-            onMouseDown={(_e) => {}}
-            onMouseUp={(_e) => {}}
-          />
+          ))}
         </div>
       </div>
-    </section>
+      <div className="pane">
+        <h3>z</h3>
+        <div>
+          {zControls.map((z) => (
+            <Button
+              key={z.id}
+              icon={z.icon}
+              onClick={(_e) => sendGcodeRelPos(z.arr)}
+              onMouseDown={(_e) => {
+                timer(() => {
+                  sendGcodeRelPos(z.arr)
+                })
+              }}
+              onMouseUp={(_e) => clearInterval(interval)}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="pane">
+        <h3>gcode</h3>
+        <form>
+          <input type="text" placeholder="G1 X0 Y0 Z0" required />
+          <Button
+            icon={faPaperPlane}
+            onClick={(_e) => {
+              console.log(visibility)
+            }}
+            onMouseDown={(_e) => {}}
+            onMouseUp={(_e) => {}}
+          />
+        </form>
+      </div>
+      <div className="pane">
+        <h3>camera</h3>
+        <Button
+          icon={faPlay}
+          onClick={(_e) => {}}
+          onMouseDown={(_e) => {}}
+          onMouseUp={(_e) => {}}
+        />
+        <Button
+          icon={faStop}
+          onClick={(_e) => {}}
+          onMouseDown={(_e) => {}}
+          onMouseUp={(_e) => {}}
+        />
+        <Button
+          icon={faCamera}
+          onClick={(_e) => {}}
+          onMouseDown={(_e) => {}}
+          onMouseUp={(_e) => {}}
+        />
+      </div>
+    </div>
   )
 }
 

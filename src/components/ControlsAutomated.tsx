@@ -22,10 +22,8 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
   const [steps, setSteps] = useState<Step[]>(stepsPlaceholder)
 
   return (
-    <section
-      className={`controls sequence ${visibility ? "show-block" : "hide"}`}
-    >
-      <div className="sequence-btns">
+    <div className={visibility ? "sequence" : "hide"}>
+      <div>
         <Button
           icon={faFolderOpen}
           onClick={(_e) => {
@@ -75,12 +73,12 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
           onClick={(_e) => {}}
         />
       </div>
-      <ul className="sequence-steps">
+      <ul>
         {steps.map((step) => (
           <Step key={step.id} step={step} />
         ))}
       </ul>
-    </section>
+    </div>
   )
 }
 

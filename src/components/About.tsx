@@ -7,7 +7,7 @@ import PropTypes from "prop-types"
 
 const About = ({ visibility }: { visibility: boolean }) => {
   return (
-    <section className={`about ${visibility ? "show-block" : "hide"}`}>
+    <section className={visibility ? "about" : "hide"}>
       <p>
         <strong>Voroscope</strong> is an open-source microscopy platform. It
         consists of an open hardware design—based on the Voron V0 3D printer—as

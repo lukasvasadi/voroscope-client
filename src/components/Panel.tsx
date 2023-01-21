@@ -3,7 +3,7 @@ import ControlsManual from "./ControlsManual"
 import ControlsAutomated from "./ControlsAutomated"
 import { useState } from "react"
 
-const SideBar = ({
+const Panel = ({
   sendGcode,
   sendGcodeRelPos,
 }: {
@@ -13,18 +13,18 @@ const SideBar = ({
   // Control display visibility
   const [visManual, setVisManual] = useState(true)
   const [visAutomated, setVisAutomated] = useState(false)
-  const [focusManual, setFocusManual] = useState("toggle-focus")
+  const [focusManual, setFocusManual] = useState("focus")
   const [focusAutomated, setFocusAutomated] = useState("")
 
   return (
-    <section>
-      <div className="toggle">
+    <div className="control-panel">
+      <div>
         <button
           className={focusManual}
           onClick={() => {
             setVisManual(true)
             setVisAutomated(false)
-            setFocusManual("toggle-focus")
+            setFocusManual("focus")
             setFocusAutomated("")
           }}
         >
@@ -36,13 +36,13 @@ const SideBar = ({
             setVisManual(false)
             setVisAutomated(true)
             setFocusManual("")
-            setFocusAutomated("toggle-focus")
+            setFocusAutomated("focus")
           }}
         >
           Automatic
         </button>
       </div>
-      <div className="grid">
+      <div>
         <ControlsManual
           visibility={visManual}
           sendGcode={sendGcode}
@@ -50,13 +50,13 @@ const SideBar = ({
         />
         <ControlsAutomated visibility={visAutomated} />
       </div>
-    </section>
+    </div>
   )
 }
 
-SideBar.propTypes = {
+Panel.propTypes = {
   sendGcode: PropTypes.func.isRequired,
   sendGcodeRelPos: PropTypes.func.isRequired,
 }
 
-export default SideBar
+export default Panel

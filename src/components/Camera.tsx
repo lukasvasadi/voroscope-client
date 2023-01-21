@@ -6,35 +6,35 @@
 
 import PropTypes from "prop-types"
 import Button from "./Button"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCamera } from "@fortawesome/free-solid-svg-icons"
-import { ReactElement } from "react"
+import { useEffect, ReactElement } from "react"
 
-const Camera = ({ image }: { image: string }) => {
+const Camera = ({
+  image,
+  cameraConnect,
+}: {
+  image: string
+  cameraConnect: Function
+}) => {
   let imageElement: ReactElement
   if (image !== "") {
     imageElement = <img src={"data:image/jpeg;base64, " + image} alt="" />
   } else {
     imageElement = (
-      <div className="filler">
-        <Button
-          icon={faCamera}
-          onClick={(_) => {}}
-          onMouseDown={(_) => {}}
-          onMouseUp={(_) => {}}
-        />
-      </div>
+      <Button
+        icon={faCamera}
+        onClick={() => cameraConnect(true)}
+        onMouseDown={(_) => {}}
+        onMouseUp={(_) => {}}
+      />
     )
   }
-  return (
-    <section>
-      <div className="camera">{imageElement}</div>
-    </section>
-  )
+  return <div className="camera">{imageElement}</div>
 }
 
 Camera.propTypes = {
   image: PropTypes.string.isRequired,
+  cameraConnect: PropTypes.func,
 }
 
 export default Camera

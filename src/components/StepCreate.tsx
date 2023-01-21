@@ -13,7 +13,8 @@ for (var i = 0; i < 15; i++) {
   stepsPlaceholder.push({
     id: i,
     command: `X${i * 5 + 10} Y${i * 5 + 10} Z${i} F800`,
-    active: i ? false : true,
+    // active: i ? false : true,
+    active: false,
   })
 }
 
@@ -21,7 +22,7 @@ const StepCreate = ({ visibility }: { visibility: boolean }) => {
   const [steps, setSteps] = useState<Step[]>(stepsPlaceholder)
 
   return (
-    <section className={`step-create ${visibility ? "show-block" : "hide"}`}>
+    <section className={visibility ? "step-create" : "hide"}>
       <ul className="sequence-steps">
         {steps.map((step) => (
           <Step key={step.id} step={step} />
@@ -29,8 +30,10 @@ const StepCreate = ({ visibility }: { visibility: boolean }) => {
       </ul>
       <div>
         <form>
-          <label>Add step</label>
-          <input type="text" placeholder="X1 Y2 Z3 F800" />
+          <div>
+            <label>Add step</label>
+            <input type="text" placeholder="X1 Y2 Z3 F800" />
+          </div>
           <Button
             icon={faPlus}
             onClick={(_e) => {}}

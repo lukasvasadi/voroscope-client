@@ -1,22 +1,24 @@
 import PropTypes from "prop-types"
 import Camera from "./Camera"
-import SideBar from "./SideBar"
+import Panel from "./Panel"
 
 const Microscope = ({
   visibility,
+  cameraConnect,
   image,
   sendGcode,
   sendGcodeRelPos,
 }: {
   visibility: boolean
+  cameraConnect: Function
   image: string
   sendGcode: Function
   sendGcodeRelPos: Function
 }) => {
   return (
-    <section className={`grid microscope ${visibility ? "show-grid" : "hide"}`}>
-      <Camera image={image} />
-      <SideBar sendGcode={sendGcode} sendGcodeRelPos={sendGcodeRelPos} />
+    <section className={visibility ? "microscope" : "hide"}>
+      <Camera image={image} cameraConnect={cameraConnect} />
+      <Panel sendGcode={sendGcode} sendGcodeRelPos={sendGcodeRelPos} />
     </section>
   )
 }
@@ -24,6 +26,8 @@ const Microscope = ({
 Microscope.propTypes = {
   visibility: PropTypes.bool.isRequired,
   image: PropTypes.string,
+  sendGcode: PropTypes.func,
+  sendGcodeRelPos: PropTypes.func,
 }
 
 export default Microscope
