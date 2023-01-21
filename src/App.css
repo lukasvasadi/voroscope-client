@@ -2,6 +2,12 @@
   --background: #222;
   --foreground: #ddd;
   --border: #bdbdbd;
+  --input-height: 40px;
+  --button-form-height: 40px;
+  --button-form-width: 60px;
+  --button-font-size: 30px;
+  --step: slateblue;
+  --step-highlight: teal;
 }
 
 * {
@@ -44,33 +50,43 @@ header {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-bottom: var(--border) solid 5px;
-  align-content: center;
+  align-items: center;
+  justify-items: center;
 }
 
 main {
   width: 100%;
-  height: 751px;
-  margin: auto;
+  height: 751px; /* Height of window minus all static elements */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content horizontally */
+  align-content: center; /* Center content vertically */
 }
 
-form label {
-  margin-bottom: 5rem;
+button {
+  padding: 0;
+  width: fit-content;
+  height: fit-content;
+  font-size: var(--button-font-size);
+  background: var(--background);
+  border: none;
 }
 
-form button {
-  /* width: 80px; */
-  font-size: 20px;
-  border-radius: 5px;
-  background: var(--foreground);
-  color: var(--background);
+button svg {
+  color: var(--foreground);
 }
 
-form button:hover {
+button:hover {
   cursor: pointer;
 }
 
-form button .fa-icon {
-  color: var(--background);
+form fieldset {
+  border: none;
+}
+
+form label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
 }
 
 form input {
@@ -78,41 +94,24 @@ form input {
   border: none;
 }
 
+form button {
+  width: var(--button-form-width);
+  height: var(--button-form-height);
+  font-size: 20px;
+  border-radius: 5px;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+form button svg {
+  color: var(--background);
+}
+
 form input[type="text"] {
-  height: 40px;
+  height: var(--input-height);
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-}
-
-section {
-  height: 100%;
-}
-
-section div {
-  text-align: center;
-}
-
-section.about {
-  width: 50%;
-  height: 30%;
-  margin: 5rem auto auto auto;
-}
-
-section.about a {
-  color: blueviolet;
-}
-
-section.settings {
-  width: 40%;
-  height: 30%;
-  margin: 5rem auto auto auto;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-section.settings form input {
-  margin-top: 0.5rem;
 }
 
 h2,
@@ -121,125 +120,7 @@ h3 {
 }
 
 img {
-  width: 800px;
-}
-
-button {
-  border: none;
-  height: 40px;
-  font-size: 30px;
-  background: var(--background);
-}
-
-button span {
-  padding: 0.5rem;
-}
-
-button .fa-icon {
-  color: var(--foreground);
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  padding: 0.5rem;
   width: 100%;
-  height: 40px;
-  background-color: #bdbdbd;
-}
-
-footer p {
-  font-weight: 900;
-}
-
-.grid {
-  display: grid;
-  grid-auto-rows: auto;
-  grid-gap: 1rem;
-}
-
-.microscope {
-  grid-template-columns: 5fr 2fr;
-  justify-items: center;
-  align-content: center;
-}
-
-div.filler {
-  width: 800px;
-  height: 600px;
-  background-color: #2e2e2e;
-}
-
-div.filler button {
-  height: 100px;
-  margin: 250px auto;
-  background: #2e2e2e;
-}
-
-div.filler button .fa-icon {
-  height: 100px;
-  color: #444;
-}
-
-.controls {
-  max-width: 300px;
-  grid-template-columns: 2fr 1fr;
-}
-
-.panel {
-  border: 0.15rem solid var(--foreground);
-  border-radius: 5px;
-  padding: 1rem;
-}
-
-.panel:last-child button {
-  font-size: 20px;
-  border-radius: 5px;
-  width: 70px;
-  height: 40px;
-  margin: auto 0.5rem;
-  background: var(--foreground);
-}
-
-.panel:last-child button .fa-icon {
-  color: var(--background);
-}
-
-.panel:nth-child(3) {
-  grid-column: 1 / -1;
-}
-
-.panel:last-child {
-  grid-column: 1 / -1;
-}
-
-.xy {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.gcode {
-  grid-template-columns: 5fr 2fr;
-}
-
-.overlap .focus {
-  grid-area: 1 / 1 / 1 / 1;
-}
-
-.sequence-steps {
-  height: 460px;
-  overflow-y: scroll;
-}
-
-.sequence-btns {
-  margin-bottom: 1rem;
-}
-
-.sequence-btns button {
-  margin: auto 0.5rem;
 }
 
 ul {
@@ -251,9 +132,9 @@ li {
   height: 3rem;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
-  /* justify-content: center; */
-  background: slateblue;
+  background: var(--step);
   margin-bottom: 0.5rem;
 }
 
@@ -262,11 +143,7 @@ li:last-of-type {
 }
 
 li.highlight {
-  background-color: teal;
-}
-
-li span:first-child {
-  margin: auto;
+  background-color: var(--step-highlight);
 }
 
 li span:last-child {
@@ -275,117 +152,287 @@ li span:last-child {
   right: 1rem;
 }
 
-section.step-create > ul {
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #bdbdbd;
+}
+
+footer p {
+  font-weight: 900;
+}
+
+section {
+  height: fit-content;
+  margin: 0 auto;
+}
+
+section form {
+  width: 100%;
+}
+
+section.about {
+  width: 60%;
+}
+
+section.about a {
+  color: blueviolet;
+}
+
+section.settings {
+  width: 40%;
+}
+
+section.settings form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+section.settings fieldset:last-of-type {
+  grid-column: 1 / 3;
+}
+
+section.settings form:last-of-type div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+section.settings form fieldset:last-of-type input {
+  width: 85%;
+}
+
+section.settings form:last-of-type button {
+  margin-left: auto;
+}
+
+section.settings > div {
+  width: fit-content;
+  margin: auto;
+  display: flex;
+  gap: 3rem;
+}
+
+section.step-create {
   width: 600px;
+  margin: 0 auto;
+}
+
+section.step-create > ul {
   height: 550px;
   padding: 1rem;
-  margin: 2rem auto;
+  margin-bottom: 2rem;
   background: #333;
+  overflow-y: scroll;
+}
+
+section.step-create ul li:hover {
+  background: var(--step-highlight);
 }
 
 section.step-create ul li:hover span:last-child {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
 }
 
 section.step-create ul li button {
+  height: min-content;
+  width: fit-content;
+  font-size: 16px;
   background: none;
-  height: 1rem;
-  font-size: 18px;
 }
 
 section.step-create ul li button svg {
   height: 1rem;
 }
 
-section.step-create ul li button:first-child {
-  margin-right: 0.5rem;
-}
-
-section.step-create form {
-  width: 330px;
-  height: min-content;
-  /* margin: auto; */
-  text-align: left;
-  margin-right: 3rem;
-  align-self: last baseline;
-}
-
-section.step-create form input[type="text"] {
-  width: 250px;
-  margin: 10px 10px 0 0;
-}
-
-section.step-create form button {
-  font-size: 20px;
-  border-radius: 5px;
-  width: 70px;
-  height: 40px;
-}
-
-section.step-create div {
-  width: min-content;
-  height: min-content;
+section.step-create > div {
+  width: 90%;
+  height: fit-content;
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
-  align-content: last baseline;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+section.step-create > div > form {
+  width: 350px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+section.step-create > div > form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+section.step-create > div > form input[type="text"] {
+  width: 200px;
+}
+
+section.step-create > div > button {
+  font-size: 20px;
+  border-radius: 5px;
+  width: var(--button-form-width);
+  height: var(--button-form-height);
+  background: var(--foreground);
+  color: var(--background);
+}
+section.step-create > div > button:first-of-type {
+  margin-left: auto;
+}
+
+section.step-create > div > button svg {
+  color: var(--background);
+}
+
+section.microscope {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+div.camera {
+  width: 820px;
+  height: 620px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #2e2e2e;
+}
+
+div.camera button {
+  height: 100px;
+  background-color: inherit;
+}
+
+div.camera button svg {
+  height: 100px;
+  color: #444;
+}
+
+div.control-panel {
+  width: 300px;
+  text-align: center;
+}
+
+div.control-panel > div:first-of-type {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+div.control-panel > div:first-of-type button.focus {
+  color: var(--foreground);
+}
+
+div.controls {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0.5rem;
+}
+
+div.control-panel > div:first-of-type button {
+  font-size: 24px;
+  font-weight: 900;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+div.pane {
+  border: 2px solid var(--foreground);
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+div.pane div.xy {
+  width: min-content;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+  gap: 1rem;
   margin: auto;
 }
 
-section.step-create div > button {
-  width: 70px;
-  height: 40px;
+div.pane:nth-child(1) > div button,
+div.pane:nth-child(2) > div button {
+  height: 30px;
+}
+
+div.pane:nth-child(2) > div {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  margin: auto;
+  justify-items: center;
+}
+
+div.pane:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+div.pane:nth-child(3) > form {
+  display: flex;
+  flex-direction: row;
+}
+
+div.pane:nth-child(3) > form input {
+  width: 70%;
+}
+
+div.pane:nth-child(3) > form button {
+  margin-left: auto;
+}
+
+div.pane:last-child {
+  grid-column: 1 / -1;
+}
+
+div.pane:last-child button {
   font-size: 20px;
   border-radius: 5px;
+  width: 60px;
+  height: 40px;
+  margin: auto 0.5rem;
   background: var(--foreground);
-  color: var(--background);
-  align-self: last baseline;
 }
 
-section.step-create div > button .fa-icon {
+div.pane:last-child button svg {
   color: var(--background);
 }
 
-section.step-create div > button:first-of-type {
-  margin-right: 1rem;
+div.sequence ul {
+  height: 460px;
+  width: 90%;
+  padding: 1rem;
+  background: #333;
+  overflow-y: scroll;
 }
 
-.show-grid {
-  display: grid;
+div.sequence > div {
+  margin-bottom: 1rem;
 }
 
-.show-block {
-  display: inline-block;
-}
-
-.show-grid {
-  display: grid;
+div.sequence > div button {
+  margin: auto 0.5rem;
 }
 
 .hide {
   display: none;
-}
-
-.toggle {
-  margin-bottom: 0.5rem;
-}
-
-.toggle button {
-  margin: 0 0.5rem;
-  font-size: 24px;
-  font-weight: 900;
-  color: #555;
-}
-
-.toggle button:hover {
-  cursor: pointer;
-}
-
-.toggle .toggle-focus {
-  color: var(--foreground);
-}
-
-@media screen and (min-width: 960px) {
-  .controls {
-    grid-template-columns: 2fr 1fr;
-  }
 }
