@@ -1,6 +1,6 @@
 {
   "name": "voroscope-client",
-  "productName": "voroscope-client",
+  "productName": "Voroscope",
   "version": "1.0.0",
   "description": "Control software for Voroscope microscopy platform",
   "main": ".webpack/main",
