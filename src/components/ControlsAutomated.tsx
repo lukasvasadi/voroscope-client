@@ -15,6 +15,7 @@ for (var i = 0; i < 15; i++) {
     id: i,
     command: `X${i * 5 + 10} Y${i * 5 + 10} Z${i} F800`,
     active: i ? false : true,
+    draggable: false,
   })
 }
 
@@ -41,6 +42,7 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
                           id: i,
                           command: gcodeList[i].substring(3),
                           active: false,
+                          draggable: true,
                         })
                       }
                     }
