@@ -1,11 +1,17 @@
+/**
+ * Toolbar
+ * Navigation menu to switch between window options
+ * Uses React state to toggle window visibility
+ */
+
 import PropTypes from "prop-types"
+import Button from "./Button"
 import {
   faCog,
   faFileCode,
   faMicroscope,
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons"
-import Button from "./Button"
 
 interface PropsDefinition {
   setVisMicroscope(visibility: boolean): void
@@ -25,8 +31,6 @@ const Toolbar = (props: PropsDefinition) => {
           props.setVisSettings(false)
           props.setVisAbout(false)
         }}
-        onMouseDown={(_e) => {}}
-        onMouseUp={(_e) => {}}
       />
       <Button
         icon={faFileCode}
@@ -36,8 +40,6 @@ const Toolbar = (props: PropsDefinition) => {
           props.setVisSettings(false)
           props.setVisAbout(false)
         }}
-        onMouseDown={(_e) => {}}
-        onMouseUp={(_e) => {}}
       />
       <Button
         icon={faCog}
@@ -47,8 +49,6 @@ const Toolbar = (props: PropsDefinition) => {
           props.setVisSettings(true)
           props.setVisAbout(false)
         }}
-        onMouseDown={(_e) => {}}
-        onMouseUp={(_e) => {}}
       />
       <Button
         icon={faQuestionCircle}
@@ -58,15 +58,13 @@ const Toolbar = (props: PropsDefinition) => {
           props.setVisSettings(false)
           props.setVisAbout(true)
         }}
-        onMouseDown={(_e) => {}}
-        onMouseUp={(_e) => {}}
       />
     </header>
   )
 }
 
 Toolbar.propTypes = {
-  setVisibility: PropTypes.func,
+  props: PropTypes.object,
 }
 
 export default Toolbar

@@ -21,7 +21,7 @@ const Button = ({
   onMouseUp: MouseEventHandler
 }) => {
   return (
-    // MouseEventHandler is a function with a single parameter (event)
+    // MouseEventHandler is a function with a single argument (event)
     <button
       type="button" // Without specifying type, form buttons will behave as "submit"
       onClick={onClick}
@@ -31,6 +31,12 @@ const Button = ({
       <FontAwesomeIcon icon={icon} className="fa-icon" />
     </button>
   )
+}
+
+// By default, mousedown and mouseup have no function
+Button.defaultProps = {
+  onMouseDown: () => {},
+  onMouseUp: () => {},
 }
 
 Button.propTypes = {

@@ -15,6 +15,7 @@ for (var i = 0; i < 15; i++) {
     command: `X${i * 5 + 10} Y${i * 5 + 10} Z${i} F800`,
     // active: i ? false : true,
     active: false,
+    draggable: true,
   })
 }
 

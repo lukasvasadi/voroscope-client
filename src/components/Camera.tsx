@@ -7,14 +7,14 @@
 import PropTypes from "prop-types"
 import Button from "./Button"
 import { faCamera } from "@fortawesome/free-solid-svg-icons"
-import { useEffect, ReactElement } from "react"
+import { ReactElement } from "react"
 
 const Camera = ({
   image,
-  cameraConnect,
+  connectCamera,
 }: {
   image: string
-  cameraConnect: Function
+  connectCamera: Function
 }) => {
   let imageElement: ReactElement
   if (image !== "") {
@@ -23,9 +23,9 @@ const Camera = ({
     imageElement = (
       <Button
         icon={faCamera}
-        onClick={() => cameraConnect(true)}
-        onMouseDown={(_) => {}}
-        onMouseUp={(_) => {}}
+        onClick={() => connectCamera(true)}
+        onMouseDown={() => {}}
+        onMouseUp={() => {}}
       />
     )
   }
@@ -34,7 +34,7 @@ const Camera = ({
 
 Camera.propTypes = {
   image: PropTypes.string.isRequired,
-  cameraConnect: PropTypes.func,
+  connectCamera: PropTypes.func,
 }
 
 export default Camera
