@@ -19,8 +19,8 @@ if (require("electron-squirrel-startup")) {
 
 class Store {
   path: fs.PathOrFileDescriptor
-  data: object
-  constructor(config: { fname: string; data: object }) {
+  data: Config
+  constructor(config: { fname: string; data: Config }) {
     const userHomePath = app.getPath("home")
 
     // this.path = path.join(userDataPath, config.fname + ".json")
@@ -32,13 +32,13 @@ class Store {
     return this.data
   }
 
-  set(data: object) {
+  set(data: Config) {
     this.data = data
     fs.writeFileSync(this.path, JSON.stringify(this.data))
   }
 }
 
-function parseDataFile(path: fs.PathOrFileDescriptor, data: object) {
+function parseDataFile(path: fs.PathOrFileDescriptor, data: Config) {
   try {
     /**
      * fs.readFileSync returns a Buffer or string
@@ -103,17 +103,24 @@ async function registerListeners() {
 
   ipcMain.on("set-config", (_, config) => store.set(config))
 
-  ipcMain.handle("get-config", async (_) => {
+  ipcMain.handle("get-config", async () => {
     return store.get()
   })
 
-  ipcMain.handle("get-default", async (_) => {
+  ipcMain.handle("get-default", async () => {
     return defaultConfig
   })
 
-  ipcMain.handle("get-file", async (_) => {
+  ipcMain.handle("get-save-dir", async (_, defaultPath) => {
+    return dialog.showSaveDialog(mainWindow, {
+      defaultPath: defaultPath,
+      properties: ["createDirectory"],
+    })
+  })
+
+  ipcMain.handle("get-file", async (_, openDir: boolean = false) => {
     return dialog.showOpenDialog(mainWindow, {
-      properties: ["openFile"],
+      properties: openDir ? ["openDirectory"] : ["openFile"],
     })
   })
 

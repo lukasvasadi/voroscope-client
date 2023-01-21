@@ -23,17 +23,19 @@ declare global {
     id: number
     command: string
     active: boolean
+    draggable: boolean
   }
 }
 
 declare namespace api {
   function setConfig(config: Config): void
-  function getConfig(): Promise<object>
+  function getConfig(): Promise<Config>
   function getDefault(): Promise<Config>
   // function closePort(
   //   callback: (event: IpcRendererEvent, ...args: any[]) => void
   // ): void
   function getSettings(): Promise<object>
-  function getFile(): Promise<object>
+  function getSaveDir(defaultPath: string): Promise<ElectronDialogResult>
+  function getFile(openDir: boolean = false): Promise<ElectronDialogResult>
   function getFileContents(filePath: string): Promise<string>
 }

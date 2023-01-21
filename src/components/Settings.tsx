@@ -27,6 +27,9 @@ const Settings = ({
     const [resolution, setResolution] = useState<number[]>(settings.resolution)
     const [pitchXY, setPitchXY] = useState<number>(settings.pitchXY)
     const [pitchZ, setPitchZ] = useState<number>(settings.pitchZ)
+    const [imageSavePath, setImageSavePath] = useState<string>(
+      settings.imageSavePath
+    )
 
     return (
       <section className={visibility ? "settings" : "hide"}>
@@ -38,7 +41,7 @@ const Settings = ({
               id="endpoint"
               name="endpoint"
               onChange={(e) => setEndpoint(e.target.value)}
-              defaultValue={settings.endpoint}
+              defaultValue={endpoint}
             />
           </fieldset>
           <fieldset>
@@ -47,6 +50,7 @@ const Settings = ({
               type="text"
               id="resolution"
               name="resolution"
+              readOnly={true}
               onChange={(e) => {
                 var arr = e.target.value.split(",")
                 setResolution(
@@ -55,7 +59,7 @@ const Settings = ({
                   })
                 )
               }}
-              defaultValue={settings.resolution.toString()}
+              defaultValue={resolution.toString().replace(",", ", ")}
             />
           </fieldset>
           <fieldset>
@@ -65,7 +69,7 @@ const Settings = ({
               id="pitch-xy"
               name="pitch-xy"
               onChange={(e) => setPitchXY(parseFloat(e.target.value))}
-              defaultValue={settings.pitchXY}
+              defaultValue={pitchXY}
             />
           </fieldset>
           <fieldset>
@@ -75,7 +79,7 @@ const Settings = ({
               id="pitch-z"
               name="pitch-z"
               onChange={(e) => setPitchZ(parseFloat(e.target.value))}
-              defaultValue={settings.pitchZ}
+              defaultValue={pitchZ}
             />
           </fieldset>
           <fieldset>
@@ -85,15 +89,24 @@ const Settings = ({
                 type="text"
                 id="image-save-path"
                 name="image-save-path"
-                defaultValue={settings.imageSavePath}
+                onChange={(e) => setImageSavePath(e.target.value)}
+                defaultValue={imageSavePath}
               />
               <Button
                 icon={faFolderOpen}
-                onClick={(_e) => {
-                  console.log("homepath")
+                onClick={() => {
+                  window.Main.getFile(true).then(
+                    (result: ElectronDialogResult) => {
+                      if (!result.canceled) {
+                        const input = document.querySelector(
+                          "input[name='image-save-path']"
+                        ) as HTMLInputElement
+                        input.value = result.filePaths[0]
+                        setImageSavePath(result.filePaths[0])
+                      }
+                    }
+                  )
                 }}
-                onMouseDown={(_e) => {}}
-                onMouseUp={(_e) => {}}
               />
             </div>
           </fieldset>
@@ -101,24 +114,42 @@ const Settings = ({
         <div>
           <Button
             icon={faFloppyDisk}
-            onClick={(_e) => {
+            onClick={() => {
               updateSettings({
                 endpoint: endpoint,
                 resolution: resolution,
                 pitchXY: pitchXY,
                 pitchZ: pitchZ,
+                imageSavePath: imageSavePath,
               })
+              const configSaveNotification = new Notification(
+                "Hardware configuration updated 🤯"
+              )
+              setTimeout(() => configSaveNotification.close(), 3000)
             }}
-            onMouseDown={(_e) => {}}
-            onMouseUp={(_e) => {}}
           />
           <Button
             icon={faRotateRight}
-            onClick={(_e) => {
-              window.Main.getDefault().then((config) => console.log(config))
+            onClick={() => {
+              window.Main.getConfig().then((config) => {
+                console.log(config)
+                const inputs = document.querySelectorAll(
+                  "section.settings input"
+                ) as NodeListOf<HTMLInputElement>
+                console.log(config)
+                inputs[0].value = config.endpoint
+                inputs[1].value = config.resolution
+                  .toString()
+                  .replace(",", ", ")
+                inputs[2].value = config.pitchXY.toString()
+                inputs[3].value = config.pitchZ.toString()
+                inputs[4].value = config.imageSavePath
+              })
+              const configResetNotification = new Notification(
+                "Hardware configuration restored from memory 👀"
+              )
+              setTimeout(() => configResetNotification.close(), 3000)
             }}
-            onMouseDown={(_e) => {}}
-            onMouseUp={(_e) => {}}
           />
         </div>
       </section>
