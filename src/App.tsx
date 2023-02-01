@@ -46,19 +46,23 @@ export const App: React.FC = () => {
   }
 
   // Pass gcode to raspi node
-  const sendGcode = (command: string) => {
-    if (command.includes("G1")) {
-      // Assume user wants to move to exact coordinate location
+  const sendGcode = (command: string, rel: boolean = false) => {
+    if (rel) {
+      // Relative positioning
+      sendMessage({ gcode: command })
+    } else {
+      // Absolute positioning
       sendMessage({ gcode: "G90" }) // Switch to absolute positioning
       sendMessage({ gcode: command })
       sendMessage({ gcode: "G91" }) // Switch to relative positioning
-    } else sendMessage({ gcode: command })
+    }
   }
 
   // Send gcode from control panel buttons
-  const sendGcodeRelPos = (map: number[]) => {
-    sendGcode("G1 X0")
-    console.log(map.map((val) => val * config.pitchXY))
+  const sendGcodeRelPos = (coor: number[]) => {
+    coor = coor.map((val) => val * config.pitchXY)
+    sendGcode(`G1 X${coor[0]} Y${coor[1]} Z${coor[2]}`, true)
+    // console.log(coor.map((val) => val * config.pitchXY))
   }
 
   // Listen for state changes
@@ -91,13 +95,13 @@ export const App: React.FC = () => {
           if (typeof base64String == "string") {
             setImage(base64String.substring(base64String.indexOf(",") + 1))
             images += 1
-            console.log(images)
+            // console.log(images)
           } else
             console.log("Received imaging data does not match expected format")
         }
       } catch (TypeError) {
-        console.log(message.data)
-        var data = message.data
+        // console.log(message.data)
+        var data = JSON.parse(message.data)
         // if ("location" in data) location = data.location
       }
     }
