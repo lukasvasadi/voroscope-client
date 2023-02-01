@@ -17,7 +17,7 @@ const Microscope = ({
 }) => {
   return (
     <section className={visibility ? "microscope" : "hide"}>
-      <Camera image={image} cameraConnect={cameraConnect} />
+      <Camera image={image} connectCamera={cameraConnect} />
       <Panel sendGcode={sendGcode} sendGcodeRelPos={sendGcodeRelPos} />
     </section>
   )
