@@ -27,53 +27,37 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
       <div>
         <Button
           icon={faFolderOpen}
-          onClick={(_e) => {
-            window.Main.getFile().then((result: ElectronDialogResult) => {
-              // Proceed if user selects file
+          onClick={async () => {
+            try {
+              let result: ElectronDialogResult = await window.Main.getFile()
               if (!result.canceled) {
-                window.Main.getFileContents(result.filePaths[0]).then(
-                  (contents: string) => {
-                    var gcodeList: string[] = contents.split("\n") // Split string into gcode array
-                    var stepList: Step[] = [] // Initialize empty step list
-                    for (var i = 0; i < gcodeList.length; i++) {
-                      // Populate step list if gcode is not an empty string
-                      if (gcodeList[i]) {
-                        stepList.push({
-                          id: i,
-                          command: gcodeList[i].substring(3),
-                          active: false,
-                          draggable: true,
-                        })
-                      }
-                    }
-                    console.log(stepList)
-                    setSteps(stepList)
-                  }
+                let contents: string = await window.Main.getFileContents(
+                  result.filePaths[0]
                 )
+                var gcodeList: string[] = contents.split("\n") // Split string into gcode array
+                var stepList: Step[] = [] // Initialize empty step list
+                for (var i = 0; i < gcodeList.length; i++) {
+                  // Populate step list if gcode is not an empty string
+                  if (gcodeList[i]) {
+                    stepList.push({
+                      id: i,
+                      command: gcodeList[i].substring(3),
+                      active: false,
+                      draggable: true,
+                    })
+                  }
+                }
+                console.log(stepList)
+                setSteps(stepList)
               }
-            })
+            } catch (err) {
+              console.log(`ERROR: ${err}`)
+            }
           }}
-          onMouseDown={(_e) => {}}
-          onMouseUp={(_e) => {}}
         />
-        <Button
-          icon={faPlay}
-          onMouseDown={(_e) => {}}
-          onMouseUp={(_e) => {}}
-          onClick={(_e) => {}}
-        />
-        <Button
-          icon={faPause}
-          onMouseDown={(_e) => {}}
-          onMouseUp={(_e) => {}}
-          onClick={(_e) => {}}
-        />
-        <Button
-          icon={faStop}
-          onMouseDown={(_e) => {}}
-          onMouseUp={(_e) => {}}
-          onClick={(_e) => {}}
-        />
+        <Button icon={faPlay} onClick={(_e) => {}} />
+        <Button icon={faPause} onClick={(_e) => {}} />
+        <Button icon={faStop} onClick={(_e) => {}} />
       </div>
       <ul>
         {steps.map((step) => (

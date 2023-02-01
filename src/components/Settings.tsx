@@ -68,7 +68,12 @@ const Settings = ({
               type="text"
               id="pitch-xy"
               name="pitch-xy"
-              onChange={(e) => setPitchXY(parseFloat(e.target.value))}
+              onChange={(e) => {
+                let val: number = parseFloat(e.target.value)
+                if (!Number.isNaN(val)) {
+                  setPitchXY(val)
+                }
+              }}
               defaultValue={pitchXY}
             />
           </fieldset>
@@ -78,7 +83,12 @@ const Settings = ({
               type="text"
               id="pitch-z"
               name="pitch-z"
-              onChange={(e) => setPitchZ(parseFloat(e.target.value))}
+              onChange={(e) => {
+                let val: number = parseFloat(e.target.value)
+                if (!Number.isNaN(val)) {
+                  setPitchZ(val)
+                }
+              }}
               defaultValue={pitchZ}
             />
           </fieldset>
@@ -94,18 +104,20 @@ const Settings = ({
               />
               <Button
                 icon={faFolderOpen}
-                onClick={() => {
-                  window.Main.getFile(true).then(
-                    (result: ElectronDialogResult) => {
-                      if (!result.canceled) {
-                        const input = document.querySelector(
-                          "input[name='image-save-path']"
-                        ) as HTMLInputElement
-                        input.value = result.filePaths[0]
-                        setImageSavePath(result.filePaths[0])
-                      }
+                onClick={async () => {
+                  try {
+                    let result: ElectronDialogResult =
+                      await window.Main.getFile(true)
+                    if (!result.canceled) {
+                      const input = document.querySelector(
+                        "input[name='image-save-path']"
+                      ) as HTMLInputElement
+                      input.value = result.filePaths[0]
+                      setImageSavePath(result.filePaths[0])
                     }
-                  )
+                  } catch (err) {
+                    console.log(`ERROR: ${err}`)
+                  }
                 }}
               />
             </div>
@@ -130,8 +142,9 @@ const Settings = ({
           />
           <Button
             icon={faRotateRight}
-            onClick={() => {
-              window.Main.getConfig().then((config) => {
+            onClick={async () => {
+              try {
+                let config: Config = await window.Main.getConfig()
                 console.log(config)
                 const inputs = document.querySelectorAll(
                   "section.settings input"
@@ -144,7 +157,10 @@ const Settings = ({
                 inputs[2].value = config.pitchXY.toString()
                 inputs[3].value = config.pitchZ.toString()
                 inputs[4].value = config.imageSavePath
-              })
+              } catch (err) {
+                console.log(`ERROR: ${err}`)
+              }
+
               const configResetNotification = new Notification(
                 "Hardware configuration restored from memory 👀"
               )
