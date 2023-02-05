@@ -9,12 +9,12 @@ import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
 
 const Step = ({
   step,
-  stepAdd,
-  stepDelete,
+  addStep,
+  deleteStep,
 }: {
   step: Step
-  stepAdd: Function
-  stepDelete: Function
+  addStep: Function
+  deleteStep: Function
 }) => {
   return (
     <li
@@ -23,23 +23,23 @@ const Step = ({
     >
       <span>{step.command}</span>
       <span>
-        <Button icon={faPlus} onClick={() => stepAdd()} />
-        <Button icon={faTrash} onClick={() => stepDelete()} />
+        <Button icon={faPlus} onClick={(e) => addStep(e)} />
+        <Button icon={faTrash} onClick={(e) => deleteStep(e)} />
       </span>
     </li>
   )
 }
 
-// By default, stepAdd and stepDelete are void
+// Default event handlers
 Step.defaultProps = {
-  stepAdd: () => {},
-  stepDelete: () => {},
+  addStep: (_e: MouseEvent) => {},
+  deleteStep: (_e: MouseEvent) => {},
 }
 
 Step.propTypes = {
-  step: PropTypes.object,
-  stepAdd: PropTypes.func,
-  stepDelete: PropTypes.func,
+  step: PropTypes.object.isRequired,
+  addStep: PropTypes.func,
+  deleteStep: PropTypes.func,
 }
 
 export default Step
