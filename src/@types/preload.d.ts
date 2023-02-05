@@ -1,3 +1,4 @@
+import { SaveDialogReturnValue, OpenDialogReturnValue } from "electron"
 import { api } from "../../electron/preload"
 
 declare global {
@@ -12,11 +13,6 @@ declare global {
     pitchXY: number
     pitchZ: number
     imageSavePath: string
-  }
-
-  interface ElectronDialogResult {
-    canceled: boolean
-    filePaths: string[]
   }
 
   interface Step {
@@ -34,8 +30,8 @@ declare namespace api {
   // function closePort(
   //   callback: (event: IpcRendererEvent, ...args: any[]) => void
   // ): void
-  function getSettings(): Promise<object>
-  function getSaveDir(defaultPath: string): Promise<ElectronDialogResult>
-  function getFile(openDir: boolean = false): Promise<ElectronDialogResult>
+  function getSavePath(): Promise<SaveDialogReturnValue>
+  function getFile(openDir: boolean = false): Promise<OpenDialogReturnValue>
   function getFileContents(filePath: string): Promise<string>
+  function saveScript(path: string, content: string): void
 }

@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
+import { contextBridge, ipcRenderer } from "electron"
 
 export const api = {
   /**
@@ -10,18 +10,17 @@ export const api = {
    */
 
   sendMessage: (message: string) => ipcRenderer.send("message", message),
-  setConfig: (config: Config) => ipcRenderer.send("set-config", config),
-  getConfig: () => ipcRenderer.invoke("get-config"),
-  getSaveDir: (defaultPath: string) =>
-    ipcRenderer.invoke("get-save-dir", defaultPath),
-  getDefault: () => ipcRenderer.invoke("get-default"),
-  // closePort: (callback: (event: IpcRendererEvent, ...args: any[]) => void) =>
-  //   ipcRenderer.on("close-port", callback),
 
+  getConfig: () => ipcRenderer.invoke("get-config"),
+  setConfig: (config: Config) => ipcRenderer.send("set-config", config),
+  getDefault: () => ipcRenderer.invoke("get-default"),
   getFile: (openFile: boolean = false) =>
     ipcRenderer.invoke("get-file", openFile),
   getFileContents: (filePath: string) =>
     ipcRenderer.invoke("get-file-contents", filePath),
+  getSavePath: () => ipcRenderer.invoke("get-save-path"),
+  saveScript: (path: string, content: string) =>
+    ipcRenderer.invoke("save-script", path, content),
 
   /**
    * Provide an easier way to listen to events
