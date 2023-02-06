@@ -273,7 +273,7 @@ section.step-create > div {
 }
 
 section.step-create > div > form {
-  width: 350px;
+  width: 310px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -286,7 +286,7 @@ section.step-create > div > form > div {
 }
 
 section.step-create > div > form input[type="text"] {
-  width: 200px;
+  width: 180px;
 }
 
 section.step-create > div > button {
