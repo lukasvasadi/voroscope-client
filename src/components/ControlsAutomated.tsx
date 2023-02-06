@@ -29,7 +29,7 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
           icon={faFolderOpen}
           onClick={async () => {
             try {
-              let result: ElectronDialogResult = await window.Main.getFile()
+              let result = await window.Main.getFile()
               if (!result.canceled) {
                 let contents: string = await window.Main.getFileContents(
                   result.filePaths[0]
@@ -55,9 +55,9 @@ const ControlsAutomated = ({ visibility }: { visibility: boolean }) => {
             }
           }}
         />
-        <Button icon={faPlay} onClick={(_e) => {}} />
-        <Button icon={faPause} onClick={(_e) => {}} />
-        <Button icon={faStop} onClick={(_e) => {}} />
+        <Button icon={faPlay} onClick={() => {}} />
+        <Button icon={faPause} onClick={() => {}} />
+        <Button icon={faStop} onClick={() => {}} />
       </div>
       <ul>
         {steps.map((step) => (

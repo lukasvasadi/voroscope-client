@@ -163,34 +163,17 @@ const ControlsManual = ({
           <input type="text" placeholder="G1 X0 Y0 Z0" required />
           <Button
             icon={faPaperPlane}
-            onClick={(_e) => {
+            onClick={() => {
               console.log(visibility)
             }}
-            onMouseDown={(_e) => {}}
-            onMouseUp={(_e) => {}}
           />
         </form>
       </div>
       <div className="pane">
         <h3>camera</h3>
-        <Button
-          icon={faPlay}
-          onClick={(_e) => {}}
-          onMouseDown={(_e) => {}}
-          onMouseUp={(_e) => {}}
-        />
-        <Button
-          icon={faStop}
-          onClick={(_e) => {}}
-          onMouseDown={(_e) => {}}
-          onMouseUp={(_e) => {}}
-        />
-        <Button
-          icon={faCamera}
-          onClick={(_e) => {}}
-          onMouseDown={(_e) => {}}
-          onMouseUp={(_e) => {}}
-        />
+        <Button icon={faPlay} onClick={() => {}} />
+        <Button icon={faStop} onClick={() => {}} />
+        <Button icon={faCamera} onClick={() => {}} />
       </div>
     </div>
   )
