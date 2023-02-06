@@ -21,12 +21,7 @@ const Camera = ({
     imageElement = <img src={"data:image/jpeg;base64, " + image} alt="" />
   } else {
     imageElement = (
-      <Button
-        icon={faCamera}
-        onClick={() => connectCamera(true)}
-        onMouseDown={() => {}}
-        onMouseUp={() => {}}
-      />
+      <Button icon={faCamera} onClick={() => connectCamera(true)} />
     )
   }
   return <div className="camera">{imageElement}</div>
@@ -34,7 +29,7 @@ const Camera = ({
 
 Camera.propTypes = {
   image: PropTypes.string.isRequired,
-  connectCamera: PropTypes.func,
+  connectCamera: PropTypes.func.isRequired,
 }
 
 export default Camera
