@@ -3,7 +3,7 @@ import Status from "./components/Status"
 import About from "./components/About"
 import Settings from "./components/Settings"
 import Microscope from "./components/Microscope"
-import StepCreate from "./components/StepCreate"
+import Script from "./components/Script"
 import { useEffect, useState } from "react"
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import "./App.css"
@@ -16,13 +16,13 @@ export const App: React.FC = () => {
   const [socket, setSocket] = useState<W3CWebSocket | null>(null)
   const [image, setImage] = useState<string>("")
 
-  const [visMicroscope, setVisMicroscope] = useState<boolean>(true)
-  const [visStepCreate, setVisStepCreate] = useState<boolean>(false)
+  const [visMicroscope, setVisMicroscope] = useState<boolean>(false)
+  const [visStepCreate, setVisStepCreate] = useState<boolean>(true)
   const [visSettings, setVisSettings] = useState<boolean>(false)
   const [visAbout, setVisAbout] = useState<boolean>(false)
 
   const [config, setConfig] = useState<Config | null>(null)
-  const [connect, setConnect] = useState<boolean>(false)
+  const [connect, setCamera] = useState<boolean>(false)
 
   useEffect(() => {
     if (!socket && config) {
@@ -83,7 +83,7 @@ export const App: React.FC = () => {
     }
 
     socket.onclose = () => {
-      setConnect(false)
+      setCamera(false)
       console.log("Disconnected")
     }
 
@@ -123,12 +123,12 @@ export const App: React.FC = () => {
       <main>
         <Microscope
           visibility={visMicroscope}
-          cameraConnect={setConnect}
+          connectCamera={setCamera}
           image={image}
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}
         />
-        <StepCreate visibility={visStepCreate} />
+        <Script visibility={visStepCreate} />
         <Settings
           visibility={visSettings}
           settings={config}
