@@ -22,13 +22,12 @@ export const App: React.FC = () => {
   const [visAbout, setVisAbout] = useState<boolean>(false)
 
   const [config, setConfig] = useState<Config | null>(null)
-  const [connect, setCamera] = useState<boolean>(false)
+  const [connect, setConnect] = useState<boolean>(false)
 
   useEffect(() => {
     if (!socket && config) {
       try {
         setSocket(new W3CWebSocket(config.endpoint))
-        console.log("Camera connected!")
       } catch (err) {
         console.log(err)
       }
@@ -69,10 +68,6 @@ export const App: React.FC = () => {
   useEffect(() => console.log(config), [config])
 
   if (socket) {
-    // window.Main.closePort((_) => {
-    //   socket.close()
-    // })
-
     socket.onopen = () => {
       console.log("Connected")
 
@@ -83,7 +78,7 @@ export const App: React.FC = () => {
     }
 
     socket.onclose = () => {
-      setCamera(false)
+      setConnect(false)
       console.log("Disconnected")
     }
 
@@ -123,8 +118,8 @@ export const App: React.FC = () => {
       <main>
         <Microscope
           visibility={visMicroscope}
-          connectCamera={setCamera}
           image={image}
+          connect={setConnect}
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}
         />

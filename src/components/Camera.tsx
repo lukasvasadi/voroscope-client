@@ -9,27 +9,17 @@ import Button from "./Button"
 import { faCamera } from "@fortawesome/free-solid-svg-icons"
 import { ReactElement } from "react"
 
-const Camera = ({
-  image,
-  connectCamera,
-}: {
-  image: string
-  connectCamera: Function
-}) => {
+const Camera = ({ image, connect }: { image: string; connect: Function }) => {
   let imageElement: ReactElement
-  if (image !== "") {
+  if (image)
     imageElement = <img src={"data:image/jpeg;base64, " + image} alt="" />
-  } else {
-    imageElement = (
-      <Button icon={faCamera} onClick={() => connectCamera(true)} />
-    )
-  }
+  else imageElement = <Button icon={faCamera} onClick={() => connect(true)} />
   return <div className="camera">{imageElement}</div>
 }
 
 Camera.propTypes = {
   image: PropTypes.string.isRequired,
-  connectCamera: PropTypes.func.isRequired,
+  connect: PropTypes.func.isRequired,
 }
 
 export default Camera

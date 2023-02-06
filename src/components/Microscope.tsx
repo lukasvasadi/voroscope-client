@@ -5,19 +5,19 @@ import Panel from "./Panel"
 const Microscope = ({
   visibility,
   image,
-  connectCamera,
+  connect,
   sendGcode,
   sendGcodeRelPos,
 }: {
   visibility: boolean
   image: string
-  connectCamera: Function
+  connect: Function
   sendGcode: Function
   sendGcodeRelPos: Function
 }) => {
   return (
     <section className={visibility ? "microscope" : "hide"}>
-      <Camera image={image} connectCamera={connectCamera} />
+      <Camera image={image} connect={connect} />
       <Panel sendGcode={sendGcode} sendGcodeRelPos={sendGcodeRelPos} />
     </section>
   )
@@ -26,7 +26,7 @@ const Microscope = ({
 Microscope.propTypes = {
   visibility: PropTypes.bool.isRequired,
   image: PropTypes.string.isRequired,
-  connectCamera: PropTypes.func.isRequired,
+  connect: PropTypes.func.isRequired,
   sendGcode: PropTypes.func,
   sendGcodeRelPos: PropTypes.func,
 }
