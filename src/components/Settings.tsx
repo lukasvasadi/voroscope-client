@@ -106,7 +106,7 @@ const Settings = ({
                 icon={faFolderOpen}
                 onClick={async () => {
                   try {
-                    let result: ElectronDialogResult =
+                    let result: Electron.OpenDialogReturnValue =
                       await window.Main.getFile(true)
                     if (!result.canceled) {
                       const input = document.querySelector(
