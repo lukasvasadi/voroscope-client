@@ -16,14 +16,14 @@ Initial setup of this application follows this [Electron-React tutorial](https:/
 
 This project requires the websocket package and TypeScript dev dependencies:
 
-```bash
+```zsh
 npm i --save websocket
 npm i --save-dev @types/websocket
 ```
 
 Also the standard [FontAwesome React components](https://fontawesome.com/v5/docs/web/use-with/react):
 
-```bash
+```zsh
 npm i --save @fortawesome/fontawesome-svg-core
 npm i --save @fortawesome/free-solid-svg-icons
 npm i --save @fortawesome/react-fontawesome
@@ -33,20 +33,30 @@ npm i --save @fortawesome/react-fontawesome
 
 To run this application on a new machine, first clone the repository:
 
-```bash
+```zsh
 git clone git@github.com:lukasvasadi/voroscope-client-typescript.git
 ```
 
 Then install the package dependencies:
 
-```bash
+```zsh
 npm i
 ```
 
 And finally, run the start command to launch the application:
 
-```bash
+```zsh
 npm run start
+```
+
+## Converting png image files to icns (macOS)
+
+```zsh
+cd assets
+mkdir icon.iconset
+cp icon1024.png icon.iconset/icon_512x512@2x.png
+iconutil -c icns icon.iconset
+rm -R icon.iconset
 ```
 
 ## License
