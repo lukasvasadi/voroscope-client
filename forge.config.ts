@@ -12,7 +12,7 @@ const config: ForgeConfig = {
   packagerConfig: {
     name: "Voroscope",
     executableName: "Voroscope",
-    icon: "assets/icon",
+    icon: "assets/icon.icns",
     extraResource: ["assets"],
   },
   rebuildConfig: {},
