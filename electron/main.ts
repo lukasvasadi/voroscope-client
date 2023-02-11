@@ -97,7 +97,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   // Open DevTools
-  mainWindow.webContents.openDevTools({ mode: "detach" })
+  // mainWindow.webContents.openDevTools({ mode: "detach" })
 }
 
 async function registerListeners() {
