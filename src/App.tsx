@@ -16,8 +16,8 @@ export const App: React.FC = () => {
   const [socket, setSocket] = useState<W3CWebSocket | null>(null)
   const [image, setImage] = useState<string>("")
 
-  const [visMicroscope, setVisMicroscope] = useState<boolean>(false)
-  const [visStepCreate, setVisStepCreate] = useState<boolean>(true)
+  const [visMicroscope, setVisMicroscope] = useState<boolean>(true)
+  const [visStepCreate, setVisStepCreate] = useState<boolean>(false)
   const [visSettings, setVisSettings] = useState<boolean>(false)
   const [visAbout, setVisAbout] = useState<boolean>(false)
 
