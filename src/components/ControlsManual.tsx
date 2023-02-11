@@ -14,9 +14,8 @@ import {
   faArrowCircleDown,
   faHome,
   faPaperPlane,
-  faArrowsRotate,
-  faPlay,
-  faStop,
+  faXmark,
+  faLightbulb,
   faCamera,
 } from "@fortawesome/free-solid-svg-icons"
 import Button from "./Button"
@@ -171,9 +170,9 @@ const ControlsManual = ({
       </div>
       <div className="pane">
         <h3>camera</h3>
-        <Button icon={faPlay} onClick={() => {}} />
-        <Button icon={faStop} onClick={() => {}} />
         <Button icon={faCamera} onClick={() => {}} />
+        <Button icon={faLightbulb} onClick={() => {}} />
+        <Button icon={faXmark} onClick={() => {}} />
       </div>
     </div>
   )
