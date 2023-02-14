@@ -97,7 +97,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   // Open DevTools
-  // mainWindow.webContents.openDevTools({ mode: "detach" })
+  mainWindow.webContents.openDevTools({ mode: "detach" })
 }
 
 async function registerListeners() {
@@ -154,7 +154,7 @@ async function registerListeners() {
    */
   ipcMain.on("save-image-file", (_, base64String: string): void => {
     var buf = Buffer.from(base64String, "base64")
-    fs.writeFile("image.png", buf, (err) => {
+    fs.writeFile("image.jpg", buf, (err) => {
       if (err) throw err
       console.log("Image file saved!")
     })
