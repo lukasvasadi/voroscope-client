@@ -146,6 +146,10 @@ li.highlight {
   background-color: var(--step-highlight);
 }
 
+li.dragover {
+  opacity: 0.5;
+}
+
 li span:last-child {
   display: none;
   position: absolute;

@@ -9,17 +9,31 @@ import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
 
 const Step = ({
   step,
+  stepStartId,
+  stepEnterId,
   addStep,
   deleteStep,
 }: {
   step: Step
+  stepStartId: React.MutableRefObject<number | null>
+  stepEnterId: React.MutableRefObject<number | null>
   addStep: Function
   deleteStep: Function
 }) => {
+  function onDragStart(_e: React.DragEvent<HTMLLIElement>, step: Step) {
+    stepStartId.current = step.id
+  }
+
+  function onDragEnter(_e: React.DragEvent<HTMLLIElement>, step: Step) {
+    stepEnterId.current = step.id
+  }
+
   return (
     <li
       className={`step ${step.active ? "highlight" : ""}`}
       draggable={step.draggable}
+      onDragStart={(e) => onDragStart(e, step)}
+      onDragEnter={(e) => onDragEnter(e, step)}
     >
       <span>{step.command}</span>
       <span>
@@ -38,6 +52,8 @@ Step.defaultProps = {
 
 Step.propTypes = {
   step: PropTypes.object.isRequired,
+  stepStartId: PropTypes.object,
+  stepEnterId: PropTypes.object,
   addStep: PropTypes.func,
   deleteStep: PropTypes.func,
 }

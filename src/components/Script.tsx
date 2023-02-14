@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import Button from "./Button"
 import Step from "./Step"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import {
   faPlus,
   faSave,
@@ -21,15 +21,47 @@ for (var i = 0; i < 15; i++) {
 }
 
 const Script = ({ visibility }: { visibility: boolean }) => {
+  // const [steps, setSteps] = useState<Step[]>(stepsPlaceholder)
   const [steps, setSteps] = useState<Step[]>([])
+
+  const stepStartId = useRef<number | null>(null)
+  const stepEnterId = useRef<number | null>(null)
 
   return (
     <section className={visibility ? "step-create" : "hide"}>
-      <ul className="sequence-steps">
+      <ul
+        className="sequence-steps"
+        onDragOver={(e) => {
+          e.preventDefault()
+          const li = e.target as HTMLLIElement
+          li.classList.add("dragover")
+        }}
+        onDragLeave={(e) => {
+          const li = e.target as HTMLLIElement
+          li.classList.remove("dragover")
+        }}
+        onDrop={(e) => {
+          let _steps = [...steps] // Copy step array
+          const dragStep = _steps.splice(stepStartId.current, 1)[0] // Pop step item
+          _steps.splice(stepEnterId.current, 0, dragStep) // Swap step items
+
+          for (let i = 0; i < _steps.length; i++) _steps[i].id = i // Reset id values
+
+          setSteps(_steps)
+
+          const li = e.target as HTMLLIElement
+          li.classList.remove("dragover")
+        }}
+        onDragEnd={() => {
+          stepStartId.current = stepEnterId.current = null
+        }}
+      >
         {steps.map((step) => (
           <Step
             key={step.id}
             step={step}
+            stepStartId={stepStartId}
+            stepEnterId={stepEnterId}
             addStep={(e: MouseEvent) => {
               const btn = e.target as HTMLButtonElement
               const li = btn.closest("li")
