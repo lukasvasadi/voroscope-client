@@ -43,9 +43,10 @@ const Script = ({ visibility }: { visibility: boolean }) => {
         onDrop={(e) => {
           let _steps = [...steps] // Copy step array
           const dragStep = _steps.splice(stepStartId.current, 1)[0] // Pop step item
-          _steps.splice(stepEnterId.current, 0, dragStep) // Swap step items
 
-          for (let i = 0; i < _steps.length; i++) _steps[i].id = i // Reset id values
+          // Array methods have to be executed separately
+          _steps.splice(stepEnterId.current, 0, dragStep) // Swap step items
+          _steps.forEach((step, ind) => (step.id = ind)) // Reset id values
 
           setSteps(_steps)
 
