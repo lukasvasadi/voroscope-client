@@ -11,9 +11,9 @@ export const api = {
 
   sendMessage: (message: string) => ipcRenderer.send("message", message),
 
+  getDefaultConfig: () => ipcRenderer.invoke("get-default-config"),
   getConfig: () => ipcRenderer.invoke("get-config"),
   setConfig: (config: Config) => ipcRenderer.send("set-config", config),
-  getDefault: () => ipcRenderer.invoke("get-default"),
   getFile: (openFile: boolean = false) =>
     ipcRenderer.invoke("get-file", openFile),
   getFileContents: (filePath: string) =>
@@ -21,6 +21,8 @@ export const api = {
   getSavePath: () => ipcRenderer.invoke("get-save-path"),
   saveScript: (path: string, content: string) =>
     ipcRenderer.invoke("save-script", path, content),
+  saveImage: (base64String: string) =>
+    ipcRenderer.send("save-image", base64String),
 
   /**
    * Provide an easier way to listen to events

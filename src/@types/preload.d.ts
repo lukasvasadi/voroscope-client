@@ -8,7 +8,9 @@ declare global {
   }
 
   interface Config {
-    endpoint: string
+    address: string
+    cameraPort: number
+    stagePort: number
     resolution: number[]
     pitchXY: number
     pitchZ: number
@@ -24,14 +26,12 @@ declare global {
 }
 
 declare namespace api {
-  function setConfig(config: Config): void
+  function getDefaultConfig(): Promise<Config>
   function getConfig(): Promise<Config>
-  function getDefault(): Promise<Config>
-  // function closePort(
-  //   callback: (event: IpcRendererEvent, ...args: any[]) => void
-  // ): void
-  function getSavePath(): Promise<SaveDialogReturnValue>
+  function setConfig(config: Config): void
   function getFile(openDir: boolean = false): Promise<OpenDialogReturnValue>
   function getFileContents(filePath: string): Promise<string>
+  function getSavePath(): Promise<SaveDialogReturnValue>
   function saveScript(path: string, content: string): void
+  function saveImage(base64String: string): void
 }
