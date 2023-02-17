@@ -46,7 +46,7 @@ class Store {
   }
 }
 
-function parseDataFile(path: fs.PathOrFileDescriptor, data: Config) {
+function parseDataFile(path: PathOrFileDescriptor, data: Config) {
   try {
     /**
      * fs.readFileSync returns a Buffer or string
@@ -62,7 +62,9 @@ function parseDataFile(path: fs.PathOrFileDescriptor, data: Config) {
 
 // Create default system configuration
 let defaultConfig: Config = {
-  endpoint: "ws://10.0.151.85:8765",
+  address: "10.0.151.85",
+  cameraPort: 8765,
+  stagePort: 8885,
   imageSavePath: path.join(
     app.getPath("home"),
     "Documents",
@@ -93,11 +95,9 @@ const createWindow = (): void => {
     },
   })
 
-  // Load the html
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY) // Load the html
 
-  // Open DevTools
-  mainWindow.webContents.openDevTools({ mode: "detach" })
+  mainWindow.webContents.openDevTools({ mode: "detach" }) // Open DevTools
 }
 
 async function registerListeners() {
@@ -105,33 +105,42 @@ async function registerListeners() {
    * From bridge integration
    * Check preload.ts for more details
    */
+
+  // Basic communication testing
   ipcMain.on("message", (_, message) => {
     console.log(message)
   })
 
-  ipcMain.handle("get-default", (): Config => {
+  // Return default app configuration
+  ipcMain.handle("get-default-config", (): Config => {
     return defaultConfig
   })
 
+  // Return app configuration
   ipcMain.handle("get-config", (): Config => {
     return store.get()
   })
 
+  // Save app configuration in persistent memory
   ipcMain.on("set-config", (_, config): void => store.set(config))
 
+  // Open popup to show user existing gcode files
   ipcMain.handle(
     "get-file",
     async (_, openDir: boolean = false): Promise<OpenDialogReturnValue> => {
       return dialog.showOpenDialog(mainWindow, {
         properties: openDir ? ["openDirectory"] : ["openFile"],
+        filters: [{ name: "Gcode", extensions: [".gcode"] }],
       })
     }
   )
 
+  // Return gcode
   ipcMain.handle("get-file-contents", (_, filePath: string): string => {
     return fs.readFileSync(filePath, "utf-8")
   })
 
+  // Open popup to allow user to select a save directory
   ipcMain.handle("get-save-path", async (): Promise<SaveDialogReturnValue> => {
     return dialog.showSaveDialog(mainWindow, {
       defaultPath: path.join(app.getPath("home"), "Documents", "steps.gcode"),
@@ -140,6 +149,7 @@ async function registerListeners() {
     })
   })
 
+  // Save gcode scripts to filesystem
   ipcMain.handle("save-script", (_, path: string, content: string): void => {
     fs.writeFile(path, content, (err) => {
       if (err) {
@@ -149,10 +159,9 @@ async function registerListeners() {
     })
   })
 
-  /**
-   * https://stackoverflow.com/questions/43487543/writing-binary-data-using-node-js-fs-writefile-to-create-an-image-file
-   */
-  ipcMain.on("save-image-file", (_, base64String: string): void => {
+  // Save image to filesystem
+  // https://stackoverflow.com/questions/43487543/writing-binary-data-using-node-js-fs-writefile-to-create-an-image-file
+  ipcMain.on("save-image", (_, base64String: string): void => {
     var buf = Buffer.from(base64String, "base64")
     fs.writeFile("image.jpg", buf, (err) => {
       if (err) throw err
