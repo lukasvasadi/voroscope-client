@@ -12,8 +12,7 @@ declare global {
     cameraPort: number
     stagePort: number
     resolution: number[]
-    pitchXY: number
-    pitchZ: number
+    pitch: number[]
     imageSavePath: string
   }
 
@@ -25,6 +24,7 @@ declare global {
   }
 }
 
+// All ipcRenderer invoke functions return a promise
 declare namespace api {
   function getDefaultConfig(): Promise<Config>
   function getConfig(): Promise<Config>

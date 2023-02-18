@@ -64,7 +64,7 @@ function parseDataFile(path: PathOrFileDescriptor, data: Config) {
 let defaultConfig: Config = {
   address: "10.0.151.85",
   cameraPort: 8765,
-  stagePort: 8885,
+  stagePort: 8775,
   imageSavePath: path.join(
     app.getPath("home"),
     "Documents",
@@ -72,8 +72,7 @@ let defaultConfig: Config = {
     "Data"
   ),
   resolution: [640, 480],
-  pitchXY: 3.0,
-  pitchZ: 0.5,
+  pitch: [3.0, 3.0, 0.5],
 }
 
 // Initialize store
