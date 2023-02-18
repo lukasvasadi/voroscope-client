@@ -31,17 +31,17 @@ const xyControlsTop = [
   {
     id: 0,
     icon: faDotCircle,
-    arr: [-1, 0, 1],
+    arr: [-1, 1, 0],
   },
   {
     id: 1,
     icon: faArrowCircleUp,
-    arr: [0, 0, 1],
+    arr: [0, 1, 0],
   },
   {
     id: 2,
     icon: faDotCircle,
-    arr: [1, 0, 1],
+    arr: [1, 1, 0],
   },
   {
     id: 3,
@@ -59,17 +59,17 @@ const xyControlsBtm = [
   {
     id: 1,
     icon: faDotCircle,
-    arr: [-1, 0, -1],
+    arr: [-1, -1, 0],
   },
   {
     id: 2,
     icon: faArrowCircleDown,
-    arr: [0, 0, -1],
+    arr: [0, -1, 0],
   },
   {
     id: 3,
     icon: faDotCircle,
-    arr: [1, 0, -1],
+    arr: [1, -1, 0],
   },
 ]
 
@@ -77,21 +77,25 @@ const zControls = [
   {
     id: 0,
     icon: faArrowCircleUp,
-    arr: [0, 1, 0],
+    arr: [0, 0, 1],
   },
   {
     id: 1,
     icon: faArrowCircleDown,
-    arr: [0, -1, 0],
+    arr: [0, 0, -1],
   },
 ]
 
 const ControlsManual = ({
   visibility,
+  connectDevices,
+  sendMessageStage,
   sendGcode,
   sendGcodeRelPos,
 }: {
   visibility: boolean
+  connectDevices: Function
+  sendMessageStage: Function
   sendGcode: Function
   sendGcodeRelPos: Function
 }) => {
@@ -159,7 +163,18 @@ const ControlsManual = ({
       <div className="pane">
         <h3>gcode</h3>
         <form>
-          <input type="text" placeholder="G1 X0 Y0 Z0" required />
+          <input
+            type="text"
+            placeholder="G1 X0 Y0 Z0"
+            required
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                e.preventDefault()
+                sendMessageStage({ cmd: "G90" }) // Switch to absolute positioning
+                sendMessageStage({ cmd: (e.target as HTMLInputElement).value })
+              }
+            }}
+          />
           <Button
             icon={faPaperPlane}
             onClick={() => {
@@ -172,7 +187,12 @@ const ControlsManual = ({
         <h3>camera</h3>
         <Button icon={faCamera} onClick={() => {}} />
         <Button icon={faLightbulb} onClick={() => {}} />
-        <Button icon={faXmark} onClick={() => {}} />
+        <Button
+          icon={faXmark}
+          onClick={() => {
+            connectDevices(false)
+          }}
+        />
       </div>
     </div>
   )
@@ -180,6 +200,8 @@ const ControlsManual = ({
 
 ControlsManual.propTypes = {
   visibility: PropTypes.bool.isRequired,
+  connectDevices: PropTypes.func.isRequired,
+  sendMessageStage: PropTypes.func.isRequired,
   sendGcode: PropTypes.func.isRequired,
   sendGcodeRelPos: PropTypes.func.isRequired,
 }

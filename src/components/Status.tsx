@@ -5,20 +5,36 @@
 
 import PropTypes from "prop-types"
 
-const Status = ({ status }: { status: string }) => {
+const Status = ({
+  stagePosition,
+}: {
+  stagePosition: React.MutableRefObject<number[] | null[]>
+}) => {
   return (
     <footer>
-      {/* <p style={{ color: status === 'connected' ? 'green' : '#800000'}}>{status}</p> */}
+      <p>
+        <span>
+          {stagePosition.current[0] != null
+            ? `X:${stagePosition.current[0]}`
+            : "X:?"}
+        </span>
+        <span>
+          {stagePosition.current[1] != null
+            ? `Y:${stagePosition.current[1]}`
+            : "Y:?"}
+        </span>
+        <span>
+          {stagePosition.current[2] != null
+            ? `Z:${stagePosition.current[2]}`
+            : "Z:?"}
+        </span>
+      </p>
     </footer>
   )
 }
 
-Status.defaultProps = {
-  status: "disconnected",
-}
-
 Status.propTypes = {
-  status: PropTypes.string,
+  stagePosition: PropTypes.object,
 }
 
 export default Status

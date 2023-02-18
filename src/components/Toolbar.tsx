@@ -13,50 +13,53 @@ import {
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons"
 
-interface PropsDefinition {
-  setVisMicroscope(visibility: boolean): void
-  setVisStepCreate(visibility: boolean): void
-  setVisSettings(visibility: boolean): void
-  setVisAbout(visibility: boolean): void
-}
-
-const Toolbar = (props: PropsDefinition) => {
+const Toolbar = ({
+  toggleVisMicroscope,
+  toggleVisScripting,
+  toggleVisSettings,
+  toggleVisAbout,
+}: {
+  toggleVisMicroscope: Function
+  toggleVisScripting: Function
+  toggleVisSettings: Function
+  toggleVisAbout: Function
+}) => {
   return (
     <header>
       <Button
         icon={faMicroscope}
         onClick={() => {
-          props.setVisMicroscope(true)
-          props.setVisStepCreate(false)
-          props.setVisSettings(false)
-          props.setVisAbout(false)
+          toggleVisMicroscope(true)
+          toggleVisScripting(false)
+          toggleVisSettings(false)
+          toggleVisAbout(false)
         }}
       />
       <Button
         icon={faFileCode}
         onClick={() => {
-          props.setVisMicroscope(false)
-          props.setVisStepCreate(true)
-          props.setVisSettings(false)
-          props.setVisAbout(false)
+          toggleVisMicroscope(false)
+          toggleVisScripting(true)
+          toggleVisSettings(false)
+          toggleVisAbout(false)
         }}
       />
       <Button
         icon={faCog}
         onClick={() => {
-          props.setVisMicroscope(false)
-          props.setVisStepCreate(false)
-          props.setVisSettings(true)
-          props.setVisAbout(false)
+          toggleVisMicroscope(false)
+          toggleVisScripting(false)
+          toggleVisSettings(true)
+          toggleVisAbout(false)
         }}
       />
       <Button
         icon={faQuestionCircle}
         onClick={() => {
-          props.setVisMicroscope(false)
-          props.setVisStepCreate(false)
-          props.setVisSettings(false)
-          props.setVisAbout(true)
+          toggleVisMicroscope(false)
+          toggleVisScripting(false)
+          toggleVisSettings(false)
+          toggleVisAbout(true)
         }}
       />
     </header>
@@ -64,7 +67,10 @@ const Toolbar = (props: PropsDefinition) => {
 }
 
 Toolbar.propTypes = {
-  props: PropTypes.object,
+  toggleVisMicroscope: PropTypes.func,
+  toggleVisScripting: PropTypes.func,
+  toggleVisSettings: PropTypes.func,
+  toggleVisAbout: PropTypes.func,
 }
 
 export default Toolbar

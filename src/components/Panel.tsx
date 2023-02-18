@@ -4,9 +4,13 @@ import ControlsAutomated from "./ControlsAutomated"
 import { useState } from "react"
 
 const Panel = ({
+  connectDevices,
+  sendMessageStage,
   sendGcode,
   sendGcodeRelPos,
 }: {
+  connectDevices: Function
+  sendMessageStage: Function
   sendGcode: Function
   sendGcodeRelPos: Function
 }) => {
@@ -45,6 +49,8 @@ const Panel = ({
       <div>
         <ControlsManual
           visibility={visManual}
+          connectDevices={connectDevices}
+          sendMessageStage={sendMessageStage}
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}
         />
@@ -55,6 +61,8 @@ const Panel = ({
 }
 
 Panel.propTypes = {
+  connectDevices: PropTypes.func.isRequired,
+  sendMessageStage: PropTypes.func.isRequired,
   sendGcode: PropTypes.func.isRequired,
   sendGcodeRelPos: PropTypes.func.isRequired,
 }

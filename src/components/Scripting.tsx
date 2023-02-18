@@ -20,7 +20,7 @@ for (var i = 0; i < 15; i++) {
   })
 }
 
-const Script = ({ visibility }: { visibility: boolean }) => {
+const Scripting = ({ visibility }: { visibility: boolean }) => {
   // const [steps, setSteps] = useState<Step[]>(stepsPlaceholder)
   const [steps, setSteps] = useState<Step[]>([])
 
@@ -200,8 +200,8 @@ const Script = ({ visibility }: { visibility: boolean }) => {
   )
 }
 
-Script.propTypes = {
+Scripting.propTypes = {
   visibility: PropTypes.bool.isRequired,
 }
 
-export default Script
+export default Scripting

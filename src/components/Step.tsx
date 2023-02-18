@@ -20,20 +20,12 @@ const Step = ({
   addStep: Function
   deleteStep: Function
 }) => {
-  function onDragStart(_e: React.DragEvent<HTMLLIElement>, step: Step) {
-    stepStartId.current = step.id
-  }
-
-  function onDragEnter(_e: React.DragEvent<HTMLLIElement>, step: Step) {
-    stepEnterId.current = step.id
-  }
-
   return (
     <li
       className={`step ${step.active ? "highlight" : ""}`}
       draggable={step.draggable}
-      onDragStart={(e) => onDragStart(e, step)}
-      onDragEnter={(e) => onDragEnter(e, step)}
+      onDragStart={() => (stepStartId.current = step.id)}
+      onDragEnter={() => (stepEnterId.current = step.id)}
     >
       <span>{step.command}</span>
       <span>
@@ -46,6 +38,8 @@ const Step = ({
 
 // Default event handlers
 Step.defaultProps = {
+  stepStartId: null,
+  stepEnterId: null,
   addStep: (_e: MouseEvent) => {},
   deleteStep: (_e: MouseEvent) => {},
 }

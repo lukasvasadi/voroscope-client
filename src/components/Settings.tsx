@@ -19,11 +19,11 @@ const Settings = ({
   updateSettings,
 }: {
   visibility: boolean
-  settings: Config | null
+  settings: Config
   updateSettings: Function
 }) => {
   if (settings) {
-    const [endpoint, setEndpoint] = useState<string>(settings.endpoint)
+    const [endpoint, setEndpoint] = useState<string>(settings.address)
     const [resolution, setResolution] = useState<number[]>(settings.resolution)
     const [pitchXY, setPitchXY] = useState<number>(settings.pitchXY)
     const [pitchZ, setPitchZ] = useState<number>(settings.pitchZ)
@@ -150,7 +150,7 @@ const Settings = ({
                   "section.settings input"
                 ) as NodeListOf<HTMLInputElement>
                 console.log(config)
-                inputs[0].value = config.endpoint
+                inputs[0].value = config.address
                 inputs[1].value = config.resolution
                   .toString()
                   .replace(",", ", ")
