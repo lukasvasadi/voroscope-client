@@ -48,7 +48,7 @@ npm i
 And finally, run the start command to launch the application:
 
 ```zsh
-npm run start
+npm start
 ```
 
 ## Converting png image files to icns (macOS)
