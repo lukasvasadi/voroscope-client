@@ -178,12 +178,22 @@ footer {
   width: 100%;
   height: var(--height-footer);
   display: flex;
+  color: var(--background);
+  font-weight: 500;
   flex-direction: column;
-  align-items: center;
+  place-items: start center;
+  place-content: center;
   background-color: #bdbdbd;
 }
 
-section {
+footer > p {
+  margin: 0 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+foot section {
   height: fit-content;
   margin: 0 auto;
 }
