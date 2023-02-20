@@ -88,12 +88,14 @@ const zControls = [
 
 const ControlsManual = ({
   visibility,
+  grabFrame,
   connectDevices,
   sendMessageStage,
   sendGcode,
   sendGcodeRelPos,
 }: {
   visibility: boolean
+  grabFrame: Function
   connectDevices: Function
   sendMessageStage: Function
   sendGcode: Function
@@ -185,14 +187,21 @@ const ControlsManual = ({
       </div>
       <div className="pane">
         <h3>camera</h3>
-        <Button icon={faCamera} onClick={() => {}} />
-        <Button icon={faLightbulb} onClick={() => {}} />
-        <Button
-          icon={faXmark}
-          onClick={() => {
-            connectDevices(false)
-          }}
-        />
+        <div>
+          <Button
+            icon={faCamera}
+            onClick={() => {
+              grabFrame()
+            }}
+          />
+          <Button icon={faLightbulb} onClick={() => {}} />
+          <Button
+            icon={faXmark}
+            onClick={() => {
+              connectDevices(false)
+            }}
+          />
+        </div>
       </div>
     </div>
   )
@@ -200,6 +209,7 @@ const ControlsManual = ({
 
 ControlsManual.propTypes = {
   visibility: PropTypes.bool.isRequired,
+  grabFrame: PropTypes.func.isRequired,
   connectDevices: PropTypes.func.isRequired,
   sendMessageStage: PropTypes.func.isRequired,
   sendGcode: PropTypes.func.isRequired,

@@ -22,6 +22,11 @@ declare global {
     active: boolean
     draggable: boolean
   }
+
+  interface StageMessage {
+    pos: string
+    err: string
+  }
 }
 
 // All ipcRenderer invoke functions return a promise

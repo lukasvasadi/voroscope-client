@@ -50,6 +50,26 @@ export const App: React.FC = () => {
     window.Main.setConfig(newConfig) // Persist new config in memory
   }, [])
 
+  const grabFrame = useCallback(() => {
+    const img = document.querySelector("img")
+
+    if (img) {
+      for (let i = 0; i <= 100; i + 10) {
+        setTimeout(() => {
+          img.style.opacity = i.toString()
+        }, 10)
+      }
+
+      for (let i = 100; i >= 100; i - 10) {
+        setTimeout(() => {
+          img.style.opacity = i.toString()
+        }, 10)
+      }
+
+      window.Main.saveImage(image)
+    }
+  }, [image])
+
   // Change microscope visibility on callback
   const toggleVisMicroscope = useCallback(
     (state: boolean) => {
@@ -157,7 +177,7 @@ export const App: React.FC = () => {
   }
 
   if (stage) {
-    var data: object // Initialize data object
+    var data: StageMessage // Initialize data object
 
     stage.onopen = () => {
       console.log("Stage socket connection opened")
@@ -176,7 +196,7 @@ export const App: React.FC = () => {
     stage.onmessage = (message: MessageEvent) => {
       data = JSON.parse(message.data)
       console.log(data)
-      if ("pos" in data && data.pos) {
+      if ("pos" in data) {
         stagePosition.current = (data.pos as string)
           .split(" ", 3)
           .map((val) => Number(val.split(":")[1]))
@@ -200,6 +220,7 @@ export const App: React.FC = () => {
         <Microscope
           visibility={visMicroscope}
           image={image}
+          grabFrame={grabFrame}
           connectDevices={connectDevices}
           sendMessageStage={sendMessageStage}
           sendGcode={sendGcode}
