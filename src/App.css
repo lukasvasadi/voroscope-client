@@ -264,12 +264,12 @@ section.settings > div {
   gap: 3rem;
 }
 
-section.step-create {
+section.script {
   width: 600px;
   margin: 0 auto;
 }
 
-section.step-create > ul {
+section.script > ul {
   height: 550px;
   padding: 1rem;
   margin-bottom: 2rem;
@@ -277,28 +277,28 @@ section.step-create > ul {
   overflow-y: scroll;
 }
 
-section.step-create ul li:hover {
+section.script ul li:hover {
   background: var(--step-highlight);
 }
 
-section.step-create ul li:hover span:last-child {
+section.script ul li:hover span:last-child {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
 }
 
-section.step-create ul li button {
+section.script ul li button {
   height: min-content;
   width: fit-content;
   font-size: 16px;
   background: none;
 }
 
-section.step-create ul li button svg {
+section.script ul li button svg {
   height: 1rem;
 }
 
-section.step-create > div {
+section.script > div {
   width: 90%;
   height: fit-content;
   margin: 0 auto;
@@ -308,7 +308,7 @@ section.step-create > div {
   gap: 1rem;
 }
 
-section.step-create > div > form {
+section.script > div > form {
   width: 310px;
   display: flex;
   flex-direction: row;
@@ -316,16 +316,16 @@ section.step-create > div > form {
   gap: 1rem;
 }
 
-section.step-create > div > form > div {
+section.script > div > form > div {
   display: flex;
   flex-direction: column;
 }
 
-section.step-create > div > form input[type="text"] {
+section.script > div > form input[type="text"] {
   width: 180px;
 }
 
-section.step-create > div > button {
+section.script > div > button {
   font-size: 20px;
   border-radius: 5px;
   width: var(--button-form-width);
@@ -333,11 +333,11 @@ section.step-create > div > button {
   background: var(--foreground);
   color: var(--background);
 }
-section.step-create > div > button:first-of-type {
+section.script > div > button:first-of-type {
   margin-left: auto;
 }
 
-section.step-create > div > button svg {
+section.script > div > button svg {
   color: var(--background);
 }
 
