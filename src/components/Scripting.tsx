@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import Button from "./Button"
 import Step from "./Step"
-import { useState, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import {
   faPlus,
   faSave,
@@ -14,7 +14,6 @@ for (var i = 0; i < 15; i++) {
   stepsPlaceholder.push({
     id: i,
     command: `X${i * 5 + 10} Y${i * 5 + 10} Z${i} F800`,
-    // active: i ? false : true,
     active: false,
     draggable: true,
   })
@@ -28,9 +27,9 @@ const Scripting = ({ visibility }: { visibility: boolean }) => {
   const stepEnterId = useRef<number | null>(null)
 
   return (
-    <section className={visibility ? "step-create" : "hide"}>
+    <section className={visibility ? "script" : "hide"}>
       <ul
-        className="sequence-steps"
+        className="script"
         onDragOver={(e) => {
           e.preventDefault()
           const li = e.target as HTMLLIElement
@@ -148,28 +147,28 @@ const Scripting = ({ visibility }: { visibility: boolean }) => {
           icon={faFolderOpen}
           onClick={async () => {
             try {
-              let result = await window.Main.getFile()
+              const result = await window.Main.getFile()
               if (!result.canceled) {
-                let contents: string = await window.Main.getFileContents(
+                const contents = await window.Main.getFileContents(
                   result.filePaths[0]
                 )
-                var gcodeList: string[] = contents.split("\n") // Split string into gcode array
-                var stepList: Step[] = [] // Initialize empty step list
-                for (var i = 0; i < gcodeList.length; i++) {
+                const gcode: string[] = contents.split("\n") // Split string into gcode array
+                let _steps: Step[] = [] // Initialize empty step list
+                for (var i = 0; i < gcode.length; i++) {
                   // Populate step list if gcode is not an empty string
-                  if (gcodeList[i]) {
-                    stepList.push({
+                  if (gcode[i]) {
+                    _steps.push({
                       id: i,
-                      command: gcodeList[i].substring(3),
+                      command: gcode[i].substring(3),
                       active: false,
                       draggable: true,
                     })
                   }
                 }
-                setSteps(stepList)
+                setSteps(_steps)
               }
             } catch (err) {
-              console.log(`ERROR: ${err}`)
+              console.log(`Error: ${err}`)
             }
           }}
         />
@@ -178,7 +177,7 @@ const Scripting = ({ visibility }: { visibility: boolean }) => {
           onClick={async () => {
             let result = await window.Main.getSavePath()
             if (!result.canceled) {
-              const ul = document.querySelector("ul[class='sequence-steps']")
+              const ul = document.querySelector("ul[class='script']")
               var content = ""
               for (let i = 0; i < ul.children.length; i++) {
                 content += `G1 ${
