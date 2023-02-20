@@ -23,10 +23,12 @@ const Settings = ({
   updateSettings: Function
 }) => {
   if (settings) {
-    const [endpoint, setEndpoint] = useState<string>(settings.address)
+    const [address, setAddress] = useState<string>(settings.address)
+    const [cameraPort, setCameraPort] = useState<number>(settings.cameraPort)
+    const [stagePort, setStagePort] = useState<number>(settings.stagePort)
     const [resolution, setResolution] = useState<number[]>(settings.resolution)
-    const [pitchXY, setPitchXY] = useState<number>(settings.pitchXY)
-    const [pitchZ, setPitchZ] = useState<number>(settings.pitchZ)
+    const [pitchXY, setPitchXY] = useState<number>(settings.pitch[0])
+    const [pitchZ, setPitchZ] = useState<number>(settings.pitch[2])
     const [imageSavePath, setImageSavePath] = useState<string>(
       settings.imageSavePath
     )
@@ -35,13 +37,33 @@ const Settings = ({
       <section className={visibility ? "settings" : "hide"}>
         <form>
           <fieldset>
-            <label htmlFor="endpoint">Endpoint</label>
+            <label htmlFor="address">Address</label>
             <input
               type="text"
-              id="endpoint"
-              name="endpoint"
-              onChange={(e) => setEndpoint(e.target.value)}
-              defaultValue={endpoint}
+              id="address"
+              name="address"
+              onChange={(e) => setAddress(e.target.value)}
+              defaultValue={address}
+            />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="camera-port">Camera Port</label>
+            <input
+              type="text"
+              id="camera-port"
+              name="camera-port"
+              onChange={(e) => setCameraPort(parseInt(e.target.value))}
+              defaultValue={cameraPort}
+            />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="stage-port">Stage Port</label>
+            <input
+              type="text"
+              id="stage-port"
+              name="stage-port"
+              onChange={(e) => setStagePort(parseInt(e.target.value))}
+              defaultValue={stagePort}
             />
           </fieldset>
           <fieldset>
@@ -128,10 +150,11 @@ const Settings = ({
             icon={faFloppyDisk}
             onClick={() => {
               updateSettings({
-                endpoint: endpoint,
+                address: address,
+                cameraPort: cameraPort,
+                stagePort: stagePort,
                 resolution: resolution,
-                pitchXY: pitchXY,
-                pitchZ: pitchZ,
+                pitch: [pitchXY, pitchXY, pitchZ],
                 imageSavePath: imageSavePath,
               })
               const configSaveNotification = new Notification(
@@ -144,19 +167,21 @@ const Settings = ({
             icon={faRotateRight}
             onClick={async () => {
               try {
-                let config: Config = await window.Main.getConfig()
-                console.log(config)
+                let config = await window.Main.getConfig()
+
                 const inputs = document.querySelectorAll(
                   "section.settings input"
                 ) as NodeListOf<HTMLInputElement>
-                console.log(config)
+
                 inputs[0].value = config.address
-                inputs[1].value = config.resolution
+                inputs[1].value = config.cameraPort.toString()
+                inputs[2].value = config.stagePort.toString()
+                inputs[3].value = config.resolution
                   .toString()
                   .replace(",", ", ")
-                inputs[2].value = config.pitchXY.toString()
-                inputs[3].value = config.pitchZ.toString()
-                inputs[4].value = config.imageSavePath
+                inputs[4].value = config.pitch[0].toString()
+                inputs[5].value = config.pitch[2].toString()
+                inputs[6].value = config.imageSavePath
               } catch (err) {
                 console.log(`ERROR: ${err}`)
               }
