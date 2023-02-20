@@ -25,6 +25,7 @@ body {
   max-width: 100vw;
   max-height: 100vh;
   position: relative;
+  margin: auto;
   line-height: 1.4em;
   font-size: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -34,6 +35,15 @@ body {
   background: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Root element */
+body > div {
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 
 /* Remove yellow border highlight from focused elements */
@@ -49,22 +59,51 @@ textarea:focus {
 /* Toolbar */
 header {
   width: 100%;
-  height: var(--height-header);
+  flex: 0 1 70px;
+  /* height: var(--height-header); */
+  /* height: 10%; */
+  /* max-height: 70px; */
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-bottom: var(--border) solid 5px;
   place-items: center;
 }
 
+footer {
+  /* position: absolute;
+  bottom: 0; */
+  width: 100%;
+  /* height: var(--height-footer); */
+  /* height: fit-content;
+  min-height: 40px;
+  max-height: 50px; */
+  flex: 0 0 40px;
+  color: var(--background);
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  place-items: start center;
+  place-content: center;
+  background-color: #bdbdbd;
+}
+
+footer > p {
+  margin: 0 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
 main {
   width: 100%;
-  height: var(--height-main); /* Height of window minus all static elements */
+  /* height: var(--height-main); Height of window minus all static elements */
+  /* height: 85%;
+  max-height: 100%; */
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   place-items: center;
   place-content: center;
-  /* justify-content: center; */
-  /* align-content: center; */
 }
 
 button {
@@ -99,6 +138,8 @@ form input {
 }
 
 form button {
+  min-width: var(--button-form-width);
+  min-height: var(--button-form-height);
   width: var(--button-form-width);
   height: var(--button-form-height);
   font-size: 20px;
@@ -120,6 +161,7 @@ form input[type="text"] {
 
 h2,
 h3 {
+  height: min-content;
   margin-bottom: 1rem;
 }
 
@@ -172,30 +214,8 @@ li span button {
   cursor: none;
 }
 
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: var(--height-footer);
-  display: flex;
-  color: var(--background);
-  font-weight: 500;
-  flex-direction: column;
-  place-items: start center;
-  place-content: center;
-  background-color: #bdbdbd;
-}
-
-footer > p {
-  margin: 0 2rem;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-
-foot section {
+section {
   height: fit-content;
-  margin: 0 auto;
 }
 
 section form {
@@ -211,28 +231,26 @@ section.about a {
 }
 
 section.settings {
-  width: 40%;
+  width: 50%;
+  max-width: 600px;
 }
 
 section.settings form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 2fr 2fr;
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
 section.settings fieldset:last-of-type {
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
 }
 
 section.settings form:last-of-type div {
   display: flex;
   flex-direction: row;
-  align-items: center;
-}
-
-section.settings form fieldset:last-of-type input {
-  width: 85%;
+  place-items: center;
+  gap: 1rem;
 }
 
 section.settings form:last-of-type button {
@@ -386,6 +404,11 @@ div.pane {
   padding: 1rem;
 }
 
+div.pane:nth-child(1),
+div.pane:nth-child(2) {
+  padding-bottom: 2rem;
+}
+
 div.pane div.xy {
   width: min-content;
   display: grid;
@@ -416,10 +439,7 @@ div.pane:nth-child(3) {
 div.pane:nth-child(3) > form {
   display: flex;
   flex-direction: row;
-}
-
-div.pane:nth-child(3) > form input {
-  width: 70%;
+  gap: 1rem;
 }
 
 div.pane:nth-child(3) > form button {
@@ -430,12 +450,21 @@ div.pane:last-child {
   grid-column: 1 / -1;
 }
 
+div.pane:last-child > div {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  place-content: center;
+  gap: 1rem;
+}
+
 div.pane:last-child button {
   font-size: 20px;
   border-radius: 5px;
   width: 60px;
   height: 40px;
-  margin: auto 0.5rem;
+  min-width: 60px;
+  min-height: 40px;
   background: var(--foreground);
 }
 
