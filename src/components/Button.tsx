@@ -21,7 +21,7 @@ const Button = ({
   onMouseUp: MouseEventHandler
 }) => {
   return (
-    // MouseEventHandler is a function with a single argument (event)
+    // MouseEventHandler is a function with at least one argument (event)
     <button
       type="button" // Without specifying type, form buttons will behave as "submit"
       onClick={onClick}
