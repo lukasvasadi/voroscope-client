@@ -1,7 +1,7 @@
 /**
  * Camera
  * Show live feed from Raspi imaging module
- * Requires image data string
+ * Requires image base64 string
  */
 
 import PropTypes from "prop-types"
@@ -11,24 +11,22 @@ import { ReactElement } from "react"
 
 const Camera = ({
   image,
-  connectDevices,
+  connectDevs,
 }: {
   image: string
-  connectDevices: Function
+  connectDevs: Function
 }) => {
   let imageElement: ReactElement
   if (image)
     imageElement = <img src={"data:image/jpeg;base64, " + image} alt="" />
   else
-    imageElement = (
-      <Button icon={faCamera} onClick={() => connectDevices(true)} />
-    )
+    imageElement = <Button icon={faCamera} onClick={() => connectDevs(true)} />
   return <div className="camera">{imageElement}</div>
 }
 
 Camera.propTypes = {
   image: PropTypes.string.isRequired,
-  connectDevices: PropTypes.func.isRequired,
+  connectDevs: PropTypes.func.isRequired,
 }
 
 export default Camera
