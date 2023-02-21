@@ -5,12 +5,12 @@
 
 import PropTypes from "prop-types"
 
-const About = ({ visibility }: { visibility: boolean }) => {
+const About = ({ visible }: { visible: boolean }) => {
   return (
-    <section className={visibility ? "about" : "hide"}>
+    <section className={visible ? "about" : "hide"}>
       <p>
         <strong>Voroscope</strong> is an open-source microscopy platform. It
-        consists of an open hardware design—based on the Voron V0 3D printer—as
+        consists of an open hardware design—based on the Voron 3D printer—as
         well as firmware (C++) and server- (Python) and client-side (TypeScript)
         source code. Inside the microscope, a Raspberry Pi acts as a central
         node to ferry data between the imaging module (Raspberry Pi HQ camera
@@ -28,7 +28,7 @@ const About = ({ visibility }: { visibility: boolean }) => {
 }
 
 About.propTypes = {
-  visibility: PropTypes.bool.isRequired,
+  visible: PropTypes.bool.isRequired,
 }
 
 export default About
