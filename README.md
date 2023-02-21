@@ -2,7 +2,7 @@
 
 Voroscope is an automated imaging platform based on the open-source Voron V0 3D printer build.
 
-![Voroscope image stream](images/voroscope_stream.png)
+![Voroscope image stream](images/voroscope.png)
 
 ## Contents
 
