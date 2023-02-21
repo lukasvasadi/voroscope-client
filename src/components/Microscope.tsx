@@ -6,7 +6,7 @@ const Microscope = ({
   visibility,
   image,
   grabFrame,
-  connectDevices,
+  connectDevs,
   sendMessageStage,
   sendGcode,
   sendGcodeRelPos,
@@ -14,17 +14,17 @@ const Microscope = ({
   visibility: boolean
   image: string
   grabFrame: Function
-  connectDevices: Function
+  connectDevs: Function
   sendMessageStage: Function
   sendGcode: Function
   sendGcodeRelPos: Function
 }) => {
   return (
     <section className={visibility ? "microscope" : "hide"}>
-      <Camera image={image} connectDevices={connectDevices} />
+      <Camera image={image} connectDevs={connectDevs} />
       <Panel
         grabFrame={grabFrame}
-        connectDevices={connectDevices}
+        connectDevs={connectDevs}
         sendMessageStage={sendMessageStage}
         sendGcode={sendGcode}
         sendGcodeRelPos={sendGcodeRelPos}
@@ -37,7 +37,7 @@ Microscope.propTypes = {
   visibility: PropTypes.bool.isRequired,
   image: PropTypes.string.isRequired,
   grabFrame: PropTypes.func.isRequired,
-  connectDevices: PropTypes.func.isRequired,
+  connectDevs: PropTypes.func.isRequired,
   sendMessageStage: PropTypes.func,
   sendGcode: PropTypes.func,
   sendGcodeRelPos: PropTypes.func,

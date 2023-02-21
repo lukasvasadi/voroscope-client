@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import Button from "./Button"
 import Step from "./Step"
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef } from "react"
 import {
   faPlus,
   faSave,

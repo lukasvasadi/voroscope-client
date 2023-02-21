@@ -86,17 +86,17 @@ const zControls = [
   },
 ]
 
-const ControlsManual = ({
+const Controls = ({
   visibility,
   grabFrame,
-  connectDevices,
+  connectDevs,
   sendMessageStage,
   sendGcode,
   sendGcodeRelPos,
 }: {
   visibility: boolean
   grabFrame: Function
-  connectDevices: Function
+  connectDevs: Function
   sendMessageStage: Function
   sendGcode: Function
   sendGcodeRelPos: Function
@@ -198,7 +198,7 @@ const ControlsManual = ({
           <Button
             icon={faXmark}
             onClick={() => {
-              connectDevices(false)
+              connectDevs(false)
             }}
           />
         </div>
@@ -207,13 +207,13 @@ const ControlsManual = ({
   )
 }
 
-ControlsManual.propTypes = {
+Controls.propTypes = {
   visibility: PropTypes.bool.isRequired,
   grabFrame: PropTypes.func.isRequired,
-  connectDevices: PropTypes.func.isRequired,
+  connectDevs: PropTypes.func.isRequired,
   sendMessageStage: PropTypes.func.isRequired,
   sendGcode: PropTypes.func.isRequired,
   sendGcodeRelPos: PropTypes.func.isRequired,
 }
 
-export default ControlsManual
+export default Controls

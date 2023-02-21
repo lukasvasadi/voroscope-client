@@ -8,8 +8,6 @@ import { useState, useEffect, useCallback, useRef } from "react"
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import "./App.css"
 
-let reader: FileReader = new FileReader() // Formats image string value
-
 export const App: React.FC = () => {
   const [camera, setCamera] = useState<W3CWebSocket | null>(null) // Camera socket connection
   const [stage, setStage] = useState<W3CWebSocket | null>(null) // Stage socket connection
@@ -21,16 +19,17 @@ export const App: React.FC = () => {
   const [visSettings, setVisSettings] = useState<boolean>(false)
   const [visAbout, setVisAbout] = useState<boolean>(false)
 
-  const stagePosition = useRef<number[] | null[]>([null, null, null]) // Assume starting at home
+  const stagePosition = useRef<number[] | null[]>([null, null, null]) // X, Y, Z location
   const imageCount = useRef<number>(0)
+  const stepCount = useRef<number>(0)
 
-  // Pull settings from file
+  // Pull configuration settings from file
   useEffect(() => {
     window.Main.getConfig().then((config: Config) => setConfig(config))
   }, []) // Empty array means hook function only runs on component docking (startup)
 
   // Open or close hardware connections
-  const connectDevices = useCallback(
+  const connectDevs = useCallback(
     (state: boolean) => {
       if (state) {
         setCamera(
@@ -45,25 +44,28 @@ export const App: React.FC = () => {
     [config, camera, stage]
   )
 
+  // Update system configuration based on user input
   const updateSettings = useCallback((newConfig: Config) => {
     setConfig(newConfig)
     window.Main.setConfig(newConfig) // Persist new config in memory
   }, [])
 
+  // Grab image with shutter effect
   const grabFrame = useCallback(() => {
     const img = document.querySelector("img")
+    const delay = 10 // Delay period (ms)
 
     if (img) {
       for (let i = 0; i <= 100; i + 10) {
         setTimeout(() => {
           img.style.opacity = i.toString()
-        }, 10)
+        }, delay)
       }
 
       for (let i = 100; i >= 100; i - 10) {
         setTimeout(() => {
           img.style.opacity = i.toString()
-        }, 10)
+        }, delay)
       }
 
       window.Main.saveImage(image)
@@ -132,7 +134,8 @@ export const App: React.FC = () => {
   }
 
   if (camera) {
-    var base64String: string // Initialize raw image data
+    let reader: FileReader = new FileReader() // Initialize file reader
+    let base64String: string // Initialize raw image data
 
     camera.onopen = () => {
       console.log("Camera socket connection opened")
@@ -177,7 +180,7 @@ export const App: React.FC = () => {
   }
 
   if (stage) {
-    var data: StageMessage // Initialize data object
+    let data: StageMessage // Initialize data object
 
     stage.onopen = () => {
       console.log("Stage socket connection opened")
@@ -185,7 +188,7 @@ export const App: React.FC = () => {
       // Initialize system
       sendMessageStage({ cmd: "G28" }) // Home all motors
       sendMessageStage({ cmd: "G91" }) // Dafault to relative stage positioning
-      sendMessageStage({ pos: {} }) // Start position reporting
+      sendMessageStage({ pos: "1000" }) // Start position reporting
     }
 
     stage.onclose = () => {
@@ -221,7 +224,7 @@ export const App: React.FC = () => {
           visibility={visMicroscope}
           image={image}
           grabFrame={grabFrame}
-          connectDevices={connectDevices}
+          connectDevs={connectDevs}
           sendMessageStage={sendMessageStage}
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}
@@ -232,7 +235,7 @@ export const App: React.FC = () => {
           settings={config}
           updateSettings={updateSettings}
         />
-        <About visibility={visAbout} />
+        <About visible={visAbout} />
       </main>
       <Status stagePosition={stagePosition} />
     </>

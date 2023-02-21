@@ -1,17 +1,17 @@
 import PropTypes from "prop-types"
-import ControlsManual from "./ControlsManual"
-import ControlsAutomated from "./ControlsAutomated"
+import Controls from "./Controls"
+import Automation from "./Automation"
 import { useState } from "react"
 
 const Panel = ({
   grabFrame,
-  connectDevices,
+  connectDevs,
   sendMessageStage,
   sendGcode,
   sendGcodeRelPos,
 }: {
   grabFrame: Function
-  connectDevices: Function
+  connectDevs: Function
   sendMessageStage: Function
   sendGcode: Function
   sendGcodeRelPos: Function
@@ -49,15 +49,15 @@ const Panel = ({
         </button>
       </div>
       <div>
-        <ControlsManual
+        <Controls
           visibility={visManual}
           grabFrame={grabFrame}
-          connectDevices={connectDevices}
+          connectDevs={connectDevs}
           sendMessageStage={sendMessageStage}
           sendGcode={sendGcode}
           sendGcodeRelPos={sendGcodeRelPos}
         />
-        <ControlsAutomated visibility={visAutomated} />
+        <Automation visible={visAutomated} />
       </div>
     </div>
   )
@@ -65,7 +65,7 @@ const Panel = ({
 
 Panel.propTypes = {
   grabFrame: PropTypes.func.isRequired,
-  connectDevices: PropTypes.func.isRequired,
+  connectDevs: PropTypes.func.isRequired,
   sendMessageStage: PropTypes.func.isRequired,
   sendGcode: PropTypes.func.isRequired,
   sendGcodeRelPos: PropTypes.func.isRequired,
