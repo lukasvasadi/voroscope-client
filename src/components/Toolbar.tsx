@@ -1,7 +1,7 @@
 /**
  * Toolbar
  * Navigation menu to switch between window options
- * Uses React state to toggle window visibility
+ * Uses React callbacks to toggle window visibility
  */
 
 import PropTypes from "prop-types"
@@ -26,51 +26,53 @@ const Toolbar = ({
 }) => {
   return (
     <header>
-      <Button
-        icon={faMicroscope}
-        onClick={() => {
-          toggleVisMicroscope(true)
-          toggleVisScripting(false)
-          toggleVisSettings(false)
-          toggleVisAbout(false)
-        }}
-      />
-      <Button
-        icon={faFileCode}
-        onClick={() => {
-          toggleVisMicroscope(false)
-          toggleVisScripting(true)
-          toggleVisSettings(false)
-          toggleVisAbout(false)
-        }}
-      />
-      <Button
-        icon={faCog}
-        onClick={() => {
-          toggleVisMicroscope(false)
-          toggleVisScripting(false)
-          toggleVisSettings(true)
-          toggleVisAbout(false)
-        }}
-      />
-      <Button
-        icon={faQuestionCircle}
-        onClick={() => {
-          toggleVisMicroscope(false)
-          toggleVisScripting(false)
-          toggleVisSettings(false)
-          toggleVisAbout(true)
-        }}
-      />
+      <div>
+        <Button
+          icon={faMicroscope}
+          onClick={() => {
+            toggleVisMicroscope(true)
+            toggleVisScripting(false)
+            toggleVisSettings(false)
+            toggleVisAbout(false)
+          }}
+        />
+        <Button
+          icon={faFileCode}
+          onClick={() => {
+            toggleVisMicroscope(false)
+            toggleVisScripting(true)
+            toggleVisSettings(false)
+            toggleVisAbout(false)
+          }}
+        />
+        <Button
+          icon={faCog}
+          onClick={() => {
+            toggleVisMicroscope(false)
+            toggleVisScripting(false)
+            toggleVisSettings(true)
+            toggleVisAbout(false)
+          }}
+        />
+        <Button
+          icon={faQuestionCircle}
+          onClick={() => {
+            toggleVisMicroscope(false)
+            toggleVisScripting(false)
+            toggleVisSettings(false)
+            toggleVisAbout(true)
+          }}
+        />
+      </div>
     </header>
   )
 }
 
 Toolbar.propTypes = {
-  toggleVisMicroscope: PropTypes.func,
-  toggleVisScripting: PropTypes.func,
-  toggleVisSettings: PropTypes.func,
-  toggleVisAbout: PropTypes.func,
+  toggleVisMicroscope: PropTypes.func.isRequired,
+  toggleVisScripting: PropTypes.func.isRequired,
+  toggleVisSettings: PropTypes.func.isRequired,
+  toggleVisAbout: PropTypes.func.isRequired,
 }
 
 export default Toolbar
