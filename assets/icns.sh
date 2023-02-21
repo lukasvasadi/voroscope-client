@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+# Convert 1024x1024 png to icns
+
 if [ "$1" == "" ]
 then
 echo "Please include path to icon png file (1024x1024 px)"
