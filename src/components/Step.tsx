@@ -22,7 +22,7 @@ const Step = ({
 }) => {
   return (
     <li
-      className={`step ${step.active ? "highlight" : ""}`}
+      className={`step ${step.status}`}
       draggable={step.draggable}
       onDragStart={() => (stepStartId.current = step.id)}
       onDragEnter={() => (stepEnterId.current = step.id)}

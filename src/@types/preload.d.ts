@@ -19,7 +19,7 @@ declare global {
   interface Step {
     id: number
     command: string
-    active: boolean
+    status: string
     draggable: boolean
   }
 

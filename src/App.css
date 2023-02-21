@@ -3,7 +3,8 @@
   --foreground: #ddd;
   --border: #bdbdbd;
   --step: slateblue;
-  --step-highlight: teal;
+  --step-pause: rgb(43, 125, 226);
+  --step-active: teal;
   --input-height: 40px;
   --button-form-height: 40px;
   --button-form-width: 60px;
@@ -185,8 +186,12 @@ li:last-of-type {
   margin-bottom: 0;
 }
 
-li.highlight {
-  background-color: var(--step-highlight);
+li.active {
+  background-color: var(--step-active);
+}
+
+li.pause {
+  background-color: var(--step-pause);
 }
 
 li.dragover {
@@ -275,7 +280,7 @@ section.script > ul {
 }
 
 section.script ul li:hover {
-  background: var(--step-highlight);
+  background: var(--step-active);
 }
 
 section.script ul li:hover span:last-child {

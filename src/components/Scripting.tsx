@@ -14,7 +14,7 @@ for (var i = 0; i < 15; i++) {
   stepsPlaceholder.push({
     id: i,
     command: `X${i * 5 + 10} Y${i * 5 + 10} Z${i} F800`,
-    active: false,
+    status: "",
     draggable: true,
   })
 }
@@ -73,7 +73,7 @@ const Scripting = ({ visibility }: { visibility: boolean }) => {
                     {
                       id: steps.length,
                       command: li.textContent,
-                      active: false,
+                      status: "",
                       draggable: true,
                     },
                   ])
@@ -115,7 +115,7 @@ const Scripting = ({ visibility }: { visibility: boolean }) => {
                       {
                         id: steps.length,
                         command: gcode,
-                        active: false,
+                        status: "",
                         draggable: true,
                       },
                     ])
@@ -135,7 +135,7 @@ const Scripting = ({ visibility }: { visibility: boolean }) => {
                   {
                     id: steps.length,
                     command: gcode,
-                    active: false,
+                    status: "",
                     draggable: true,
                   },
                 ])
@@ -160,7 +160,7 @@ const Scripting = ({ visibility }: { visibility: boolean }) => {
                     _steps.push({
                       id: i,
                       command: gcode[i].substring(3),
-                      active: false,
+                      status: "",
                       draggable: true,
                     })
                   }

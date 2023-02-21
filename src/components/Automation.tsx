@@ -30,7 +30,7 @@ const Automation = ({ visible }: { visible: boolean }) => {
                   .map((val, ind) => ({
                     id: ind,
                     command: val.substring(3),
-                    active: false,
+                    status: ind == 0 ? "pause" : "",
                     draggable: false,
                   }))
                 setSteps(_steps)
