@@ -1,6 +1,7 @@
 import {
   app,
   BrowserWindow,
+  FileFilter,
   ipcMain,
   dialog,
   SaveDialogReturnValue,
@@ -142,13 +143,20 @@ async function registerListeners() {
   })
 
   // Open popup to allow user to select a save directory
-  ipcMain.handle("get-save-path", async (): Promise<SaveDialogReturnValue> => {
-    return dialog.showSaveDialog(mainWindow, {
-      defaultPath: path.join(app.getPath("home"), "Documents", "steps.gcode"),
-      properties: ["createDirectory"],
-      filters: [{ name: "Gcode", extensions: [".gcode"] }],
-    })
-  })
+  ipcMain.handle(
+    "get-save-path",
+    async (
+      _,
+      fname: string = "steps.gcode",
+      filter: FileFilter = { name: "Gcode", extensions: [".gcode"] }
+    ): Promise<SaveDialogReturnValue> => {
+      return dialog.showSaveDialog(mainWindow, {
+        defaultPath: path.join(app.getPath("home"), "Documents", fname),
+        properties: ["createDirectory"],
+        filters: [filter],
+      })
+    }
+  )
 
   // Save gcode scripts to filesystem
   ipcMain.handle("save-script", (_, path: string, content: string): void => {
@@ -162,9 +170,9 @@ async function registerListeners() {
 
   // Save image to filesystem
   // https://stackoverflow.com/questions/43487543/writing-binary-data-using-node-js-fs-writefile-to-create-an-image-file
-  ipcMain.on("save-image", (_, base64String: string): void => {
-    var buf = Buffer.from(base64String, "base64")
-    fs.writeFile("image.jpg", buf, (err) => {
+  ipcMain.on("save-image", (_, base64String: string, fname: string): void => {
+    const buf = Buffer.from(base64String, "base64")
+    fs.writeFile(fname, buf, (err) => {
       if (err) throw err
       console.log("Image file saved!")
     })

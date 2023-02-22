@@ -36,7 +36,10 @@ declare namespace api {
   function setConfig(config: Config): void
   function getFile(openDir: boolean = false): Promise<OpenDialogReturnValue>
   function getFileContents(filePath: string): Promise<string>
-  function getSavePath(): Promise<SaveDialogReturnValue>
+  function getSavePath(
+    fname: string = "steps.gcode",
+    filter: FileFilter = { name: "Gcode", extensions: [".gcode"] }
+  ): Promise<SaveDialogReturnValue>
   function saveScript(path: string, content: string): void
-  function saveImage(base64String: string): void
+  function saveImage(base64String: string, fname: string): void
 }

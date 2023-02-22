@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from "electron"
+import { contextBridge, ipcRenderer, FileFilter } from "electron"
 
 export const api = {
   /**
@@ -18,11 +18,14 @@ export const api = {
     ipcRenderer.invoke("get-file", openFile),
   getFileContents: (filePath: string) =>
     ipcRenderer.invoke("get-file-contents", filePath),
-  getSavePath: () => ipcRenderer.invoke("get-save-path"),
+  getSavePath: (
+    fname: string = "steps.gcode",
+    filter: FileFilter = { name: "Gcode", extensions: [".gcode"] }
+  ) => ipcRenderer.invoke("get-save-path", fname, filter),
   saveScript: (path: string, content: string) =>
     ipcRenderer.invoke("save-script", path, content),
-  saveImage: (base64String: string) =>
-    ipcRenderer.send("save-image", base64String),
+  saveImage: (base64String: string, fname: string) =>
+    ipcRenderer.send("save-image", base64String, fname),
 
   /**
    * Provide an easier way to listen to events

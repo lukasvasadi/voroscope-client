@@ -51,24 +51,42 @@ export const App: React.FC = () => {
   }, [])
 
   // Grab image with shutter effect
-  const grabFrame = useCallback(() => {
+  const grabFrame = useCallback(async () => {
     const img = document.querySelector("img")
-    const delay = 10 // Delay period (ms)
+    const delay = 50 // Delay period (ms)
 
     if (img) {
-      for (let i = 0; i <= 100; i + 10) {
-        setTimeout(() => {
-          img.style.opacity = i.toString()
-        }, delay)
-      }
+      let opacity = 1.0
 
-      for (let i = 100; i >= 100; i - 10) {
-        setTimeout(() => {
-          img.style.opacity = i.toString()
-        }, delay)
-      }
+      let opacityDecrement = setInterval(() => {
+        if (opacity > 0.2) {
+          opacity -= 0.1
+          console.log(opacity.toFixed(2))
+          img.style.opacity = opacity.toFixed(2)
+        } else {
+          let opacityIncrement = setInterval(() => {
+            if (opacity < 1.0) {
+              opacity += 0.1
+              console.log(opacity.toFixed(2))
+              img.style.opacity = opacity.toFixed(2)
+            } else clearInterval(opacityIncrement)
+          }, delay)
 
-      window.Main.saveImage(image)
+          clearInterval(opacityDecrement)
+        }
+      }, delay)
+
+      const date = new Date()
+      const defaultFname = `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}_${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}_snapshot.jpg`
+
+      let result = await window.Main.getSavePath(defaultFname, {
+        name: "Images",
+        extensions: ["jpg"],
+      })
+
+      if (!result.canceled) window.Main.saveImage(image, result.filePath)
     }
   }, [image])
 
@@ -111,6 +129,7 @@ export const App: React.FC = () => {
 
   // Pass generic message to stage
   const sendMessageStage = (message: object) => {
+    console.log(message)
     if (stage) stage.send(JSON.stringify(message))
   }
 
@@ -130,7 +149,7 @@ export const App: React.FC = () => {
   // Send gcode from control panel buttons (relative moves)
   const sendGcodeRelPos = (coor: number[]) => {
     coor = coor.map((val, ind) => val * config.pitch[ind])
-    sendGcode(`G1 X${coor[0]} Y${coor[1]} Z${coor[2]}`, true)
+    sendGcode(`G0 X${coor[0]} Y${coor[1]} Z${coor[2]}`, true)
   }
 
   if (camera) {
@@ -188,7 +207,7 @@ export const App: React.FC = () => {
       // Initialize system
       sendMessageStage({ cmd: "G28" }) // Home all motors
       sendMessageStage({ cmd: "G91" }) // Dafault to relative stage positioning
-      sendMessageStage({ pos: "1000" }) // Start position reporting
+      sendMessageStage({ pos: "1" }) // Start position reporting
     }
 
     stage.onclose = () => {
@@ -198,7 +217,6 @@ export const App: React.FC = () => {
 
     stage.onmessage = (message: MessageEvent) => {
       data = JSON.parse(message.data)
-      console.log(data)
       if ("pos" in data) {
         stagePosition.current = (data.pos as string)
           .split(" ", 3)
