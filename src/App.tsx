@@ -39,6 +39,7 @@ export const App: React.FC = () => {
       } else {
         if (camera) camera.close()
         if (stage) stage.close()
+        setImage("")
       }
     },
     [config, camera, stage]
@@ -51,7 +52,7 @@ export const App: React.FC = () => {
   }, [])
 
   // Grab image with shutter effect
-  const grabFrame = useCallback(async () => {
+  const grabFrame = useCallback(() => {
     const img = document.querySelector("img")
     const delay = 50 // Delay period (ms)
 
@@ -61,32 +62,32 @@ export const App: React.FC = () => {
       let opacityDecrement = setInterval(() => {
         if (opacity > 0.2) {
           opacity -= 0.1
-          console.log(opacity.toFixed(2))
           img.style.opacity = opacity.toFixed(2)
         } else {
-          let opacityIncrement = setInterval(() => {
+          let opacityIncrement = setInterval(async () => {
             if (opacity < 1.0) {
               opacity += 0.1
-              console.log(opacity.toFixed(2))
               img.style.opacity = opacity.toFixed(2)
             } else clearInterval(opacityIncrement)
           }, delay)
 
           clearInterval(opacityDecrement)
+
+          setTimeout(async () => {
+            const date = new Date()
+            const defaultFname = `${date.getFullYear()}-${
+              date.getMonth() + 1
+            }-${date.getDate()}_${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}_snapshot.jpg`
+
+            let result = await window.Main.getSavePath(defaultFname, {
+              name: "Images",
+              extensions: ["jpg"],
+            })
+
+            if (!result.canceled) window.Main.saveImage(image, result.filePath)
+          }, 1000)
         }
       }, delay)
-
-      const date = new Date()
-      const defaultFname = `${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()}_${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}_snapshot.jpg`
-
-      let result = await window.Main.getSavePath(defaultFname, {
-        name: "Images",
-        extensions: ["jpg"],
-      })
-
-      if (!result.canceled) window.Main.saveImage(image, result.filePath)
     }
   }, [image])
 
@@ -129,27 +130,7 @@ export const App: React.FC = () => {
 
   // Pass generic message to stage
   const sendMessageStage = (message: object) => {
-    console.log(message)
     if (stage) stage.send(JSON.stringify(message))
-  }
-
-  // Send direct gcode command
-  const sendGcode = (command: string, relPos: boolean = false) => {
-    if (relPos) {
-      // Relative positioning (default)
-      sendMessageStage({ cmd: command })
-    } else {
-      // Absolute positioning
-      sendMessageStage({ cmd: "G90" }) // Switch to absolute positioning
-      sendMessageStage({ cmd: command })
-      sendMessageStage({ cmd: "G91" }) // Switch to relative positioning
-    }
-  }
-
-  // Send gcode from control panel buttons (relative moves)
-  const sendGcodeRelPos = (coor: number[]) => {
-    coor = coor.map((val, ind) => val * config.pitch[ind])
-    sendGcode(`G0 X${coor[0]} Y${coor[1]} Z${coor[2]}`, true)
   }
 
   if (camera) {
@@ -244,8 +225,6 @@ export const App: React.FC = () => {
           grabFrame={grabFrame}
           connectDevs={connectDevs}
           sendMessageStage={sendMessageStage}
-          sendGcode={sendGcode}
-          sendGcodeRelPos={sendGcodeRelPos}
         />
         <Scripting visibility={visScripting} />
         <Settings

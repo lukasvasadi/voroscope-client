@@ -7,14 +7,10 @@ const Panel = ({
   grabFrame,
   connectDevs,
   sendMessageStage,
-  sendGcode,
-  sendGcodeRelPos,
 }: {
   grabFrame: Function
   connectDevs: Function
   sendMessageStage: Function
-  sendGcode: Function
-  sendGcodeRelPos: Function
 }) => {
   // Control display visibility
   const [visManual, setVisManual] = useState(true)
@@ -32,6 +28,7 @@ const Panel = ({
             setVisAutomated(false)
             setFocusManual("focus")
             setFocusAutomated("")
+            sendMessageStage({ cmd: "G91" }) // Switch to relative positioning
           }}
         >
           Manual
@@ -43,6 +40,7 @@ const Panel = ({
             setVisAutomated(true)
             setFocusManual("")
             setFocusAutomated("focus")
+            sendMessageStage({ cmd: "G90" }) // Switch to absolute positioning
           }}
         >
           Automatic
@@ -54,8 +52,6 @@ const Panel = ({
           grabFrame={grabFrame}
           connectDevs={connectDevs}
           sendMessageStage={sendMessageStage}
-          sendGcode={sendGcode}
-          sendGcodeRelPos={sendGcodeRelPos}
         />
         <Automation visible={visAutomated} />
       </div>
@@ -67,8 +63,6 @@ Panel.propTypes = {
   grabFrame: PropTypes.func.isRequired,
   connectDevs: PropTypes.func.isRequired,
   sendMessageStage: PropTypes.func.isRequired,
-  sendGcode: PropTypes.func.isRequired,
-  sendGcodeRelPos: PropTypes.func.isRequired,
 }
 
 export default Panel

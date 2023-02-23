@@ -6,6 +6,7 @@
 */
 
 import PropTypes from "prop-types"
+import { IconProp } from "@fortawesome/fontawesome-svg-core"
 import {
   faDotCircle,
   faArrowCircleUp,
@@ -20,86 +21,73 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import Button from "./Button"
 
+interface Control {
+  id: number
+  icon: IconProp
+  arr: number[]
+}
+
+const xyIcons = [
+  faDotCircle,
+  faArrowCircleUp,
+  faDotCircle,
+  faArrowCircleLeft,
+  faHome,
+  faArrowCircleRight,
+  faDotCircle,
+  faArrowCircleDown,
+  faDotCircle,
+]
+
+const zIcons = [faArrowCircleUp, faArrowCircleDown]
+
+let xyId = 0
+var xyControls: Control[] = []
+
+for (let y = 1; y >= -1; y--) {
+  for (let x = -1; x <= 1; x++) {
+    xyControls.push({
+      id: xyId,
+      icon: xyIcons[xyId],
+      arr: [x, y, 0],
+    })
+    xyId++
+  }
+}
+
+let zId = 0
+let zControls: Control[] = []
+
+for (let z = 1; z >= -1; z -= 2) {
+  zControls.push({
+    id: zId,
+    icon: zIcons[zId],
+    arr: [0, 0, z],
+  })
+  zId++
+}
+
 // Define timer function for mouse down events
 let interval: NodeJS.Timeout
 const timer = (callback: (...args: any[]) => void, delay: number = 1000) => {
   interval = setInterval(callback, delay)
 }
 
-// Create mappings for button layout
-const xyControlsTop = [
-  {
-    id: 0,
-    icon: faDotCircle,
-    arr: [-1, 1, 0],
-  },
-  {
-    id: 1,
-    icon: faArrowCircleUp,
-    arr: [0, 1, 0],
-  },
-  {
-    id: 2,
-    icon: faDotCircle,
-    arr: [1, 1, 0],
-  },
-  {
-    id: 3,
-    icon: faArrowCircleLeft,
-    arr: [-1, 0, 0],
-  },
-]
-
-const xyControlsBtm = [
-  {
-    id: 0,
-    icon: faArrowCircleRight,
-    arr: [1, 0, 0],
-  },
-  {
-    id: 1,
-    icon: faDotCircle,
-    arr: [-1, -1, 0],
-  },
-  {
-    id: 2,
-    icon: faArrowCircleDown,
-    arr: [0, -1, 0],
-  },
-  {
-    id: 3,
-    icon: faDotCircle,
-    arr: [1, -1, 0],
-  },
-]
-
-const zControls = [
-  {
-    id: 0,
-    icon: faArrowCircleUp,
-    arr: [0, 0, 1],
-  },
-  {
-    id: 1,
-    icon: faArrowCircleDown,
-    arr: [0, 0, -1],
-  },
-]
+let config: Config
+window.Main.getConfig().then((conf) => {
+  config = conf
+})
 
 const Controls = ({
   visibility,
   grabFrame,
   connectDevs,
   sendMessageStage,
-  sendGcode,
-  sendGcodeRelPos,
 }: {
   visibility: boolean
   grabFrame: Function
   connectDevs: Function
   sendMessageStage: Function
-  sendGcode: Function
-  sendGcodeRelPos: Function
 }) => {
   return (
     /* 
@@ -110,36 +98,25 @@ const Controls = ({
       <div className="pane">
         <h3>xy</h3>
         <div className="xy">
-          {xyControlsTop.map((xy) => (
+          {xyControls.map((xy) => (
             <Button
               key={xy.id}
               icon={xy.icon}
-              onClick={(_e) => sendGcodeRelPos(xy.arr)}
-              onMouseDown={(_e) => {
-                timer(() => {
-                  sendGcodeRelPos(xy.arr)
+              onClick={() => {
+                let cmd = xy.arr.map((val, ind) => val * config.pitch[ind])
+                sendMessageStage({
+                  cmd: `G0 X${cmd[0]} Y${cmd[1]} Z${cmd[2]}`,
                 })
               }}
-              onMouseUp={(_e) => clearInterval(interval)}
-            />
-          ))}
-          <Button
-            icon={faHome}
-            onClick={(_e) => sendGcode("G28")}
-            onMouseDown={(_e) => {}}
-            onMouseUp={(_e) => {}}
-          />
-          {xyControlsBtm.map((xy) => (
-            <Button
-              key={xy.id}
-              icon={xy.icon}
-              onClick={(_e) => sendGcodeRelPos(xy.arr)}
-              onMouseDown={(_e) => {
+              onMouseDown={() => {
                 timer(() => {
-                  sendGcodeRelPos(xy.arr)
+                  let cmd = xy.arr.map((val, ind) => val * config.pitch[ind])
+                  sendMessageStage({
+                    cmd: `G0 X${cmd[0]} Y${cmd[1]} Z${cmd[2]}`,
+                  })
                 })
               }}
-              onMouseUp={(_e) => clearInterval(interval)}
+              onMouseUp={() => clearInterval(interval)}
             />
           ))}
         </div>
@@ -151,13 +128,21 @@ const Controls = ({
             <Button
               key={z.id}
               icon={z.icon}
-              onClick={(_e) => sendGcodeRelPos(z.arr)}
-              onMouseDown={(_e) => {
-                timer(() => {
-                  sendGcodeRelPos(z.arr)
+              onClick={() => {
+                let cmd = z.arr.map((val, ind) => val * config.pitch[ind])
+                sendMessageStage({
+                  cmd: `G0 X${cmd[0]} Y${cmd[1]} Z${cmd[2]}`,
                 })
               }}
-              onMouseUp={(_e) => clearInterval(interval)}
+              onMouseDown={() => {
+                timer(() => {
+                  let cmd = z.arr.map((val, ind) => val * config.pitch[ind])
+                  sendMessageStage({
+                    cmd: `G0 X${cmd[0]} Y${cmd[1]} Z${cmd[2]}`,
+                  })
+                })
+              }}
+              onMouseUp={() => clearInterval(interval)}
             />
           ))}
         </div>
@@ -172,8 +157,9 @@ const Controls = ({
             onKeyDown={(e) => {
               if (e.key == "Enter") {
                 e.preventDefault()
-                sendMessageStage({ cmd: "G90" }) // Switch to absolute positioning
+                sendMessageStage({ cmd: "G90" }) // Momentarily switch to absolute positioning
                 sendMessageStage({ cmd: (e.target as HTMLInputElement).value })
+                sendMessageStage({ cmd: "G91" }) // Return to relative stage positioning
               }
             }}
           />
@@ -212,8 +198,6 @@ Controls.propTypes = {
   grabFrame: PropTypes.func.isRequired,
   connectDevs: PropTypes.func.isRequired,
   sendMessageStage: PropTypes.func.isRequired,
-  sendGcode: PropTypes.func.isRequired,
-  sendGcodeRelPos: PropTypes.func.isRequired,
 }
 
 export default Controls

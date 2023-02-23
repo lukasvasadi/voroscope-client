@@ -8,16 +8,12 @@ const Microscope = ({
   grabFrame,
   connectDevs,
   sendMessageStage,
-  sendGcode,
-  sendGcodeRelPos,
 }: {
   visibility: boolean
   image: string
   grabFrame: Function
   connectDevs: Function
   sendMessageStage: Function
-  sendGcode: Function
-  sendGcodeRelPos: Function
 }) => {
   return (
     <section className={visibility ? "microscope" : "hide"}>
@@ -26,8 +22,6 @@ const Microscope = ({
         grabFrame={grabFrame}
         connectDevs={connectDevs}
         sendMessageStage={sendMessageStage}
-        sendGcode={sendGcode}
-        sendGcodeRelPos={sendGcodeRelPos}
       />
     </section>
   )
@@ -38,9 +32,7 @@ Microscope.propTypes = {
   image: PropTypes.string.isRequired,
   grabFrame: PropTypes.func.isRequired,
   connectDevs: PropTypes.func.isRequired,
-  sendMessageStage: PropTypes.func,
-  sendGcode: PropTypes.func,
-  sendGcodeRelPos: PropTypes.func,
+  sendMessageStage: PropTypes.func.isRequired,
 }
 
 export default Microscope

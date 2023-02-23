@@ -40,7 +40,12 @@ const Automation = ({ visible }: { visible: boolean }) => {
             }
           }}
         />
-        <Button icon={faPlay} onClick={() => {}} />
+        <Button
+          icon={faPlay}
+          onClick={() => {
+            for (const step in steps) console.log(step)
+          }}
+        />
         <Button icon={faPause} onClick={() => {}} />
         <Button icon={faStop} onClick={() => {}} />
       </div>
