@@ -4,7 +4,7 @@ import About from "./components/About"
 import Settings from "./components/Settings"
 import Scripting from "./components/Scripting"
 import Microscope from "./components/Microscope"
-import { useState, useEffect, useCallback, useRef } from "react"
+import React, { useState, useEffect, useCallback, useRef } from "react"
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import "./App.css"
 
