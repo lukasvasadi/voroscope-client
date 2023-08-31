@@ -63,7 +63,7 @@ function parseDataFile(path: PathOrFileDescriptor, data: Config) {
 
 // Create default system configuration
 let defaultConfig: Config = {
-  address: "10.0.151.85",
+  address: "10.0.151.102",
   cameraPort: 8765,
   stagePort: 8775,
   imageSavePath: path.join(
