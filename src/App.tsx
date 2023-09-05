@@ -11,7 +11,7 @@ import "./App.css"
 export const App: React.FC = () => {
     const [camera, setCamera] = useState<W3CWebSocket | null>(null) // Camera socket connection
     const [stage, setStage] = useState<W3CWebSocket | null>(null) // Stage socket connection
-    const [image, setImage] = useState<string>("") // Image base64 string value
+    const [image, setImage] = useState<string | null>(null) // Image base64 string value
     const [config, setConfig] = useState<Config | null>(null) // App configuration
 
     const [visMicroscope, setVisMicroscope] = useState<boolean>(true) // Show microscope page on default
@@ -55,7 +55,7 @@ export const App: React.FC = () => {
             } else {
                 if (camera) camera.close()
                 if (stage) stage.close()
-                setImage("")
+                setImage(null)
             }
         },
         [config, camera, stage]
@@ -165,7 +165,7 @@ export const App: React.FC = () => {
         }
 
         camera.onclose = () => {
-            // setCamera(null)
+            setCamera(null)
             console.log("Camera socket connection closed")
         }
 

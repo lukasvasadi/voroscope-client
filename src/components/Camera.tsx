@@ -13,7 +13,7 @@ const Camera = ({
                     image,
                     connectDevs,
                 }: {
-    image: string
+    image: string | null
     connectDevs: ((state: boolean) => void)
 }) => {
     let imageElement: ReactElement
