@@ -20,7 +20,7 @@ const Settings = ({
 }: {
   visibility: boolean
   settings: Config
-  updateSettings: Function
+  updateSettings: (newConfig: Config) => void
 }) => {
   if (settings) {
     const [address, setAddress] = useState<string>(settings.address)
@@ -74,7 +74,7 @@ const Settings = ({
               name="resolution"
               readOnly={true}
               onChange={(e) => {
-                var arr = e.target.value.split(",")
+                const arr = e.target.value.split(",")
                 setResolution(
                   arr.map((str) => {
                     return parseInt(str, 10)
@@ -91,7 +91,7 @@ const Settings = ({
               id="pitch-xy"
               name="pitch-xy"
               onChange={(e) => {
-                let val: number = parseFloat(e.target.value)
+                const val: number = parseFloat(e.target.value)
                 if (!Number.isNaN(val)) {
                   setPitchXY(val)
                 }
@@ -106,7 +106,7 @@ const Settings = ({
               id="pitch-z"
               name="pitch-z"
               onChange={(e) => {
-                let val: number = parseFloat(e.target.value)
+                const val: number = parseFloat(e.target.value)
                 if (!Number.isNaN(val)) {
                   setPitchZ(val)
                 }
@@ -128,7 +128,7 @@ const Settings = ({
                 icon={faFolderOpen}
                 onClick={async () => {
                   try {
-                    let result: Electron.OpenDialogReturnValue =
+                    const result: Electron.OpenDialogReturnValue =
                       await window.Main.getFile(true)
                     if (!result.canceled) {
                       const input = document.querySelector(
@@ -167,7 +167,7 @@ const Settings = ({
             icon={faRotateRight}
             onClick={async () => {
               try {
-                let config = await window.Main.getConfig()
+                const config = await window.Main.getConfig()
 
                 const inputs = document.querySelectorAll(
                   "section.settings input"

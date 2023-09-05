@@ -1,11 +1,12 @@
 /**
  * Step
- * A listitem that contains gcode step
+ * A list-item that contains gcode step
  */
 
 import PropTypes from "prop-types"
 import Button from "./Button"
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
+import React from "react";
 
 const Step = ({
   step,
@@ -17,8 +18,8 @@ const Step = ({
   step: Step
   stepStartId: React.MutableRefObject<number | null>
   stepEnterId: React.MutableRefObject<number | null>
-  addStep: Function
-  deleteStep: Function
+  addStep: (e: React.MouseEvent<Element>) => void
+  deleteStep: (e: React.MouseEvent<Element>) => void
 }) => {
   return (
     <li
@@ -40,8 +41,8 @@ const Step = ({
 Step.defaultProps = {
   stepStartId: null,
   stepEnterId: null,
-  addStep: (_e: MouseEvent) => {},
-  deleteStep: (_e: MouseEvent) => {},
+  addStep: () => ({}),
+  deleteStep: () => ({}),
 }
 
 Step.propTypes = {

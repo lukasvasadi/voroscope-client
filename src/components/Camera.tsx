@@ -1,6 +1,6 @@
 /**
  * Camera
- * Show live feed from Raspi imaging module
+ * Show live feed from Raspberry Pi imaging module
  * Requires image base64 string
  */
 
@@ -14,7 +14,7 @@ const Camera = ({
   connectDevs,
 }: {
   image: string
-  connectDevs: Function
+  connectDevs: ((state: boolean) => void)
 }) => {
   let imageElement: ReactElement
   if (image)

@@ -21,7 +21,7 @@ export const App: React.FC = () => {
 
   const stagePosition = useRef<number[] | null[]>([null, null, null]) // X, Y, Z location
   const imageCount = useRef<number>(0)
-  const stepCount = useRef<number>(0)
+  // const stepCount = useRef<number>(0)
 
   // Pull configuration settings from file
   useEffect(() => {
@@ -59,12 +59,12 @@ export const App: React.FC = () => {
     if (img) {
       let opacity = 1.0
 
-      let opacityDecrement = setInterval(() => {
+      const opacityDecrement = setInterval(() => {
         if (opacity > 0.2) {
           opacity -= 0.1
           img.style.opacity = opacity.toFixed(2)
         } else {
-          let opacityIncrement = setInterval(async () => {
+          const opacityIncrement = setInterval(async () => {
             if (opacity < 1.0) {
               opacity += 0.1
               img.style.opacity = opacity.toFixed(2)
@@ -75,11 +75,11 @@ export const App: React.FC = () => {
 
           setTimeout(async () => {
             const date = new Date()
-            const defaultFname = `${date.getFullYear()}-${
+            const defaultFilename = `${date.getFullYear()}-${
               date.getMonth() + 1
             }-${date.getDate()}_${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}_snapshot.jpg`
 
-            let result = await window.Main.getSavePath(defaultFname, {
+            const result = await window.Main.getSavePath(defaultFilename, {
               name: "Images",
               extensions: ["jpg"],
             })
@@ -93,32 +93,32 @@ export const App: React.FC = () => {
 
   // Change microscope visibility on callback
   const toggleVisMicroscope = useCallback(
-    (state: boolean) => {
-      setVisMicroscope(state)
+    (render: boolean) => {
+      setVisMicroscope(render)
     },
     [visMicroscope]
   )
 
   // Change scripting visibility on callback
   const toggleVisScripting = useCallback(
-    (state: boolean) => {
-      setVisScripting(state)
+    (render: boolean) => {
+      setVisScripting(render)
     },
     [visScripting]
   )
 
   // Change settings visibility on callback
   const toggleVisSettings = useCallback(
-    (state: boolean) => {
-      setVisSettings(state)
+    (render: boolean) => {
+      setVisSettings(render)
     },
     [visSettings]
   )
 
   // Change about visibility on callback
   const toggleVisAbout = useCallback(
-    (state: boolean) => {
-      setVisAbout(state)
+    (render: boolean) => {
+      setVisAbout(render)
     },
     [visAbout]
   )
@@ -134,7 +134,7 @@ export const App: React.FC = () => {
   }
 
   if (camera) {
-    let reader: FileReader = new FileReader() // Initialize file reader
+    const reader: FileReader = new FileReader() // Initialize file reader
     let base64String: string // Initialize raw image data
 
     camera.onopen = () => {
@@ -187,7 +187,7 @@ export const App: React.FC = () => {
 
       // Initialize system
       sendMessageStage({ cmd: "G28" }) // Home all motors
-      sendMessageStage({ cmd: "G91" }) // Dafault to relative stage positioning
+      sendMessageStage({ cmd: "G91" }) // Default to relative stage positioning
       sendMessageStage({ pos: "1" }) // Start position reporting
     }
 

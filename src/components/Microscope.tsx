@@ -11,9 +11,9 @@ const Microscope = ({
 }: {
   visibility: boolean
   image: string
-  grabFrame: Function
-  connectDevs: Function
-  sendMessageStage: Function
+  grabFrame: (() => void)
+  connectDevs: ((state: boolean) => void)
+  sendMessageStage: ((message: object) => void)
 }) => {
   return (
     <section className={visibility ? "microscope" : "hide"}>

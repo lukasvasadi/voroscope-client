@@ -18,8 +18,8 @@ const About = ({ visible }: { visible: boolean }) => {
         communicates with the Pi over a wireless socket connection. With the
         exception of the imaging module, the software was written to be as
         hardware agnostic as possible. For more information, read the docs on{" "}
-        <a href="https://lukasvasadi.github.io" target="_blank">
-          lukasvasadi.github.io
+        <a href="https://lukasvasadi.dev" target="_blank">
+          lukasvasadi.dev
         </a>
         .
       </p>

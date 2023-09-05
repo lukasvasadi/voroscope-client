@@ -35,8 +35,8 @@ const Button = ({
 
 // By default, mousedown and mouseup have no function
 Button.defaultProps = {
-  onMouseDown: () => {},
-  onMouseUp: () => {},
+  onMouseDown: () => ({}),
+  onMouseUp: () => ({}),
 }
 
 Button.propTypes = {

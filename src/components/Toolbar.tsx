@@ -19,10 +19,10 @@ const Toolbar = ({
   toggleVisSettings,
   toggleVisAbout,
 }: {
-  toggleVisMicroscope: Function
-  toggleVisScripting: Function
-  toggleVisSettings: Function
-  toggleVisAbout: Function
+  toggleVisMicroscope: ((render: boolean) => void)
+  toggleVisScripting: ((render: boolean) => void)
+  toggleVisSettings: ((render: boolean) => void)
+  toggleVisAbout: ((render: boolean) => void)
 }) => {
   return (
     <header>

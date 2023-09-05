@@ -1,9 +1,8 @@
-/* 
-  Manual controls component
-  Occupies right-hand side of main microscope window
-  Provides user ability to translate stage, control image feed, and 
-  capture images
-*/
+/**
+ * Manual controls component
+ * Occupies right-hand side of main microscope window
+ * Provides user ability to translate stage, control image feed, and capture images
+ */
 
 import PropTypes from "prop-types"
 import { IconProp } from "@fortawesome/fontawesome-svg-core"
@@ -42,7 +41,7 @@ const xyIcons = [
 const zIcons = [faArrowCircleUp, faArrowCircleDown]
 
 let xyId = 0
-var xyControls: Control[] = []
+const xyControls: Control[] = []
 
 for (let y = 1; y >= -1; y--) {
   for (let x = -1; x <= 1; x++) {
@@ -56,7 +55,7 @@ for (let y = 1; y >= -1; y--) {
 }
 
 let zId = 0
-let zControls: Control[] = []
+const zControls: Control[] = []
 
 for (let z = 1; z >= -1; z -= 2) {
   zControls.push({
@@ -69,7 +68,7 @@ for (let z = 1; z >= -1; z -= 2) {
 
 // Define timer function for mouse down events
 let interval: NodeJS.Timeout
-const timer = (callback: (...args: any[]) => void, delay: number = 1000) => {
+const timer = (callback: () => void, delay = 1000) => {
   interval = setInterval(callback, delay)
 }
 
@@ -85,9 +84,9 @@ const Controls = ({
   sendMessageStage,
 }: {
   visibility: boolean
-  grabFrame: Function
-  connectDevs: Function
-  sendMessageStage: Function
+  grabFrame: (() => void)
+  connectDevs: ((state: boolean) => void)
+  sendMessageStage: ((message: object) => void)
 }) => {
   return (
     /* 
@@ -103,14 +102,14 @@ const Controls = ({
               key={xy.id}
               icon={xy.icon}
               onClick={() => {
-                let cmd = xy.arr.map((val, ind) => val * config.pitch[ind])
+                const cmd = xy.arr.map((val, ind) => val * config.pitch[ind])
                 sendMessageStage({
                   cmd: `G0 X${cmd[0]} Y${cmd[1]} Z${cmd[2]}`,
                 })
               }}
               onMouseDown={() => {
                 timer(() => {
-                  let cmd = xy.arr.map((val, ind) => val * config.pitch[ind])
+                  const cmd = xy.arr.map((val, ind) => val * config.pitch[ind])
                   sendMessageStage({
                     cmd: `G0 X${cmd[0]} Y${cmd[1]} Z${cmd[2]}`,
                   })
@@ -129,14 +128,14 @@ const Controls = ({
               key={z.id}
               icon={z.icon}
               onClick={() => {
-                let cmd = z.arr.map((val, ind) => val * config.pitch[ind])
+                const cmd = z.arr.map((val, ind) => val * config.pitch[ind])
                 sendMessageStage({
                   cmd: `G0 X${cmd[0]} Y${cmd[1]} Z${cmd[2]}`,
                 })
               }}
               onMouseDown={() => {
                 timer(() => {
-                  let cmd = z.arr.map((val, ind) => val * config.pitch[ind])
+                  const cmd = z.arr.map((val, ind) => val * config.pitch[ind])
                   sendMessageStage({
                     cmd: `G0 X${cmd[0]} Y${cmd[1]} Z${cmd[2]}`,
                   })
@@ -157,9 +156,9 @@ const Controls = ({
             onKeyDown={(e) => {
               if (e.key == "Enter") {
                 e.preventDefault()
-                sendMessageStage({ cmd: "G90" }) // Momentarily switch to absolute positioning
+                sendMessageStage({ cmd: "G90" }) // Momentarily switch to "absolute" positioning
                 sendMessageStage({ cmd: (e.target as HTMLInputElement).value })
-                sendMessageStage({ cmd: "G91" }) // Return to relative stage positioning
+                sendMessageStage({ cmd: "G91" }) // Return to "relative" stage positioning
               }
             }}
           />
@@ -180,7 +179,7 @@ const Controls = ({
               grabFrame()
             }}
           />
-          <Button icon={faLightbulb} onClick={() => {}} />
+          <Button icon={faLightbulb} onClick={() => ({})} />
           <Button
             icon={faXmark}
             onClick={() => {

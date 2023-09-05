@@ -8,9 +8,9 @@ const Panel = ({
   connectDevs,
   sendMessageStage,
 }: {
-  grabFrame: Function
-  connectDevs: Function
-  sendMessageStage: Function
+    grabFrame: (() => void)
+    connectDevs: ((state: boolean) => void)
+    sendMessageStage: ((message: object) => void)
 }) => {
   // Control display visibility
   const [visManual, setVisManual] = useState(true)

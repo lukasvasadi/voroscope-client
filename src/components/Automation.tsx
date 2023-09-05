@@ -1,3 +1,8 @@
+/**
+ * Automation
+ * Allow user to load and run automation script
+ */
+
 import PropTypes from "prop-types"
 import Step from "./Step"
 import Button from "./Button"
@@ -46,8 +51,8 @@ const Automation = ({ visible }: { visible: boolean }) => {
             for (const step in steps) console.log(step)
           }}
         />
-        <Button icon={faPause} onClick={() => {}} />
-        <Button icon={faStop} onClick={() => {}} />
+        <Button icon={faPause} onClick={() => ({})} />
+        <Button icon={faStop} onClick={() => ({})} />
       </div>
       <ul>
         {steps.map((step) => (

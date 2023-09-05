@@ -7,8 +7,7 @@ import {
   SaveDialogReturnValue,
   OpenDialogReturnValue,
 } from "electron"
-import { PathOrFileDescriptor } from "fs"
-import fs from "fs"
+import fs, { PathOrFileDescriptor } from "fs"
 import path from "path"
 
 /**

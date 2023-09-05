@@ -4,6 +4,7 @@
  */
 
 import PropTypes from "prop-types"
+import React from "react";
 
 const Status = ({
   stagePosition,

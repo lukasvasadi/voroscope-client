@@ -3,10 +3,9 @@ import { contextBridge, ipcRenderer, FileFilter } from "electron"
 export const api = {
   /**
    * Here you can expose functions to the renderer process
-   * so they can interact with the main (electron) side
-   * without security problems
+   * to interact with the main (electron) side without security problems
    *
-   * The function below can accessed using `window.Main.sendMessage`
+   * The function below can be accessed using `window.Main.sendMessage`
    */
 
   sendMessage: (message: string) => ipcRenderer.send("message", message),
@@ -19,7 +18,7 @@ export const api = {
   getFileContents: (filePath: string) =>
     ipcRenderer.invoke("get-file-contents", filePath),
   getSavePath: (
-    fname: string = "steps.gcode",
+    fname = "steps.gcode",
     filter: FileFilter = { name: "Gcode", extensions: [".gcode"] }
   ) => ipcRenderer.invoke("get-save-path", fname, filter),
   saveScript: (path: string, content: string) =>
