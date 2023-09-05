@@ -1,13 +1,14 @@
 import {
-  app,
-  BrowserWindow,
-  FileFilter,
-  ipcMain,
-  dialog,
-  SaveDialogReturnValue,
-  OpenDialogReturnValue,
+    app,
+    dialog,
+    ipcMain,
+    BrowserWindow,
+    FileFilter,
+    SaveDialogReturnValue,
+    OpenDialogReturnValue,
 } from "electron"
-import fs, { PathOrFileDescriptor } from "fs"
+import os from "os"
+import fs, {PathOrFileDescriptor} from "fs"
 import path from "path"
 
 /**
@@ -22,160 +23,163 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true" // Disable security warn
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling
 if (require("electron-squirrel-startup")) {
-  app.quit()
+    app.quit()
 }
 
 class Store {
-  path: PathOrFileDescriptor
-  data: Config
-  constructor(config: { fname: string; data: Config }) {
-    const userHomePath = app.getPath("home")
+    path: PathOrFileDescriptor
+    data: Config
 
-    // this.path = path.join(userDataPath, config.fname + ".json")
-    this.path = path.join(userHomePath, config.fname) // Save without json extension
-    this.data = parseDataFile(this.path, config.data)
-  }
+    constructor(config: { filename: string; data: Config }) {
+        const userHomePath = app.getPath("home")
 
-  get() {
-    return this.data
-  }
+        // this.path = path.join(userDataPath, config.filename + ".json")
+        this.path = path.join(userHomePath, config.filename) // Save without json extension
+        this.data = parseDataFile(this.path, config.data)
+        console.log(this.path)
+    }
 
-  set(data: Config) {
-    this.data = data
-    fs.writeFileSync(this.path, JSON.stringify(this.data))
-  }
+    get() {
+        return this.data
+    }
+
+    set(data: Config) {
+        this.data = data
+        fs.writeFileSync(this.path, JSON.stringify(this.data))
+    }
 }
 
 function parseDataFile(path: PathOrFileDescriptor, data: Config) {
-  try {
-    /**
-     * fs.readFileSync returns a Buffer or string
-     *
-     * JSON.parse requires string parameter, so any Buffer argument must
-     * first be converted to a string type
-     */
-    return JSON.parse(fs.readFileSync(path).toString())
-  } catch (err) {
-    return data
-  }
+    try {
+        /**
+         * fs.readFileSync returns a Buffer or string
+         *
+         * JSON.parse requires string parameter, so any Buffer argument must
+         * first be converted to a string type
+         */
+        return JSON.parse(fs.readFileSync(path).toString())
+    } catch (err) {
+        return data
+    }
 }
 
 // Create default system configuration
-let defaultConfig: Config = {
-  address: "10.0.151.102",
-  cameraPort: 8765,
-  stagePort: 8775,
-  imageSavePath: path.join(
-    app.getPath("home"),
-    "Documents",
-    "Voroscope",
-    "Data"
-  ),
-  resolution: [640, 480],
-  pitch: [3.0, 3.0, 0.5],
+const defaultConfig: Config = {
+    address: "10.0.151.237",
+    cameraPort: 8765,
+    stagePort: 8775,
+    imageSavePath: path.join(
+        app.getPath("home"),
+        "Documents",
+        "Voroscope",
+        "Data"
+    ),
+    resolution: [640, 480],
+    pitch: [3.0, 3.0, 0.5],
 }
 
 // Initialize store
+// noinspection SpellCheckingInspection
 const store = new Store({
-  fname: ".voroconfig",
-  data: defaultConfig,
+    filename: ".voroconfig",
+    data: defaultConfig,
 })
 
 let mainWindow: BrowserWindow
 const createWindow = (): void => {
-  // Create the browser window
-  mainWindow = new BrowserWindow({
-    minHeight: 828,
-    minWidth: 1200,
-    height: 828,
-    width: 1200,
-    // resizable: false,
-    autoHideMenuBar: true,
-    webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-    },
-  })
+    // Create the browser window
+    mainWindow = new BrowserWindow({
+        minHeight: 828,
+        minWidth: 1200,
+        height: 828,
+        width: 1200,
+        // resizable: false,
+        autoHideMenuBar: true,
+        webPreferences: {
+            preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+        },
+    })
 
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY) // Load the html
+    void mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
-  // mainWindow.webContents.openDevTools({ mode: "detach" }) // Open DevTools
+    mainWindow.webContents.openDevTools({mode: "detach"}) // Open DevTools
 }
 
 async function registerListeners() {
-  /**
-   * From bridge integration
-   * Check preload.ts for more details
-   */
+    /**
+     * From bridge integration
+     * Check preload.ts for more details
+     */
 
-  // Basic communication testing
-  ipcMain.on("message", (_, message) => {
-    console.log(message)
-  })
-
-  // Return default app configuration
-  ipcMain.handle("get-default-config", (): Config => {
-    return defaultConfig
-  })
-
-  // Return app configuration
-  ipcMain.handle("get-config", (): Config => {
-    return store.get()
-  })
-
-  // Save app configuration in persistent memory
-  ipcMain.on("set-config", (_, config): void => store.set(config))
-
-  // Open popup to show user existing gcode files
-  ipcMain.handle(
-    "get-file",
-    async (_, openDir: boolean = false): Promise<OpenDialogReturnValue> => {
-      return dialog.showOpenDialog(mainWindow, {
-        properties: openDir ? ["openDirectory"] : ["openFile"],
-        filters: [{ name: "Gcode", extensions: [".gcode"] }],
-      })
-    }
-  )
-
-  // Return gcode
-  ipcMain.handle("get-file-contents", (_, filePath: string): string => {
-    return fs.readFileSync(filePath, "utf-8")
-  })
-
-  // Open popup to allow user to select a save directory
-  ipcMain.handle(
-    "get-save-path",
-    async (
-      _,
-      fname: string = "steps.gcode",
-      filter: FileFilter = { name: "Gcode", extensions: [".gcode"] }
-    ): Promise<SaveDialogReturnValue> => {
-      return dialog.showSaveDialog(mainWindow, {
-        defaultPath: path.join(app.getPath("home"), "Documents", fname),
-        properties: ["createDirectory"],
-        filters: [filter],
-      })
-    }
-  )
-
-  // Save gcode scripts to filesystem
-  ipcMain.handle("save-script", (_, path: string, content: string): void => {
-    fs.writeFile(path, content, (err) => {
-      if (err) {
-        console.error(err)
-      }
-      // File written successfully
+    // Basic communication testing
+    ipcMain.on("message", (_, message) => {
+        console.log(message)
     })
-  })
 
-  // Save image to filesystem
-  // https://stackoverflow.com/questions/43487543/writing-binary-data-using-node-js-fs-writefile-to-create-an-image-file
-  ipcMain.on("save-image", (_, base64String: string, fname: string): void => {
-    const buf = Buffer.from(base64String, "base64")
-    fs.writeFile(fname, buf, (err) => {
-      if (err) throw err
-      console.log("Image file saved!")
+    // Return default app configuration
+    ipcMain.handle("get-default-config", (): Config => {
+        return defaultConfig
     })
-  })
+
+    // Return app configuration
+    ipcMain.handle("get-config", (): Config => {
+        return store.get()
+    })
+
+    // Save app configuration in persistent memory
+    ipcMain.on("set-config", (_, config): void => store.set(config))
+
+    // Open popup to show user existing gcode files
+    ipcMain.handle(
+        "get-file",
+        async (_, openDir = false): Promise<OpenDialogReturnValue> => {
+            return dialog.showOpenDialog(mainWindow, {
+                properties: openDir ? ["openDirectory"] : ["openFile"],
+                filters: [{name: "Gcode", extensions: [".gcode"]}],
+            })
+        }
+    )
+
+    // Return gcode
+    ipcMain.handle("get-file-contents", (_, filePath: string): string => {
+        return fs.readFileSync(filePath, "utf-8")
+    })
+
+    // Open popup to allow user to select a save directory
+    ipcMain.handle(
+        "get-save-path",
+        async (
+            _,
+            filename = "steps.gcode",
+            filter: FileFilter = {name: "Gcode", extensions: [".gcode"]}
+        ): Promise<SaveDialogReturnValue> => {
+            return dialog.showSaveDialog(mainWindow, {
+                defaultPath: path.join(app.getPath("home"), "Documents", filename),
+                properties: ["createDirectory"],
+                filters: [filter],
+            })
+        }
+    )
+
+    // Save gcode scripts to filesystem
+    ipcMain.handle("save-script", (_, path: string, content: string): void => {
+        fs.writeFile(path, content, (err) => {
+            if (err) {
+                console.error(err)
+            }
+            // File written successfully
+        })
+    })
+
+    // Save image to filesystem
+    // https://stackoverflow.com/questions/43487543/writing-binary-data-using-node-js-fs-writefile-to-create-an-image-file
+    ipcMain.on("save-image", (_, base64String: string, filename: string): void => {
+        const buf = Buffer.from(base64String, "base64")
+        fs.writeFile(filename, buf, (err) => {
+            if (err) throw err
+            console.log("Image file saved!")
+        })
+    })
 }
 
 /**
@@ -185,10 +189,10 @@ async function registerListeners() {
  * Some APIs can only be used after this event occurs
  */
 app
-  .on("ready", createWindow)
-  .whenReady()
-  .then(registerListeners)
-  .catch((err) => console.error(err))
+    .on("ready", createWindow)
+    .whenReady()
+    .then(registerListeners)
+    .catch((err) => console.error(err))
 
 /**
  * Quit when all windows are closed, except on macOS, where it is common
@@ -196,17 +200,17 @@ app
  * explicitly with Cmd + Q
  */
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit()
-  }
+    if (os.platform() !== "darwin") {
+        app.quit()
+    }
 })
 
 app.on("activate", () => {
-  /**
-   * On OS X itis common to re-create a window in the app when the
-   * dock icon is clicked and there are no other windows open
-   */
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
-  }
+    /**
+     * On OS X it is common to re-create a window in the app when the
+     * dock icon is clicked and there are no other windows open
+     */
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow()
+    }
 })

@@ -7,35 +7,35 @@ import PropTypes from "prop-types"
 import React from "react";
 
 const Status = ({
-  stagePosition,
-}: {
-  stagePosition: React.MutableRefObject<number[] | null[]>
+                    stagePosition,
+                }: {
+    stagePosition: React.MutableRefObject<number[] | null[]>
 }) => {
-  return (
-    <footer>
-      <p>
+    return (
+        <footer>
+            <p>
         <span>
           {stagePosition.current[0] != null
-            ? `X:${stagePosition.current[0]}`
-            : "X:?"}
+              ? `X:${stagePosition.current[0]}`
+              : "X:?"}
         </span>
-        <span>
+                <span>
           {stagePosition.current[1] != null
-            ? `Y:${stagePosition.current[1]}`
-            : "Y:?"}
+              ? `Y:${stagePosition.current[1]}`
+              : "Y:?"}
         </span>
-        <span>
+                <span>
           {stagePosition.current[2] != null
-            ? `Z:${stagePosition.current[2]}`
-            : "Z:?"}
+              ? `Z:${stagePosition.current[2]}`
+              : "Z:?"}
         </span>
-      </p>
-    </footer>
-  )
+            </p>
+        </footer>
+    )
 }
 
 Status.propTypes = {
-  stagePosition: PropTypes.object,
+    stagePosition: PropTypes.object,
 }
 
 export default Status

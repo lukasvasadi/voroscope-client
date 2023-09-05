@@ -1,43 +1,43 @@
 :root {
-  --background: #222;
-  --foreground: #ddd;
-  --border: #bdbdbd;
-  --step: slateblue;
-  --step-pause: rgb(43, 125, 226);
-  --step-active: teal;
-  --input-height: 40px;
-  --button-form-height: 40px;
-  --button-form-width: 60px;
-  --button-font-size: 30px;
+    --background: #222;
+    --foreground: #ddd;
+    --border: #bdbdbd;
+    --step: slateblue;
+    --step-pause: rgb(43, 125, 226);
+    --step-active: teal;
+    --input-height: 40px;
+    --button-form-height: 40px;
+    --button-form-width: 60px;
+    --button-font-size: 30px;
 }
 
 * {
-  box-sizing: border-box; /* Include padding in element width and height */
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box; /* Include padding in element width and height */
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  margin: auto;
-  line-height: 1.4em;
-  font-size: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    margin: auto;
+    line-height: 1.4em;
+    font-size: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  color: var(--foreground);
-  background: var(--background);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    color: var(--foreground);
+    background: var(--background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Root element */
 body > div {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
 }
 
 /* Remove yellow border highlight from focused elements */
@@ -45,452 +45,451 @@ select:focus,
 input:focus,
 button:focus,
 textarea:focus {
-  outline: 0;
-  outline-color: transparent;
-  outline-style: none;
+    outline: transparent none 0;
 }
 
 /* Toolbar */
 header {
-  width: 100%;
-  flex: 0 1 70px;
-  border-bottom: var(--border) solid 5px;
+    width: 100%;
+    flex: 0 1 70px;
+    border-bottom: var(--border) solid 5px;
 }
 
 header > div {
-  height: 100%;
-  margin: auto;
-  max-width: 800px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  place-items: center;
-  place-content: center;
+    height: 100%;
+    margin: auto;
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+    place-content: center;
 }
 
 footer {
-  /* position: absolute;
-  bottom: 0; */
-  width: 100%;
-  /* height: var(--footer-height); */
-  /* height: fit-content;
-  min-height: 40px;
-  max-height: 50px; */
-  flex: 0 0 40px;
-  color: var(--background);
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  place-items: start center;
-  place-content: center;
-  background-color: #bdbdbd;
+    /* position: absolute;
+    bottom: 0; */
+    width: 100%;
+    /* height: var(--footer-height); */
+    /* height: fit-content;
+    min-height: 40px;
+    max-height: 50px; */
+    flex: 0 0 40px;
+    color: var(--background);
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    place-items: start center;
+    place-content: center;
+    background-color: #bdbdbd;
 }
 
 footer > p {
-  margin: 0 2rem;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+    margin: 0 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 main {
-  width: 100%;
-  /* height: var(--main-height); Height of window minus all static elements */
-  /* height: 85%;
-  max-height: 100%; */
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  place-content: center;
+    width: 100%;
+    /* height: var(--main-height); Height of window minus all static elements */
+    /* height: 85%;
+    max-height: 100%; */
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    place-content: center;
 }
 
 button {
-  padding: 0;
-  width: fit-content;
-  height: fit-content;
-  font-size: var(--button-font-size);
-  background: var(--background);
-  border: none;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+    font-size: var(--button-font-size);
+    background: var(--background);
+    border: none;
 }
 
 button svg {
-  color: var(--foreground);
+    color: var(--foreground);
 }
 
 button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 form fieldset {
-  border: none;
+    border: none;
 }
 
 form label {
-  display: inline-block;
-  margin-bottom: 0.5rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
 }
 
 form input {
-  width: 100%;
-  border: none;
+    width: 100%;
+    border: none;
 }
 
 form button {
-  min-width: var(--button-form-width);
-  min-height: var(--button-form-height);
-  width: var(--button-form-width);
-  height: var(--button-form-height);
-  font-size: 20px;
-  border-radius: 5px;
-  background: var(--foreground);
-  color: var(--background);
+    min-width: var(--button-form-width);
+    min-height: var(--button-form-height);
+    width: var(--button-form-width);
+    height: var(--button-form-height);
+    font-size: 20px;
+    border-radius: 5px;
+    /*background: var(--foreground);*/
 }
 
 form button svg {
-  color: var(--background);
+    /*color: var(--background);*/
+    color: var(--foreground);
 }
 
 form input[type="text"] {
-  height: var(--input-height);
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
+    height: var(--input-height);
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
 }
 
 h2,
 h3 {
-  height: min-content;
-  margin-bottom: 1rem;
+    height: min-content;
+    margin-bottom: 1rem;
 }
 
 img {
-  width: 100%;
+    width: 100%;
 }
 
 ul {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 li {
-  position: relative;
-  height: 3rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background: var(--step);
-  margin-bottom: 0.5rem;
+    position: relative;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: var(--step);
+    margin-bottom: 0.5rem;
 }
 
 li:last-of-type {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 li.active {
-  background-color: var(--step-active);
+    background-color: var(--step-active);
 }
 
 li.pause {
-  background-color: var(--step-pause);
+    background-color: var(--step-pause);
 }
 
 li.dragover {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 li span:last-child {
-  display: none;
-  position: absolute;
-  right: 1rem;
+    display: none;
+    position: absolute;
+    right: 1rem;
 }
 
 li[draggable="true"] {
-  cursor: grab;
+    cursor: grab;
 }
 
 li span:last-of-type {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 li span button {
-  cursor: none;
+    cursor: none;
 }
 
 section {
-  height: fit-content;
+    height: fit-content;
 }
 
 section form {
-  width: 100%;
+    width: 100%;
 }
 
 section.about {
-  width: 60%;
+    width: 60%;
 }
 
 section.about a {
-  color: blueviolet;
+    color: blueviolet;
 }
 
 section.settings {
-  width: 50%;
-  max-width: 600px;
+    width: 50%;
+    max-width: 600px;
 }
 
 section.settings form {
-  display: grid;
-  grid-template-columns: 3fr 2fr 2fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 section.settings fieldset:last-of-type {
-  grid-column: 1 / 4;
+    grid-column: 1 / 4;
 }
 
 section.settings form:last-of-type div {
-  display: flex;
-  flex-direction: row;
-  place-items: center;
-  gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    place-items: center;
+    gap: 1rem;
 }
 
 section.settings form:last-of-type button {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 section.settings > div {
-  width: fit-content;
-  margin: auto;
-  display: flex;
-  gap: 3rem;
+    width: fit-content;
+    margin: auto;
+    display: flex;
+    gap: 3rem;
 }
 
 section.script {
-  width: 600px;
-  margin: 0 auto;
+    width: 600px;
+    margin: 0 auto;
 }
 
 section.script > ul {
-  height: 550px;
-  padding: 1rem;
-  margin-bottom: 2rem;
-  background: #333;
-  overflow-y: scroll;
+    height: 550px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    background: #333;
+    overflow-y: scroll;
 }
 
 section.script ul li:hover {
-  background: var(--step-active);
+    background: var(--step-active);
 }
 
 section.script ul li:hover span:last-child {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
 }
 
 section.script ul li button {
-  height: min-content;
-  width: fit-content;
-  font-size: 16px;
-  background: none;
+    height: min-content;
+    width: fit-content;
+    font-size: 16px;
+    background: none;
 }
 
 section.script ul li button svg {
-  height: 1rem;
+    height: 1rem;
 }
 
 section.script > div {
-  width: 90%;
-  height: fit-content;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 1rem;
+    width: 90%;
+    height: fit-content;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1rem;
 }
 
 section.script > div > form {
-  width: 310px;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 1rem;
+    width: 310px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1rem;
 }
 
 section.script > div > form > div {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 section.script > div > form input[type="text"] {
-  width: 180px;
+    width: 180px;
 }
 
 section.script > div > button {
-  font-size: 20px;
-  border-radius: 5px;
-  width: var(--button-form-width);
-  height: var(--button-form-height);
-  background: var(--foreground);
-  color: var(--background);
+    font-size: 20px;
+    border-radius: 5px;
+    width: var(--button-form-width);
+    height: var(--button-form-height);
+    background: var(--foreground);
+    color: var(--background);
 }
+
 section.script > div > button:first-of-type {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 section.script > div > button svg {
-  color: var(--background);
+    color: var(--background);
 }
 
 section.microscope {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
 }
 
 div.camera {
-  width: 820px;
-  height: 620px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #2e2e2e;
+    width: 820px;
+    height: 620px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #2e2e2e;
 }
 
 div.camera button {
-  height: 100px;
-  background-color: inherit;
+    height: 100px;
+    background-color: inherit;
 }
 
 div.camera button svg {
-  height: 100px;
-  color: #444;
+    height: 100px;
+    color: #444;
 }
 
 div.control-panel {
-  width: 300px;
-  text-align: center;
+    width: 300px;
+    text-align: center;
 }
 
 div.control-panel > div:first-of-type {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 div.control-panel > div:first-of-type button.focus {
-  color: var(--foreground);
+    color: var(--foreground);
 }
 
 div.controls {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 0.5rem;
 }
 
 div.control-panel > div:first-of-type button {
-  font-size: 24px;
-  font-weight: 900;
-  color: #555;
-  margin-bottom: 1rem;
+    font-size: 24px;
+    font-weight: 900;
+    color: #555;
+    margin-bottom: 1rem;
 }
 
 div.pane {
-  border: 2px solid var(--foreground);
-  border-radius: 5px;
-  padding: 1rem;
+    border: 2px solid var(--foreground);
+    border-radius: 5px;
+    padding: 1rem;
 }
 
 div.pane:nth-child(1),
 div.pane:nth-child(2) {
-  padding-bottom: 2rem;
+    padding-bottom: 2rem;
 }
 
 div.pane div.xy {
-  width: min-content;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  justify-items: center;
-  gap: 1rem;
-  margin: auto;
+    width: min-content;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: 1rem;
+    margin: auto;
 }
 
 div.pane:nth-child(1) > div button,
 div.pane:nth-child(2) > div button {
-  height: 30px;
+    height: 30px;
 }
 
 div.pane:nth-child(2) > div {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 1rem;
-  margin: auto;
-  justify-items: center;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    margin: auto;
+    justify-items: center;
 }
 
 div.pane:nth-child(3) {
-  grid-column: 1 / -1;
+    grid-column: 1 / -1;
 }
 
 div.pane:nth-child(3) > form {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 div.pane:nth-child(3) > form button {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 div.pane:last-child {
-  grid-column: 1 / -1;
+    grid-column: 1 / -1;
 }
 
 div.pane:last-child > div {
-  display: flex;
-  flex-direction: row;
-  place-items: center;
-  place-content: center;
-  gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    place-items: center;
+    place-content: center;
+    gap: 1rem;
 }
 
 div.pane:last-child button {
-  font-size: 20px;
-  border-radius: 5px;
-  width: 60px;
-  height: 40px;
-  min-width: 60px;
-  min-height: 40px;
-  background: var(--foreground);
+    font-size: 20px;
+    border-radius: 5px;
+    width: 60px;
+    height: 40px;
+    min-width: 60px;
+    min-height: 40px;
+    background: var(--foreground);
 }
 
 div.pane:last-child button svg {
-  color: var(--background);
+    color: var(--background);
 }
 
 div.automation ul {
-  height: 460px;
-  width: 90%;
-  margin: auto;
-  padding: 1rem;
-  background: #333;
-  overflow-y: scroll;
+    height: 460px;
+    width: 90%;
+    margin: auto;
+    padding: 1rem;
+    background: #333;
+    overflow-y: scroll;
 }
 
 div.automation > div {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 div.automation > div button {
-  margin: auto 0.5rem;
+    margin: auto 0.5rem;
 }
 
 .hide {
-  display: none;
+    display: none;
 }
