@@ -26,7 +26,7 @@ const Camera = ({
 }
 
 Camera.propTypes = {
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string,
     connectDevs: PropTypes.func.isRequired,
 }
 

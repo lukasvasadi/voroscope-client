@@ -28,8 +28,8 @@ const Microscope = ({
 }
 
 Microscope.propTypes = {
+    image: PropTypes.string,
     visibility: PropTypes.bool.isRequired,
-    image: PropTypes.string.isRequired,
     grabFrame: PropTypes.func.isRequired,
     connectDevs: PropTypes.func.isRequired,
     sendMessageStage: PropTypes.func.isRequired,
