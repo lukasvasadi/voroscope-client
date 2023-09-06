@@ -37,7 +37,7 @@ const Settings = ({
             <section className={visibility ? "settings" : "hide"}>
                 <form>
                     <fieldset>
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="address">Host Address</label>
                         <input
                             type="text"
                             id="address"
