@@ -2,16 +2,16 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="297mm"
-   height="210mm"
-   viewBox="0 0 297 210"
+   width="1024"
+   height="1024"
+   viewBox="0 0 270.93333 270.93333"
    version="1.1"
    id="svg5"
    inkscape:version="1.2 (dc2aeda, 2022-05-15)"
    sodipodi:docname="icon.svg"
-   inkscape:export-filename="/Users/lukasvasadi/Code/voroscope-client/assets/icon64.png"
-   inkscape:export-xdpi="13.546667"
-   inkscape:export-ydpi="13.546667"
+   inkscape:export-filename="icon1024.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.90380494"
-     inkscape:cx="273.84227"
-     inkscape:cy="388.91135"
+     inkscape:zoom="0.53683425"
+     inkscape:cx="470.35002"
+     inkscape:cy="418.19239"
      inkscape:window-width="1512"
      inkscape:window-height="945"
      inkscape:window-x="0"
@@ -47,7 +47,8 @@
        id="g5976"
        inkscape:export-filename="icon1024.png"
        inkscape:export-xdpi="216.74667"
-       inkscape:export-ydpi="216.74667">
+       inkscape:export-ydpi="216.74667"
+       transform="matrix(1.8344444,0,0,1.8344444,-136.94833,-57.149995)">
       <rect
          style="fill:#6a5acd;fill-opacity:1;stroke:none;stroke-width:0.447457"
          id="rect846"
